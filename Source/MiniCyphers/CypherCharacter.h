@@ -85,6 +85,7 @@ private:
 		return "";
 	}
 
+// 요기 아래 인터페이스로 빼서, 몬스터도 사용할 수 있도록 하자.
 protected:
 	virtual bool IsSatisfiedNormalAttack() { return true; }
 	virtual bool IsSatisfiedRightClickAttack() { return true; }

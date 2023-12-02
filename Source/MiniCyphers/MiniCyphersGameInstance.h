@@ -8,6 +8,29 @@
 
 DECLARE_MULTICAST_DELEGATE_TwoParams(FOnHPChangedDelegate, int, int)
 
+UENUM()
+enum class ECharacterType
+{
+	Shiva = 0,
+	Tara = 1,
+	Max,
+};
+
+USTRUCT(BlueprintType)
+struct FCharacterStatData : public FTableRowBase
+{
+	GENERATED_BODY()
+
+public:
+	FCharacterStatData() : MaxHp(100.0f), MoveSpeed(5.0f) {}
+
+	UPROPERTY()
+	int32 MaxHp;
+
+	UPROPERTY()
+	int32 MoveSpeed;
+};
+
 /**
  * 
  */
@@ -18,7 +41,10 @@ class MINICYPHERS_API UMiniCyphersGameInstance : public UGameInstance
 
 public:
 	UMiniCyphersGameInstance();
-	void OnChangePlayerHealth(int objectId, int Amount);
+
+private:
+	UPROPERTY(EditAnywhere)
+	class UDataTable* CharacterStatTable;
 
 protected:
 	virtual void Init() override;
@@ -26,4 +52,7 @@ protected:
 public:
 	FOnHPChangedDelegate OnPlayerHPChanged;
 
+public:
+	void OnChangePlayerHealth(int objectId, int Amount);
+	FCharacterStatData* GetStatData(ECharacterType type);
 };

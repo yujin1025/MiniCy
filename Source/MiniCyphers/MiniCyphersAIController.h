@@ -21,9 +21,10 @@ public:
 	virtual void OnUnPossess() override;
 
 private:
-	void OnRepeatTimer();
-
-	FTimerHandle RepeatTimerHandle;
-	float RepeatInterval;
+	UPROPERTY(EditAnywhere, Category = AI)
+	class UBehaviorTree* BTAsset;
+	
+	UPROPERTY(EditAnywhere, Category = AI)
+	class UBlackboardData* BBAsset;
 	
 };

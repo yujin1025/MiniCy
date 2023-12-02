@@ -2,6 +2,7 @@
 
 
 #include "MiniCyphersGameInstance.h"
+#include "Engine/DataTable.h"
 
 UMiniCyphersGameInstance::UMiniCyphersGameInstance()
 {
@@ -10,6 +11,14 @@ UMiniCyphersGameInstance::UMiniCyphersGameInstance()
 void UMiniCyphersGameInstance::Init()
 {
 	Super::Init();
+}
+
+FCharacterStatData* UMiniCyphersGameInstance::GetStatData(ECharacterType type)
+{
+	int typeInt = (int)type;
+	FName typeString = *FString::FromInt(typeInt);
+
+	return CharacterStatTable->FindRow<FCharacterStatData>(typeString, TEXT(""));
 }
 
 void UMiniCyphersGameInstance::OnChangePlayerHealth(int objectId, int Amount)
