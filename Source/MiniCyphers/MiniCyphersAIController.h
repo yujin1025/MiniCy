@@ -13,5 +13,17 @@ UCLASS()
 class MINICYPHERS_API AMiniCyphersAIController : public AAIController
 {
 	GENERATED_BODY()
+
+public:
+	AMiniCyphersAIController();
+	
+	virtual void OnPossess(APawn* InPawn) override;
+	virtual void OnUnPossess() override;
+
+private:
+	void OnRepeatTimer();
+
+	FTimerHandle RepeatTimerHandle;
+	float RepeatInterval;
 	
 };
