@@ -6,32 +6,32 @@
 
 bool AShiva::IsSatisfiedNormalAttack()
 {
-	return false;
+	return true;
 }
 
 bool AShiva::IsSatisfiedRightClickAttack()
 {
-	return false;
+	return true;
 }
 
 bool AShiva::IsSatisfiedShiftAttack()
 {
-	return false;
+	return true;
 }
 
 bool AShiva::IsSatisfiedQSkill()
 {
-	return false;
+	return true;
 }
 
 bool AShiva::IsSatisfiedUltimateSkill()
 {
-	return false;
+	return true;
 }
 
 bool AShiva::IsSatisfiedGrabSkill()
 {
-	return false;
+	return true;
 }
 
 void AShiva::OnUseNormalAttack()

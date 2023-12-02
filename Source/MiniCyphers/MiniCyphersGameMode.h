@@ -13,6 +13,15 @@ class AMiniCyphersGameMode : public AGameModeBase
 
 public:
 	AMiniCyphersGameMode();
+
+	virtual void BeginPlay() override;
+
+private:
+	UPROPERTY(EditDefaultsOnly, Category = UI)
+	TSubclassOf<class UMiniCyphersWidget> ingameWindowWidgetClass;
+
+	UPROPERTY()
+	UMiniCyphersWidget* ingameWindowWidget;
 };
 
 

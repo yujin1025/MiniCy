@@ -5,32 +5,32 @@
 
 bool ATara::IsSatisfiedNormalAttack()
 {
-	return false;
+	return true;
 }
 
 bool ATara::IsSatisfiedRightClickAttack()
 {
-	return false;
+	return true;
 }
 
 bool ATara::IsSatisfiedShiftAttack()
 {
-	return false;
+	return true;
 }
 
 bool ATara::IsSatisfiedQSkill()
 {
-	return false;
+	return true;
 }
 
 bool ATara::IsSatisfiedUltimateSkill()
 {
-	return false;
+	return true;
 }
 
 bool ATara::IsSatisfiedGrabSkill()
 {
-	return false;
+	return true;
 }
 
 void ATara::OnUseNormalAttack()
