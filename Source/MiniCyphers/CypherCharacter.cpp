@@ -154,30 +154,5 @@ void ACypherCharacter::UseSkill(EAttackType AttackType)
 
 	ActionComponentMap[AttackType]->DoCombo();
 
-	switch (AttackType)
-	{
-	case EAttackType::NormalAttack:
-		OnUseNormalAttack();
-		break;
-
-	case EAttackType::RightClickAttack:
-		OnUseRightClickAttack();
-		break;
-
-	case EAttackType::ShiftAttack:
-		OnUseShiftLeftClickAttack();
-		break;
-
-	case EAttackType::QSkillAttack:
-		OnUseQSkill();
-		break;
-
-	case EAttackType::UltimateAttack:
-		OnUseUltimateSkill();
-		break;
-
-	case EAttackType::GrabSkillAttack:
-		OnUseGrabSkill();
-		break;
-	}
+	Super::UseSkill(AttackType);
 }

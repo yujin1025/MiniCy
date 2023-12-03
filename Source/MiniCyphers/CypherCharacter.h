@@ -12,17 +12,6 @@ class USpringArmComponent;
 class UCameraComponent;
 struct FInputActionValue;
 
-UENUM()
-enum class EAttackType
-{
-	NormalAttack,
-	RightClickAttack,
-	ShiftAttack,
-	QSkillAttack,
-	UltimateAttack,
-	GrabSkillAttack,
-	Max,
-};
 
 /**
  * 
@@ -83,33 +72,6 @@ private:
 	void OnMove(const FInputActionValue& Value);
 	void OnLook(const FInputActionValue& Value);
 
-	void UseSkill(EAttackType AttackType);
-
-	FString GetEnumNameAsString(EAttackType EnumValue)
-	{
-		switch (EnumValue)
-		{
-		case EAttackType::NormalAttack:
-			return "NormalAttack";
-
-		case EAttackType::RightClickAttack:
-			return "RightAttack";
-
-		case EAttackType::ShiftAttack:
-			return "ShiftAttack";
-
-		case EAttackType::QSkillAttack:
-			return "QSkillAttack";
-
-		case EAttackType::UltimateAttack:
-			return "UltimateAttack";
-
-		case EAttackType::GrabSkillAttack:
-			return "GrabSkillAttack";
-		}
-
-		return "";
-	}
 
 public:
 	/** Returns CameraBoom subobject **/
@@ -120,4 +82,7 @@ public:
 protected:
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 	virtual void BeginPlay() override;
+
+public:
+	virtual void UseSkill(EAttackType AttackType) override;
 };

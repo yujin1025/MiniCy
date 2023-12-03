@@ -9,6 +9,19 @@
 
 class UHealthComponent;
 
+UENUM()
+enum class EAttackType
+{
+	NormalAttack,
+	RightClickAttack,
+	ShiftAttack,
+	QSkillAttack,
+	UltimateAttack,
+	GrabSkillAttack,
+	Max,
+};
+
+
 DECLARE_LOG_CATEGORY_EXTERN(LogTemplateCharacter, Log, All);
 
 UCLASS(config=Game)
@@ -26,7 +39,35 @@ protected:
 	void Move(const FVector2D Value);
 	void Look(const FVector2D Value);
 
-protected:
+	FString GetEnumNameAsString(EAttackType EnumValue)
+	{
+		switch (EnumValue)
+		{
+		case EAttackType::NormalAttack:
+			return "NormalAttack";
+
+		case EAttackType::RightClickAttack:
+			return "RightAttack";
+
+		case EAttackType::ShiftAttack:
+			return "ShiftAttack";
+
+		case EAttackType::QSkillAttack:
+			return "QSkillAttack";
+
+		case EAttackType::UltimateAttack:
+			return "UltimateAttack";
+
+		case EAttackType::GrabSkillAttack:
+			return "GrabSkillAttack";
+		}
+
+		return "";
+	}
+
+public:
+	virtual void UseSkill(EAttackType AttackType);
+
 	virtual bool IsSatisfiedNormalAttack() { return true; }
 	virtual bool IsSatisfiedRightClickAttack() { return true; }
 	virtual bool IsSatisfiedQSkill() { return true; }
