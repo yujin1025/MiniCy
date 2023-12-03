@@ -7,7 +7,7 @@
 #include "MiniCyphersAIController.generated.h"
 
 /**
- * 
+ * 블루 프린트로 파생 컨트롤러를 만듬
  */
 UCLASS()
 class MINICYPHERS_API AMiniCyphersAIController : public AAIController
@@ -21,10 +21,10 @@ public:
 	virtual void OnUnPossess() override;
 
 private:
-	UPROPERTY(EditAnywhere, Category = AI)
+	UPROPERTY(EditAnywhere)
 	class UBehaviorTree* BTAsset;
 	
-	UPROPERTY(EditAnywhere, Category = AI)
+	UPROPERTY(EditAnywhere)
 	class UBlackboardData* BBAsset;
 	
 };

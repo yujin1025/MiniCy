@@ -3,14 +3,14 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "CypherCharacter.h"
+#include "PlayableCharacter.h"
 #include "Tara.generated.h"
 
 /**
  * 
  */
 UCLASS()
-class MINICYPHERS_API ATara : public ACypherCharacter
+class MINICYPHERS_API ATara : public APlayableCharacter
 {
 	GENERATED_BODY()
 

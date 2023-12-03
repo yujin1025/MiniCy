@@ -1,7 +1,7 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 
-#include "CypherCharacter.h"
+#include "PlayableCharacter.h"
 #include "EnhancedInputComponent.h"
 #include "EnhancedInputSubsystems.h"
 #include "InputActionValue.h"
@@ -13,7 +13,7 @@
 #include "GameFramework/SpringArmComponent.h"
 #include "GameFramework/Controller.h"
 
-ACypherCharacter::ACypherCharacter()
+APlayableCharacter::APlayableCharacter()
 {
 	isShift = false;
 
@@ -41,7 +41,7 @@ ACypherCharacter::ACypherCharacter()
 }
 
 
-void ACypherCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
+void APlayableCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
 
@@ -50,18 +50,18 @@ void ACypherCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCom
 
 		//EnhancedInputComponent->BindAction(JumpAction, ETriggerEvent::Started, this, &ACharacter::Jump);
 		//EnhancedInputComponent->BindAction(JumpAction, ETriggerEvent::Completed, this, &ACharacter::StopJumping);
-		EnhancedInputComponent->BindAction(MoveAction, ETriggerEvent::Triggered, this, &ACypherCharacter::OnMove);
-		EnhancedInputComponent->BindAction(LookAction, ETriggerEvent::Triggered, this, &ACypherCharacter::OnLook);
+		EnhancedInputComponent->BindAction(MoveAction, ETriggerEvent::Triggered, this, &APlayableCharacter::OnMove);
+		EnhancedInputComponent->BindAction(LookAction, ETriggerEvent::Triggered, this, &APlayableCharacter::OnLook);
 
-		EnhancedInputComponent->BindAction(InputActionMap[EAttackType::NormalAttack], ETriggerEvent::Triggered, this, &ACypherCharacter::OnNormalAttack);
-		EnhancedInputComponent->BindAction(InputActionMap[EAttackType::RightClickAttack], ETriggerEvent::Triggered, this, &ACypherCharacter::OnRightClickAttack);
+		EnhancedInputComponent->BindAction(InputActionMap[EAttackType::NormalAttack], ETriggerEvent::Triggered, this, &APlayableCharacter::OnNormalAttack);
+		EnhancedInputComponent->BindAction(InputActionMap[EAttackType::RightClickAttack], ETriggerEvent::Triggered, this, &APlayableCharacter::OnRightClickAttack);
 
-		EnhancedInputComponent->BindAction(InputActionMap[EAttackType::ShiftAttack], ETriggerEvent::Started, this, &ACypherCharacter::OnShift);
-		EnhancedInputComponent->BindAction(InputActionMap[EAttackType::ShiftAttack], ETriggerEvent::Completed, this, &ACypherCharacter::OnShiftEnd);
+		EnhancedInputComponent->BindAction(InputActionMap[EAttackType::ShiftAttack], ETriggerEvent::Started, this, &APlayableCharacter::OnShift);
+		EnhancedInputComponent->BindAction(InputActionMap[EAttackType::ShiftAttack], ETriggerEvent::Completed, this, &APlayableCharacter::OnShiftEnd);
 
-		EnhancedInputComponent->BindAction(InputActionMap[EAttackType::QSkillAttack], ETriggerEvent::Triggered, this, &ACypherCharacter::OnQSkill);
-		EnhancedInputComponent->BindAction(InputActionMap[EAttackType::UltimateAttack], ETriggerEvent::Triggered, this, &ACypherCharacter::OnUltimateSkill);
-		EnhancedInputComponent->BindAction(InputActionMap[EAttackType::GrabSkillAttack], ETriggerEvent::Triggered, this, &ACypherCharacter::OnGrabSkill);
+		EnhancedInputComponent->BindAction(InputActionMap[EAttackType::QSkillAttack], ETriggerEvent::Triggered, this, &APlayableCharacter::OnQSkill);
+		EnhancedInputComponent->BindAction(InputActionMap[EAttackType::UltimateAttack], ETriggerEvent::Triggered, this, &APlayableCharacter::OnUltimateSkill);
+		EnhancedInputComponent->BindAction(InputActionMap[EAttackType::GrabSkillAttack], ETriggerEvent::Triggered, this, &APlayableCharacter::OnGrabSkill);
 
 	}
 	else
@@ -70,7 +70,7 @@ void ACypherCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCom
 	}
 }
 
-void ACypherCharacter::BeginPlay()
+void APlayableCharacter::BeginPlay()
 {
 	Super::BeginPlay();
 
@@ -85,21 +85,21 @@ void ACypherCharacter::BeginPlay()
 }
 
 
-void ACypherCharacter::OnMove(const FInputActionValue& Value)
+void APlayableCharacter::OnMove(const FInputActionValue& Value)
 {
 	// input is a Vector2D
 	FVector2D MovementVector = Value.Get<FVector2D>();
 	Move(MovementVector);
 }
 
-void ACypherCharacter::OnLook(const FInputActionValue& Value)
+void APlayableCharacter::OnLook(const FInputActionValue& Value)
 {
 	// input is a Vector2D
 	FVector2D LookAxisVector = Value.Get<FVector2D>();
 	Look(LookAxisVector);
 }
 
-void ACypherCharacter::OnNormalAttack(const FInputActionValue& Value)
+void APlayableCharacter::OnNormalAttack(const FInputActionValue& Value)
 {
 	if (IsSatisfiedNormalAttack() == false)
 		return;
@@ -107,7 +107,7 @@ void ACypherCharacter::OnNormalAttack(const FInputActionValue& Value)
 	UseSkill(isShift ? EAttackType::ShiftAttack : EAttackType::NormalAttack);
 }
 
-void ACypherCharacter::OnRightClickAttack(const FInputActionValue& Value)
+void APlayableCharacter::OnRightClickAttack(const FInputActionValue& Value)
 {
 	if (IsSatisfiedRightClickAttack() == false)
 		return;
@@ -115,7 +115,7 @@ void ACypherCharacter::OnRightClickAttack(const FInputActionValue& Value)
 	UseSkill(EAttackType::RightClickAttack);
 }
 
-void ACypherCharacter::OnQSkill(const FInputActionValue& Value)
+void APlayableCharacter::OnQSkill(const FInputActionValue& Value)
 {
 	if (IsSatisfiedQSkill() == false)
 		return;
@@ -123,7 +123,7 @@ void ACypherCharacter::OnQSkill(const FInputActionValue& Value)
 	UseSkill(EAttackType::QSkillAttack);
 }
 
-void ACypherCharacter::OnUltimateSkill(const FInputActionValue& Value)
+void APlayableCharacter::OnUltimateSkill(const FInputActionValue& Value)
 {
 	if (IsSatisfiedUltimateSkill() == false)
 		return;
@@ -131,7 +131,7 @@ void ACypherCharacter::OnUltimateSkill(const FInputActionValue& Value)
 	UseSkill(EAttackType::UltimateAttack);
 }
 
-void ACypherCharacter::OnGrabSkill(const FInputActionValue& Value)
+void APlayableCharacter::OnGrabSkill(const FInputActionValue& Value)
 {
 	if (IsSatisfiedGrabSkill() == false)
 		return;
@@ -139,7 +139,7 @@ void ACypherCharacter::OnGrabSkill(const FInputActionValue& Value)
 	UseSkill(EAttackType::GrabSkillAttack);
 }
 
-void ACypherCharacter::UseSkill(EAttackType AttackType)
+void APlayableCharacter::UseSkill(EAttackType AttackType)
 {
 	if (ActionComponentMap.Contains(AttackType) == false)
 		return;

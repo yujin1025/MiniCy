@@ -3,14 +3,14 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "CypherCharacter.h"
+#include "PlayableCharacter.h"
 #include "Shiva.generated.h"
 
 /**
  * 
  */
 UCLASS()
-class MINICYPHERS_API AShiva : public ACypherCharacter
+class MINICYPHERS_API AShiva : public APlayableCharacter
 {
 	GENERATED_BODY()
 

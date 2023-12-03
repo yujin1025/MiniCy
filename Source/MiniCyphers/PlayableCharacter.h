@@ -3,7 +3,7 @@
 #pragma once
 
 #include "MiniCyphersCharacter.h"
-#include "CypherCharacter.generated.h"
+#include "PlayableCharacter.generated.h"
 
 class UInputMappingContext;
 class UInputAction;
@@ -17,7 +17,7 @@ struct FInputActionValue;
  * 
  */
 UCLASS(ABSTRACT)
-class MINICYPHERS_API ACypherCharacter : public AMiniCyphersCharacter
+class MINICYPHERS_API APlayableCharacter : public AMiniCyphersCharacter
 {
 	GENERATED_BODY()
 
@@ -55,7 +55,7 @@ class MINICYPHERS_API ACypherCharacter : public AMiniCyphersCharacter
 	bool isShift = false;
 
 public:
-	ACypherCharacter();
+	APlayableCharacter();
 
 private:
 	void OnNormalAttack(const FInputActionValue& Value);
