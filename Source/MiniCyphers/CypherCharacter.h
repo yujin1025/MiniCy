@@ -8,8 +8,9 @@
 class UInputMappingContext;
 class UInputAction;
 class UComboActionComponent;
+class USpringArmComponent;
+class UCameraComponent;
 struct FInputActionValue;
-class UHealthComponent;
 
 UENUM()
 enum class EAttackType
@@ -31,21 +32,43 @@ class MINICYPHERS_API ACypherCharacter : public AMiniCyphersCharacter
 {
 	GENERATED_BODY()
 
-		// 인풋
-		UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
-		TMap<EAttackType, UInputAction*> InputActionMap;
+	// 인풋
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
+	TMap<EAttackType, UInputAction*> InputActionMap;
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Action, meta = (AllowPrivateAccess = "true"))
-		TMap<EAttackType, UComboActionComponent*> ActionComponentMap;
+	TMap<EAttackType, UComboActionComponent*> ActionComponentMap;
 
-	UHealthComponent* HealthComponent;
+	/** Camera boom positioning the camera behind the character */
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera, meta = (AllowPrivateAccess = "true"))
+	USpringArmComponent* CameraBoom;
+
+	/** Follow camera */
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera, meta = (AllowPrivateAccess = "true"))
+	UCameraComponent* FollowCamera;
+
+	/** MappingContext */
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
+	UInputMappingContext* DefaultMappingContext;
+
+	/** Jump Input Action */
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
+	UInputAction* JumpAction;
+
+	/** Move Input Action */
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
+	UInputAction* MoveAction;
+
+	/** Look Input Action */
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
+	UInputAction* LookAction;
+
 	bool isShift = false;
 
 public:
 	ACypherCharacter();
 
 private:
-	void SetupPlayerInputComponent(UInputComponent* PlayerInputComponent);
 	void OnNormalAttack(const FInputActionValue& Value);
 	void OnRightClickAttack(const FInputActionValue& Value);
 
@@ -56,7 +79,10 @@ private:
 
 	void OnUltimateSkill(const FInputActionValue& Value);
 	void OnGrabSkill(const FInputActionValue& Value);
-	
+
+	void OnMove(const FInputActionValue& Value);
+	void OnLook(const FInputActionValue& Value);
+
 	void UseSkill(EAttackType AttackType);
 
 	FString GetEnumNameAsString(EAttackType EnumValue)
@@ -85,20 +111,13 @@ private:
 		return "";
 	}
 
-// 요기 아래 인터페이스로 빼서, 몬스터도 사용할 수 있도록 하자.
+public:
+	/** Returns CameraBoom subobject **/
+	FORCEINLINE class USpringArmComponent* GetCameraBoom() const { return CameraBoom; }
+	/** Returns FollowCamera subobject **/
+	FORCEINLINE class UCameraComponent* GetFollowCamera() const { return FollowCamera; }
+
 protected:
-	virtual bool IsSatisfiedNormalAttack() { return true; }
-	virtual bool IsSatisfiedRightClickAttack() { return true; }
-	virtual bool IsSatisfiedQSkill() { return true; }
-	virtual bool IsSatisfiedUltimateSkill() { return true; }
-	virtual bool IsSatisfiedGrabSkill() { return true; }
-	virtual bool IsSatisfiedShiftAttack() { return true; }
-
-	virtual void OnUseNormalAttack() {}
-	virtual void OnUseShiftLeftClickAttack() {}
-	virtual void OnUseRightClickAttack() {}
-	virtual void OnUseQSkill() {}
-	virtual void OnUseUltimateSkill() {}
-	virtual void OnUseGrabSkill() {}
-
+	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
+	virtual void BeginPlay() override;
 };
