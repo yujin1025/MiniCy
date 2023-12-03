@@ -6,5 +6,6 @@
 
 ANonPlayableCharacter::ANonPlayableCharacter()
 {
-	
+	// AIControllerClass = AMiniCyphersAIController::StaticClass();
+	AutoPossessAI = EAutoPossessAI::PlacedInWorldOrSpawned;
 }
