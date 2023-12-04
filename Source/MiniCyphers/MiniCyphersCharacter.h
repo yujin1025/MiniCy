@@ -8,6 +8,7 @@
 #include "MiniCyphersCharacter.generated.h"
 
 class UHealthComponent;
+class UComboActionComponent;
 
 UENUM()
 enum class EAttackType
@@ -33,40 +34,19 @@ public:
 	AMiniCyphersCharacter();
 
 private:
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Action, meta = (AllowPrivateAccess = "true"))
+	TMap<EAttackType, UComboActionComponent*> ActionComponentMap;
+
 	UHealthComponent* HealthComponent;
 
 protected:
 	void Move(const FVector2D Value);
 	void Look(const FVector2D Value);
 
-	FString GetEnumNameAsString(EAttackType EnumValue)
-	{
-		switch (EnumValue)
-		{
-		case EAttackType::NormalAttack:
-			return "NormalAttack";
-
-		case EAttackType::RightClickAttack:
-			return "RightAttack";
-
-		case EAttackType::ShiftAttack:
-			return "ShiftAttack";
-
-		case EAttackType::QSkillAttack:
-			return "QSkillAttack";
-
-		case EAttackType::UltimateAttack:
-			return "UltimateAttack";
-
-		case EAttackType::GrabSkillAttack:
-			return "GrabSkillAttack";
-		}
-
-		return "";
-	}
+	FString GetEnumNameAsString(EAttackType EnumValue);
 
 public:
-	virtual void UseSkill(EAttackType AttackType);
+	void UseSkill(EAttackType AttackType);
 
 	virtual bool IsSatisfiedNormalAttack() { return true; }
 	virtual bool IsSatisfiedRightClickAttack() { return true; }

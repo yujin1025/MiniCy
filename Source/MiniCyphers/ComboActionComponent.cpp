@@ -39,6 +39,9 @@ void UComboActionComponent::ResetCombo()
 
 void UComboActionComponent::DoCombo()
 {
+	if (ComboMontages.IsEmpty())
+		return;
+
 	if (ComboMontages.IsValidIndex(CurrentComboIndex) == false || CanCombo == false) // 콤보가 불가능하다면 무조건 1번 몽타주 실행
 		ResetCombo();
 	

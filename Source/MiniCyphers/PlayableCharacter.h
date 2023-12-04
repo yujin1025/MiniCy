@@ -25,9 +25,6 @@ class MINICYPHERS_API APlayableCharacter : public AMiniCyphersCharacter
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
 	TMap<EAttackType, UInputAction*> InputActionMap;
 
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Action, meta = (AllowPrivateAccess = "true"))
-	TMap<EAttackType, UComboActionComponent*> ActionComponentMap;
-
 	/** Camera boom positioning the camera behind the character */
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera, meta = (AllowPrivateAccess = "true"))
 	USpringArmComponent* CameraBoom;
@@ -82,7 +79,4 @@ public:
 protected:
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 	virtual void BeginPlay() override;
-
-public:
-	virtual void UseSkill(EAttackType AttackType) override;
 };

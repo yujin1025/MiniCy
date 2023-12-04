@@ -6,6 +6,7 @@
 #include "GameFramework/CharacterMovementComponent.h"
 #include "GameFramework/Controller.h"
 #include "HealthComponent.h"
+#include "ComboActionComponent.h"
 
 DEFINE_LOG_CATEGORY(LogTemplateCharacter);
 
@@ -31,6 +32,43 @@ AMiniCyphersCharacter::AMiniCyphersCharacter()
 	GetCharacterMovement()->BrakingDecelerationFalling = 1500.0f;
 
 	HealthComponent = CreateDefaultSubobject<UHealthComponent>(TEXT("HealthComponent"));
+
+	ActionComponentMap.Empty();
+	for (int i = 0; i < (int)EAttackType::Max; i++)
+	{
+		auto AttackType = (EAttackType)i;
+
+		FString AttackTypeStr = GetEnumNameAsString(AttackType);
+		FString ComponentName = TEXT("ComboActionComponent [") + AttackTypeStr + "]";
+		auto Component = CreateDefaultSubobject<UComboActionComponent>((FName)*ComponentName);
+		ActionComponentMap.Add(AttackType, Component);
+	}
+}
+
+FString AMiniCyphersCharacter::GetEnumNameAsString(EAttackType EnumValue)
+{
+	switch (EnumValue)
+	{
+	case EAttackType::NormalAttack:
+		return "NormalAttack";
+
+	case EAttackType::RightClickAttack:
+		return "RightAttack";
+
+	case EAttackType::ShiftAttack:
+		return "ShiftAttack";
+
+	case EAttackType::QSkillAttack:
+		return "QSkillAttack";
+
+	case EAttackType::UltimateAttack:
+		return "UltimateAttack";
+
+	case EAttackType::GrabSkillAttack:
+		return "GrabSkillAttack";
+	}
+
+	return "";
 }
 
 
@@ -66,6 +104,19 @@ void AMiniCyphersCharacter::Look(const FVector2D Value)
 
 void AMiniCyphersCharacter::UseSkill(EAttackType AttackType)
 {
+	if (ActionComponentMap.Contains(AttackType) == false)
+		return;
+
+	for (auto& MapPair : ActionComponentMap)
+	{
+		if (MapPair.Key == AttackType)
+			continue;
+
+		MapPair.Value->ResetCombo();
+	}
+
+	ActionComponentMap[AttackType]->DoCombo();
+
 	switch (AttackType)
 	{
 	case EAttackType::NormalAttack:

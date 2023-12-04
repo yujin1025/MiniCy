@@ -30,18 +30,6 @@ APlayableCharacter::APlayableCharacter()
 	AutoPossessAI = EAutoPossessAI::Disabled;
 
 	isShift = false;
-
-	ActionComponentMap.Empty();
-	for (int i = 0; i < (int)EAttackType::Max; i++)
-	{
-		auto AttackType = (EAttackType)i;
-
-		FString AttackTypeStr = GetEnumNameAsString(AttackType);
-		FString ComponentName = TEXT("ComboActionComponent [") + AttackTypeStr + "]";
-		auto Component = CreateDefaultSubobject<UComboActionComponent>((FName)*ComponentName);
-		ActionComponentMap.Add(AttackType, Component);
-	}
-
 }
 
 
@@ -141,22 +129,4 @@ void APlayableCharacter::OnGrabSkill(const FInputActionValue& Value)
 		return;
 
 	UseSkill(EAttackType::GrabSkillAttack);
-}
-
-void APlayableCharacter::UseSkill(EAttackType AttackType)
-{
-	if (ActionComponentMap.Contains(AttackType) == false)
-		return;
-
-	for (auto& MapPair : ActionComponentMap)
-	{
-		if (MapPair.Key == AttackType)
-			continue;
-
-		MapPair.Value->ResetCombo();
-	}
-
-	ActionComponentMap[AttackType]->DoCombo();
-
-	Super::UseSkill(AttackType);
 }

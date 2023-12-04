@@ -26,5 +26,4 @@ private:
 	
 	UPROPERTY(EditAnywhere)
 	class UBlackboardData* BBAsset;
-	
 };
