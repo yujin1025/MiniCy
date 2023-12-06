@@ -17,6 +17,9 @@ class MINICYPHERS_API AMiniCyphersAIController : public AAIController
 public:
 	AMiniCyphersAIController();
 	
+	static const FName HomePosKey;
+	static const FName PatrolPosKey;
+
 	virtual void OnPossess(APawn* InPawn) override;
 	virtual void OnUnPossess() override;
 

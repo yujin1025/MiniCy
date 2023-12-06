@@ -6,6 +6,11 @@
 #include "Blueprint/AIBlueprintHelperLibrary.h"
 #include "BehaviorTree/BlackboardData.h"
 #include "BehaviorTree/BehaviorTree.h"
+#include "BehaviorTree/BlackboardComponent.h"
+
+const FName AMiniCyphersAIController::HomePosKey(TEXT("HomePos"));
+const FName AMiniCyphersAIController::PatrolPosKey(TEXT("PatrolPos"));
+
 
 AMiniCyphersAIController::AMiniCyphersAIController()
 {
@@ -20,6 +25,7 @@ void AMiniCyphersAIController::OnPossess(APawn* InPawn)
 
 	if (UseBlackboard(BBAsset, blackboardComponent))
 	{
+		blackboardComponent->SetValueAsVector(HomePosKey, InPawn->GetActorLocation());
 		RunBehaviorTree(BTAsset);
 	}
 

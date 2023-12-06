@@ -14,4 +14,6 @@ class MINICYPHERS_API ASentinel : public ANonPlayableCharacter
 {
 	GENERATED_BODY()
 	
+public:
+	ASentinel();
 };

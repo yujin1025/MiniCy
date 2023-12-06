@@ -3,17 +3,18 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "BehaviorTree/BTTaskNode.h"
+#include "MiniCyphersTaskNode.h"
 #include "BTTask_FindPatrolPos.generated.h"
 
 /**
  * 
  */
 UCLASS()
-class MINICYPHERS_API UBTTask_FindPatrolPos : public UBTTaskNode
+class MINICYPHERS_API UBTTask_FindPatrolPos : public UMiniCyphersTaskNode
 {
 	GENERATED_BODY()
 	
 public:
+	UBTTask_FindPatrolPos();
 	virtual EBTNodeResult::Type ExecuteTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory) override;
 };
