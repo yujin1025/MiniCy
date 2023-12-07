@@ -61,5 +61,8 @@ public:
 	virtual void OnUseQSkill() {}
 	virtual void OnUseUltimateSkill() {}
 	virtual void OnUseGrabSkill() {}
+
+public:
+	bool IsPlayer();
 };
 

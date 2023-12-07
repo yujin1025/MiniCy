@@ -10,6 +10,7 @@
 
 const FName AMiniCyphersAIController::HomePosKey(TEXT("HomePos"));
 const FName AMiniCyphersAIController::PatrolPosKey(TEXT("PatrolPos"));
+const FName AMiniCyphersAIController::TargetObjectKey(TEXT("TargetObject"));
 
 
 AMiniCyphersAIController::AMiniCyphersAIController()

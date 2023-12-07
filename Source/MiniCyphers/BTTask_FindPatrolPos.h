@@ -17,4 +17,8 @@ class MINICYPHERS_API UBTTask_FindPatrolPos : public UMiniCyphersTaskNode
 public:
 	UBTTask_FindPatrolPos();
 	virtual EBTNodeResult::Type ExecuteTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory) override;
+
+private:
+	UPROPERTY(EditAnyWhere)
+	float FindTargetRadius = 500.0f;
 };

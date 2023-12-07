@@ -24,12 +24,10 @@ EBTNodeResult::Type UBTTask_FindPatrolPos::ExecuteTask(UBehaviorTreeComponent& O
 	if(BlackBoard == nullptr)
 		return EBTNodeResult::Failed;
 
-	FVector Origin = BlackBoard->GetValueAsVector(AMiniCyphersAIController::HomePosKey);
-
 	FNavLocation NextPatrol;
-	if (NavSystem->GetRandomPointInNavigableRadius(FVector::ZeroVector, 500.0f, NextPatrol) == false)
+	if (NavSystem->GetRandomPointInNavigableRadius(FVector::ZeroVector, FindTargetRadius, NextPatrol) == false)
 		return EBTNodeResult::Failed;
 
-	BlackBoard->SetValueAsVector(AMiniCyphersAIController::HomePosKey, NextPatrol.Location);
+	BlackBoard->SetValueAsVector(AMiniCyphersAIController::PatrolPosKey, NextPatrol.Location);
 	return EBTNodeResult::Succeeded;
 }

@@ -144,3 +144,8 @@ void AMiniCyphersCharacter::UseSkill(EAttackType AttackType)
 		break;
 	}
 }
+
+bool AMiniCyphersCharacter::IsPlayer()
+{
+	return Controller->IsPlayerController();
+}
