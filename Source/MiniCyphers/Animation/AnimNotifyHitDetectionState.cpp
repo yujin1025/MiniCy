@@ -2,7 +2,7 @@
 
 
 #include "AnimNotifyHitDetectionState.h"
-#include "HealthComponent.h"
+#include "../Character/HealthComponent.h"
 
 void UAnimNotifyHitDetectionState::NotifyBegin(USkeletalMeshComponent* MeshComp, UAnimSequenceBase* Animation, float TotalDuration, const FAnimNotifyEventReference& EventReference)
 {

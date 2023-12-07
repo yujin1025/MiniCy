@@ -2,7 +2,7 @@
 
 
 #include "NonPlayableCharacter.h"
-#include "MiniCyphersAIController.h"
+#include "../AI/MiniCyphersAIController.h"
 
 ANonPlayableCharacter::ANonPlayableCharacter()
 {

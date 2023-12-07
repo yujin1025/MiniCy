@@ -1,9 +1,9 @@
 // Copyright Epic Games, Inc. All Rights Reserved.
 
 #include "MiniCyphersGameMode.h"
-#include "MiniCyphersCharacter.h"
+#include "Character/MiniCyphersCharacter.h"
 #include "UObject/ConstructorHelpers.h"
-#include "MiniCyphersWidget.h"
+#include "Widget/MiniCyphersWidget.h"
 #include "Blueprint/UserWidget.h"
 
 AMiniCyphersGameMode::AMiniCyphersGameMode()

@@ -2,10 +2,10 @@
 
 #include "BTService_Detect.h"
 #include "BehaviorTree/BehaviorTreeComponent.h"
-#include "MiniCyphersCharacter.h"
+#include "../../Character/MiniCyphersCharacter.h"
 #include "DrawDebugHelpers.h"
 #include "BehaviorTree/BlackboardComponent.h"
-#include "MiniCyphersAIController.h"
+#include "../MiniCyphersAIController.h"
 
 void UBTService_Detect::TickNode(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory, float DeltaSeconds)
 {

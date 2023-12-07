@@ -4,9 +4,9 @@
 #include "MiniCyphersService.h"
 #include "BehaviorTree/BlackboardComponent.h"
 #include "NavigationSystem.h"
-#include "MiniCyphersAIController.h"
+#include "../MiniCyphersAIController.h"
 #include "AIController.h"
-#include "MiniCyphersCharacter.h"
+#include "../../Character/MiniCyphersCharacter.h"
 
 AMiniCyphersCharacter* UMiniCyphersService::GetCharacter(UBehaviorTreeComponent& OwnerComp)
 {

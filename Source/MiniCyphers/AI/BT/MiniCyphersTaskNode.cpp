@@ -4,7 +4,7 @@
 #include "MiniCyphersTaskNode.h"
 #include "BehaviorTree/BlackboardComponent.h"
 #include "NavigationSystem.h"
-#include "MiniCyphersAIController.h"
+#include "../MiniCyphersAIController.h"
 #include "AIController.h"
 
 UNavigationSystemV1* UMiniCyphersTaskNode::GetNavigationSystem(UBehaviorTreeComponent& OwnerComp)

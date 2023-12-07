@@ -2,7 +2,7 @@
 
 
 #include "AnimNotifyEnd.h"
-#include "ComboActionComponent.h"
+#include "../Character/ComboActionComponent.h"
 
 void UAnimNotifyEnd::Notify(USkeletalMeshComponent* MeshComp, UAnimSequenceBase* Animation, const FAnimNotifyEventReference& EventReference)
 {

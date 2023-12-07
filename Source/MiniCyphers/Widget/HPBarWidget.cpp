@@ -4,7 +4,7 @@
 #include "HPBarWidget.h"
 #include "Components/ProgressBar.h"
 #include "Engine/GameInstance.h"
-#include "MiniCyphersGameInstance.h"
+#include "../MiniCyphersGameInstance.h"
 #include <Kismet/GameplayStatics.h>
 
 void UHPBarWidget::NativeConstruct()

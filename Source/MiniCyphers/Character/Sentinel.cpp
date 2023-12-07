@@ -2,7 +2,7 @@
 
 
 #include "Sentinel.h"
-#include "MiniCyphersAIController.h"
+#include "../AI/MiniCyphersAIController.h"
 
 ASentinel::ASentinel()
 {

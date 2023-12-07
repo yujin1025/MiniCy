@@ -2,7 +2,7 @@
 
 
 #include "BTTask_FindPatrolPos.h"
-#include "MiniCyphersAIController.h"
+#include "../MiniCyphersAIController.h"
 #include "MiniCyphersTaskNode.h"
 #include "BehaviorTree/BlackboardComponent.h"
 #include "NavigationSystem.h"

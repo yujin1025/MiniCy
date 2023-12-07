@@ -3,7 +3,7 @@
 
 #include "HealthComponent.h"
 #include <Kismet/GameplayStatics.h>
-#include "MiniCyphersGameInstance.h"
+#include "../MiniCyphersGameInstance.h"
 
 // Sets default values for this component's properties
 UHealthComponent::UHealthComponent()
