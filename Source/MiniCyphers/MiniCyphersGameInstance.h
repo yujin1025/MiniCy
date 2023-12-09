@@ -6,8 +6,6 @@
 #include "Engine/GameInstance.h"
 #include "MiniCyphersGameInstance.generated.h"
 
-DECLARE_MULTICAST_DELEGATE_TwoParams(FOnHPChangedDelegate, int, int)
-
 UENUM()
 enum class ECharacterType
 {
@@ -50,9 +48,5 @@ protected:
 	virtual void Init() override;
 
 public:
-	FOnHPChangedDelegate OnPlayerHPChanged;
-
-public:
-	void OnChangePlayerHealth(int objectId, int Amount);
 	FCharacterStatData* GetStatData(ECharacterType type);
 };

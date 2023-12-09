@@ -6,3 +6,8 @@
 AMiniCyphersPlayerState::AMiniCyphersPlayerState()
 {
 }
+
+void AMiniCyphersPlayerState::OnChangePlayerHealth(int objectId, int Amount)
+{
+	OnPlayerHPChanged.Broadcast(objectId, Amount);
+}

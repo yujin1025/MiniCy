@@ -6,14 +6,16 @@
 #include "Engine/GameInstance.h"
 #include "../MiniCyphersGameInstance.h"
 #include <Kismet/GameplayStatics.h>
+#include "../MiniCyphersGameMode.h"
+#include "../MiniCyphersPlayerState.h"
 
 void UHPBarWidget::NativeConstruct()
 {
-	auto GameInstance = Cast<UMiniCyphersGameInstance>(UGameplayStatics::GetGameInstance(GetWorld()));
-	if (GameInstance == nullptr)
+	auto* GameMode = Cast<AMiniCyphersGameMode>(GetWorld()->GetAuthGameMode());
+	if (GameMode == nullptr)
 		return;
 
-	GameInstance->OnPlayerHPChanged.AddLambda([this](int id, int amount) -> void
+	GameMode->MyPlayerState->OnPlayerHPChanged.AddLambda([this](int id, int amount) -> void
 	{
 		ProgressBar->SetPercent(amount);
 	});

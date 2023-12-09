@@ -4,6 +4,8 @@
 #include "HealthComponent.h"
 #include <Kismet/GameplayStatics.h>
 #include "../MiniCyphersGameInstance.h"
+#include "../MiniCyphersGameMode.h"
+#include "../MiniCyphersPlayerState.h"
 
 // Sets default values for this component's properties
 UHealthComponent::UHealthComponent()
@@ -36,10 +38,10 @@ void UHealthComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActo
 
 void UHealthComponent::OnChangeHealth(int Amount)
 {
-	auto gameInstance = Cast<UMiniCyphersGameInstance>(UGameplayStatics::GetGameInstance(GetWorld()));
-	if (gameInstance == nullptr)
+	auto* GameMode = Cast<AMiniCyphersGameMode>(GetWorld()->GetAuthGameMode());
+	if (GameMode == nullptr)
 		return;
 
-	gameInstance->OnChangePlayerHealth(0, Amount);
+	GameMode->MyPlayerState->OnChangePlayerHealth(0, Amount);
 }
 

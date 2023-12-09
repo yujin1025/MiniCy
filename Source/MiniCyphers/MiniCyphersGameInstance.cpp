@@ -20,8 +20,3 @@ FCharacterStatData* UMiniCyphersGameInstance::GetStatData(ECharacterType type)
 
 	return CharacterStatTable->FindRow<FCharacterStatData>(typeString, TEXT(""));
 }
-
-void UMiniCyphersGameInstance::OnChangePlayerHealth(int objectId, int Amount)
-{
-	OnPlayerHPChanged.Broadcast(objectId, Amount);
-}

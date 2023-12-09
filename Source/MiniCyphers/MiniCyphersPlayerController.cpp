@@ -3,6 +3,7 @@
 
 #include "MiniCyphersPlayerController.h"
 #include "Character/MiniCyphersCharacter.h"
+#include "MiniCyphersPlayerState.h"
 
 void AMiniCyphersPlayerController::PostInitializeComponents()
 {
@@ -18,4 +19,9 @@ void AMiniCyphersPlayerController::OnPossess(APawn* aPawn)
 void AMiniCyphersPlayerController::OnPossessCharacter(AMiniCyphersCharacter* aCharacter)
 {
 
+}
+
+AMiniCyphersPlayerState* AMiniCyphersPlayerController::GetState()
+{
+	return Cast<AMiniCyphersPlayerState>(PlayerState);
 }

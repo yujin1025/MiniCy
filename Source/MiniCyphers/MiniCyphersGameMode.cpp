@@ -28,7 +28,7 @@ void AMiniCyphersGameMode::BeginPlay()
 void AMiniCyphersGameMode::PostInitializeComponents()
 {
 	Super::PostInitializeComponents();
-	MyGameState = Cast<AMiniCyphersGameState>(GameStateClass);
+	MyGameState = Cast<AMiniCyphersGameState>(GameState);
 }
 
 void AMiniCyphersGameMode::PostLogin(APlayerController* NewPlayer)
@@ -48,4 +48,5 @@ void AMiniCyphersGameMode::OpenWidget()
 
 void AMiniCyphersGameMode::OnPostLogin(AMiniCyphersPlayerController* NewPlayer)
 {
+	MyPlayerState = NewPlayer->GetState();
 }

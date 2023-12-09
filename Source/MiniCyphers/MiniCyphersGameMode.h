@@ -7,6 +7,7 @@
 #include "MiniCyphersGameMode.generated.h"
 
 class AMiniCyphersGameState;
+class AMiniCyphersPlayerState;
 class AMiniCyphersPlayerController;
 
 class UMiniCyphersWidget;
@@ -37,8 +38,12 @@ private:
 	UPROPERTY()
 	UMiniCyphersWidget* InGameWindowWidget;
 
+public:
 	UPROPERTY()
 	AMiniCyphersGameState* MyGameState;
+
+	UPROPERTY()
+	AMiniCyphersPlayerState* MyPlayerState;
 };
 
 

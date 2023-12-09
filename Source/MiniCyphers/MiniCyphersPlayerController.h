@@ -7,6 +7,7 @@
 #include "MiniCyphersPlayerController.generated.h"
 
 class AMiniCyphersCharacter;
+class AMiniCyphersPlayerState;
 /**
  * 
  */
@@ -21,4 +22,7 @@ public:
 
 private:
 	void OnPossessCharacter(AMiniCyphersCharacter* aCharacter);
+
+public:
+	AMiniCyphersPlayerState* GetState();
 };
