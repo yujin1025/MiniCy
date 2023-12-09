@@ -6,6 +6,10 @@
 #include "BehaviorTree/BTDecorator.h"
 #include "MiniCyphersDecorator.generated.h"
 
+class AMiniCyphersCharacter;
+class UBehaviorTreeComponent;
+class UBlackboardComponent;
+
 /**
  * 
  */
@@ -14,4 +18,8 @@ class MINICYPHERS_API UMiniCyphersDecorator : public UBTDecorator
 {
 	GENERATED_BODY()
 	
+protected:
+	AMiniCyphersCharacter* GetCharacter(UBehaviorTreeComponent& OwnerComp) const;
+	UBlackboardComponent* GetBlackboardComponent(UBehaviorTreeComponent& OwnerComp) const;
+
 };
