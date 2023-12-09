@@ -12,7 +12,8 @@ class USpringArmComponent;
 class UCameraComponent;
 struct FInputActionValue;
 
-
+class AMiniCyphersPlayerState;
+class AMiniCyphersPlayerController;
 /**
  * 
  */
@@ -69,6 +70,9 @@ private:
 	void OnMove(const FInputActionValue& Value);
 	void OnLook(const FInputActionValue& Value);
 
+private:
+	AMiniCyphersPlayerState* GetState();
+	AMiniCyphersPlayerController* GetPlayerController();
 
 public:
 	/** Returns CameraBoom subobject **/

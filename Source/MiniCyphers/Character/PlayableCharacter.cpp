@@ -12,8 +12,10 @@
 #include "GameFramework/CharacterMovementComponent.h"
 #include "GameFramework/SpringArmComponent.h"
 #include "GameFramework/Controller.h"
+#include "../MiniCyphersPlayerController.h"
+#include "../MiniCyphersPlayerState.h"
 
-APlayableCharacter::APlayableCharacter()
+ APlayableCharacter::APlayableCharacter()
 {
 	// Create a camera boom (pulls in towards the player if there is a collision)
 	CameraBoom = CreateDefaultSubobject<USpringArmComponent>(TEXT("CameraBoom"));
@@ -89,6 +91,16 @@ void APlayableCharacter::OnLook(const FInputActionValue& Value)
 	// input is a Vector2D
 	FVector2D LookAxisVector = Value.Get<FVector2D>();
 	Look(LookAxisVector);
+}
+
+AMiniCyphersPlayerState* APlayableCharacter::GetState()
+{
+	return Cast<AMiniCyphersPlayerState>(GetPlayerState());
+}
+
+AMiniCyphersPlayerController* APlayableCharacter::GetPlayerController()
+{
+	return Cast<AMiniCyphersPlayerController>(Controller);
 }
 
 void APlayableCharacter::OnNormalAttack(const FInputActionValue& Value)

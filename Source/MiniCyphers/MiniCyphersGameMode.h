@@ -6,6 +6,12 @@
 #include "GameFramework/GameModeBase.h"
 #include "MiniCyphersGameMode.generated.h"
 
+class AMiniCyphersGameState;
+class AMiniCyphersPlayerController;
+
+class UMiniCyphersWidget;
+class APlayerController;
+
 UCLASS(minimalapi)
 class AMiniCyphersGameMode : public AGameModeBase
 {
@@ -16,12 +22,23 @@ public:
 
 	virtual void BeginPlay() override;
 
+protected:
+	virtual void PostInitializeComponents() override;
+	virtual void PostLogin(APlayerController* NewPlayer) override;
+
+private:
+	void OpenWidget();
+	void OnPostLogin(AMiniCyphersPlayerController* NewPlayer);
+
 private:
 	UPROPERTY(EditDefaultsOnly, Category = UI)
-	TSubclassOf<class UMiniCyphersWidget> ingameWindowWidgetClass;
+	TSubclassOf<class UMiniCyphersWidget> InGameWindowWidgetClass;
 
 	UPROPERTY()
-	UMiniCyphersWidget* ingameWindowWidget;
+	UMiniCyphersWidget* InGameWindowWidget;
+
+	UPROPERTY()
+	AMiniCyphersGameState* MyGameState;
 };
 
 
