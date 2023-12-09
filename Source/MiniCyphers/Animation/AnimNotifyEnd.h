@@ -7,6 +7,8 @@
 #include "AnimNotifyEnd.generated.h"
 
 class UComboActionComponent;
+class AMiniCyphersCharacter;
+
 /**
  * 
  */
@@ -15,7 +17,10 @@ class MINICYPHERS_API UAnimNotifyEnd : public UAnimNotify
 {
 	GENERATED_BODY()
 	
+	
+protected:
 	virtual void Notify(USkeletalMeshComponent* MeshComp, UAnimSequenceBase* Animation, const FAnimNotifyEventReference& EventReference) override;
 	TArray<UComboActionComponent*> GetComboComponents(USkeletalMeshComponent* MeshComp);
 
+	AMiniCyphersCharacter* GetCharacter(USkeletalMeshComponent* MeshComp);
 };

@@ -2,6 +2,7 @@
 
 
 #include "AnimNotifyEnd.h"
+#include "../Character/MiniCyphersCharacter.h"
 #include "../Character/ComboActionComponent.h"
 
 void UAnimNotifyEnd::Notify(USkeletalMeshComponent* MeshComp, UAnimSequenceBase* Animation, const FAnimNotifyEventReference& EventReference)
@@ -27,4 +28,13 @@ TArray<UComboActionComponent*> UAnimNotifyEnd::GetComboComponents(USkeletalMeshC
 	owner->GetComponents<UComboActionComponent>(ComboComponents);
 
 	return ComboComponents;
+}
+
+AMiniCyphersCharacter* UAnimNotifyEnd::GetCharacter(USkeletalMeshComponent* MeshComp)
+{
+	auto owner = MeshComp->GetOwner();
+	if (owner == nullptr)
+		return nullptr;
+
+	return Cast<AMiniCyphersCharacter>(owner);
 }

@@ -4,27 +4,22 @@
 
 #include "CoreMinimal.h"
 #include "MiniCyphersTaskNode.h"
-#include "../../Character/MiniCyphersCharacter.h"
-#include "BTTask_Attack.generated.h"
+#include "BTTask_TurnToTarget.generated.h"
 
 /**
  * 
  */
 UCLASS()
-class MINICYPHERS_API UBTTask_Attack : public UMiniCyphersTaskNode
+class MINICYPHERS_API UBTTask_TurnToTarget : public UMiniCyphersTaskNode
 {
 	GENERATED_BODY()
-	
+
 public:
-	UBTTask_Attack();
+	UBTTask_TurnToTarget();
 
 protected:
 	virtual EBTNodeResult::Type ExecuteTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory) override;
-	virtual void TickTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory, float DeltaSeconds) override;
 
-private:
 	UPROPERTY(EditAnywhere)
-	EAttackType AttackType;
-
-	bool bIsProcessing = false;
+	float RotateSpeed = 2.0f;
 };

@@ -11,6 +11,8 @@ class AMiniCyphersAIController;
 class UBlackboardComponent;
 class UBehaviorTreeComponent;
 class AAIController;
+class AMiniCyphersCharacter;
+
 /**
  * 
  */
@@ -20,6 +22,7 @@ class MINICYPHERS_API UMiniCyphersTaskNode : public UBTTaskNode
 	GENERATED_BODY()
 	
 protected:
+	AMiniCyphersCharacter* GetCharacter(UBehaviorTreeComponent& OwnerComp);
 	UNavigationSystemV1* GetNavigationSystem(UBehaviorTreeComponent& OwnerComp);
 	AMiniCyphersAIController* GetAIController(UBehaviorTreeComponent& OwnerComp);
 	UBlackboardComponent* GetBlackboardComponent(UBehaviorTreeComponent& OwnerComp);

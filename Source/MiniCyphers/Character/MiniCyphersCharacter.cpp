@@ -145,7 +145,35 @@ void AMiniCyphersCharacter::UseSkill(EAttackType AttackType)
 	}
 }
 
+void AMiniCyphersCharacter::OnFinishedSkillMotion(EAttackType AttackType)
+{
+	OnUseSkillDelegate.Broadcast(AttackType);
+}
+
 bool AMiniCyphersCharacter::IsPlayer()
 {
 	return Controller->IsPlayerController();
+}
+
+FVector AMiniCyphersCharacter::GetLookVector(AMiniCyphersCharacter*& Target) const
+{
+	return Target->GetActorLocation() - GetActorLocation();
+}
+
+void AMiniCyphersCharacter::RotateToTarget(AMiniCyphersCharacter*& Target, float RotationSpeed)
+{
+	if (Target == nullptr)
+		return;
+
+	FVector LookVector = GetLookVector(Target);
+	LookVector.Z = 0.f;
+
+	FRotator TargetRotation = FRotationMatrix::MakeFromX(LookVector).Rotator();
+	SetRotation(TargetRotation, RotationSpeed);
+}
+
+void AMiniCyphersCharacter::SetRotation(FRotator Rotation, float RotationSpeed)
+{
+	FRotator TargetRotation = FMath::RInterpTo(GetActorRotation(), Rotation, GetWorld()->GetDeltaSeconds(), RotationSpeed);
+	SetActorRotation(TargetRotation);
 }

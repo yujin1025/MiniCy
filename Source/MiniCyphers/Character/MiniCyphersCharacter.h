@@ -10,8 +10,8 @@
 class UHealthComponent;
 class UComboActionComponent;
 
-UENUM()
-enum class EAttackType
+UENUM(BlueprintType)
+enum class EAttackType : uint8
 {
 	NormalAttack,
 	RightClickAttack,
@@ -22,7 +22,7 @@ enum class EAttackType
 	Max,
 };
 
-
+DECLARE_MULTICAST_DELEGATE_OneParam(FOnUseSkill, EAttackType)
 DECLARE_LOG_CATEGORY_EXTERN(LogTemplateCharacter, Log, All);
 
 UCLASS(config=Game)
@@ -47,7 +47,11 @@ protected:
 
 public:
 	void UseSkill(EAttackType AttackType);
+	void OnFinishedSkillMotion(EAttackType AttackType);
 
+	FOnUseSkill OnUseSkillDelegate;
+
+public:
 	virtual bool IsSatisfiedNormalAttack() { return true; }
 	virtual bool IsSatisfiedRightClickAttack() { return true; }
 	virtual bool IsSatisfiedQSkill() { return true; }
@@ -64,5 +68,10 @@ public:
 
 public:
 	bool IsPlayer();
+
+	FVector GetLookVector(AMiniCyphersCharacter*& Target) const;
+
+	void RotateToTarget(AMiniCyphersCharacter*& Target, float RotationSpeed);
+	void SetRotation(FRotator Rotation, float RotationSpeed);
 };
 

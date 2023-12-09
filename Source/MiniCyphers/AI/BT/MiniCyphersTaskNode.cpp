@@ -5,7 +5,17 @@
 #include "BehaviorTree/BlackboardComponent.h"
 #include "NavigationSystem.h"
 #include "../MiniCyphersAIController.h"
+#include "../../Character/MiniCyphersCharacter.h"
 #include "AIController.h"
+
+AMiniCyphersCharacter* UMiniCyphersTaskNode::GetCharacter(UBehaviorTreeComponent& OwnerComp)
+{
+	auto Pawn = OwnerComp.GetAIOwner()->GetPawn();
+	if (Pawn == nullptr)
+		return nullptr;
+
+	return Cast<AMiniCyphersCharacter>(Pawn);
+}
 
 UNavigationSystemV1* UMiniCyphersTaskNode::GetNavigationSystem(UBehaviorTreeComponent& OwnerComp)
 {
