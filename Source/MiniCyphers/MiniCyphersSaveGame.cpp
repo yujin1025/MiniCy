@@ -3,13 +3,14 @@
 
 #include "MiniCyphersSaveGame.h"
 #include "Kismet/GameplayStatics.h"
+#include "MiniCyphers/MiniCyphersGameInstance.h"
 
 const FString UMiniCyphersSaveGame::SlotName(TEXT("MiniCyphersSaveGame"));
 const int UMiniCyphersSaveGame::SlotIndex(0);
 
 UMiniCyphersSaveGame::UMiniCyphersSaveGame()
 {
-	
+	SelectedCharacterType = ECharacterType::Shiva;
 }
 
 bool UMiniCyphersSaveGame::Save()
@@ -21,12 +22,12 @@ UMiniCyphersSaveGame* UMiniCyphersSaveGame::Load()
 {
 	auto* SaveGame = UGameplayStatics::LoadGameFromSlot(SlotName, SlotIndex);
 	if (SaveGame == nullptr)
-		return GetMutableDefault<UMiniCyphersSaveGame>();
+		return Create();
 
 	return Cast<UMiniCyphersSaveGame>(SaveGame);
 }
 
 UMiniCyphersSaveGame* UMiniCyphersSaveGame::Create()
 {
-	return NewObject<UMiniCyphersSaveGame>();
+	return GetMutableDefault<UMiniCyphersSaveGame>();
 }

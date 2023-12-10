@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/SaveGame.h"
+#include "MiniCyphers/MiniCyphersGameInstance.h"
 #include "MiniCyphersSaveGame.generated.h"
 
 /**
@@ -26,5 +27,6 @@ public:
 	bool Save();
 
 public:
+	ECharacterType SelectedCharacterType;
 	// 저장해야 할 데이터들 목록...
 };

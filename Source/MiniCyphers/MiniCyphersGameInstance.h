@@ -40,13 +40,21 @@ class MINICYPHERS_API UMiniCyphersGameInstance : public UGameInstance
 public:
 	UMiniCyphersGameInstance();
 
+protected:
+	virtual void Init() override;
+
 private:
 	UPROPERTY(EditAnywhere)
 	class UDataTable* CharacterStatTable;
 
-protected:
-	virtual void Init() override;
-
 public:
 	FCharacterStatData* GetStatData(ECharacterType type);
+
+private:
+	const static FName TitleLevelName;
+	const static FName InGameLevelName;
+
+public:
+	void OpenLevel(FName LevelName) const;
+
 };

@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/GameModeBase.h"
+#include "MiniCyphers/MiniCyphersGameInstance.h"
 #include "MiniCyphersGameMode.generated.h"
 
 class AMiniCyphersGameState;
@@ -26,19 +27,27 @@ public:
 protected:
 	virtual void PostInitializeComponents() override;
 	virtual void PostLogin(APlayerController* NewPlayer) override;
+	virtual void StartPlay() override;
 
 private:
 	void OpenWidget();
 	void OnPostLogin(AMiniCyphersPlayerController* NewPlayer);
+	void SpawnPlayer(ECharacterType Type);
 
 private:
-	UPROPERTY(EditDefaultsOnly, Category = UI)
+	UPROPERTY(EditAnywhere, Category = UI)
 	TSubclassOf<class UMiniCyphersWidget> InGameWindowWidgetClass;
 
+	UPROPERTY(EditAnywhere, Category = Character)
+	TSubclassOf<class ATara> TaraClass;
+
+	UPROPERTY(EditAnywhere, Category = Character)
+	TSubclassOf<class AShiva> ShivaClass;
+
+public:
 	UPROPERTY()
 	UMiniCyphersWidget* InGameWindowWidget;
 
-public:
 	UPROPERTY()
 	AMiniCyphersGameState* MyGameState;
 
