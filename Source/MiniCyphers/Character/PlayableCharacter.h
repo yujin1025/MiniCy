@@ -10,6 +10,8 @@ class UInputAction;
 class UComboActionComponent;
 class USpringArmComponent;
 class UCameraComponent;
+class UItemActionComponent;
+
 struct FInputActionValue;
 
 class AMiniCyphersPlayerState;
@@ -50,6 +52,10 @@ class MINICYPHERS_API APlayableCharacter : public AMiniCyphersCharacter
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
 	UInputAction* LookAction;
 
+private:
+	UPROPERTY()
+	UItemActionComponent* ItemActionComponent;
+	
 	bool isShift = false;
 
 public:
