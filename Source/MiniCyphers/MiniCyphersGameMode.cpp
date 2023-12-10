@@ -26,6 +26,8 @@ AMiniCyphersGameMode::AMiniCyphersGameMode()
 
 void AMiniCyphersGameMode::BeginPlay()
 {
+	Super::BeginPlay();
+
 	OpenWidget();
 }
 
