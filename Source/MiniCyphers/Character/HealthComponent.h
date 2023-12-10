@@ -21,8 +21,8 @@ public:
 	UHealthComponent();
 
 private:
-	int MaxHealth = 100;
-	int CurrentHealth = 0;
+	int MaxHealth;
+	int CurrentHealth;
 
 protected:
 	// Called when the game starts
@@ -31,6 +31,6 @@ protected:
 public:	
 	// Called every frame
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
-	void OnChangeHealth(int Amount);
+	void ChangeHealth(int Amount);
 		
 };

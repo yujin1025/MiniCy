@@ -22,11 +22,3 @@ void UMiniCyphersGameInstance::OpenLevel(FName LevelName) const
 {
 	UGameplayStatics::OpenLevel(GetWorld(), LevelName);
 }
-
-FCharacterStatData* UMiniCyphersGameInstance::GetStatData(ECharacterType type)
-{
-	int typeInt = (int)type;
-	FName typeString = *FString::FromInt(typeInt);
-
-	return CharacterStatTable->FindRow<FCharacterStatData>(typeString, TEXT(""));
-}

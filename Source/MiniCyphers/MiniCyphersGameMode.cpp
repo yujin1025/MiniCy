@@ -97,3 +97,11 @@ void AMiniCyphersGameMode::SpawnPlayer(ECharacterType Type)
 
 	PlayerController->Possess(Character);
 }
+
+FCharacterStatData* AMiniCyphersGameMode::GetStatData(ECharacterType type)
+{
+	int typeInt = (int)type;
+	FName typeString = *FString::FromInt(typeInt);
+
+	return CharacterStatTable->FindRow<FCharacterStatData>(typeString, TEXT(""));
+}

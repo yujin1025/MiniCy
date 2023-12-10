@@ -23,8 +23,16 @@ void UHealthComponent::BeginPlay()
 {
 	Super::BeginPlay();
 
-	// ...
-	
+	auto* GameMode = Cast<AMiniCyphersGameMode>(GetWorld()->GetAuthGameMode());
+	if (GameMode == nullptr)
+		return;
+
+	auto* Data = GameMode->GetStatData(ECharacterType::Shiva);
+	if (Data == nullptr)
+		return;
+
+	MaxHealth = Data->MaxHp;
+	CurrentHealth = MaxHealth;
 }
 
 
@@ -36,12 +44,13 @@ void UHealthComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActo
 	// ...
 }
 
-void UHealthComponent::OnChangeHealth(int Amount)
+void UHealthComponent::ChangeHealth(int Amount)
 {
 	auto* GameMode = Cast<AMiniCyphersGameMode>(GetWorld()->GetAuthGameMode());
 	if (GameMode == nullptr)
 		return;
 
-	GameMode->MyPlayerState->OnChangePlayerHealth(0, Amount);
+	CurrentHealth += Amount;
+	GameMode->MyPlayerState->OnChangePlayerHealth(0, CurrentHealth);
 }
 

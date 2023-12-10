@@ -14,6 +14,29 @@ class AMiniCyphersPlayerController;
 class UMiniCyphersWidget;
 class APlayerController;
 
+UENUM()
+enum class ECharacterType
+{
+	Shiva = 0,
+	Tara = 1,
+	Max,
+};
+
+USTRUCT(BlueprintType)
+struct FCharacterStatData : public FTableRowBase
+{
+	GENERATED_BODY()
+
+public:
+	FCharacterStatData() : MaxHp(100.0f), MoveSpeed(5.0f) {}
+
+	UPROPERTY()
+	int32 MaxHp;
+
+	UPROPERTY()
+	int32 MoveSpeed;
+};
+
 UCLASS(minimalapi)
 class AMiniCyphersGameMode : public AGameModeBase
 {
@@ -33,6 +56,13 @@ private:
 	void OpenWidget();
 	void OnPostLogin(AMiniCyphersPlayerController* NewPlayer);
 	void SpawnPlayer(ECharacterType Type);
+
+private:
+	UPROPERTY(EditAnywhere, Category = Data)
+	class UDataTable* CharacterStatTable;
+
+public:
+	FCharacterStatData* GetStatData(ECharacterType type);
 
 private:
 	UPROPERTY(EditAnywhere, Category = UI)
