@@ -104,7 +104,7 @@ void AMiniCyphersCharacter::Look(const FVector2D Value)
 
 void AMiniCyphersCharacter::UseSkill(EAttackType AttackType)
 {
-	if (ActionComponentMap.Contains(AttackType) == false)
+	if (ActionComponentMap.Contains(AttackType) == false) //useskill 이 attacktype을 받아서, 액션컴포넌트맵(=콤보액션컴포넌트)가 어택타입을 가지고 있으면... 맞는 거 실행
 		return;
 
 	for (auto& MapPair : ActionComponentMap)
