@@ -52,7 +52,9 @@ public:
 	FOnUseSkill OnUseSkillDelegate;
 
 public:
-	virtual bool IsSatisfiedNormalAttack() { return true; }
+	bool bCanAttack = true;
+
+	virtual bool IsSatisfiedNormalAttack();
 	virtual bool IsSatisfiedRightClickAttack() { return true; }
 	virtual bool IsSatisfiedQSkill() { return true; }
 	virtual bool IsSatisfiedUltimateSkill() { return true; }

@@ -150,6 +150,11 @@ void AMiniCyphersCharacter::OnFinishedSkillMotion(EAttackType AttackType)
 	OnUseSkillDelegate.Broadcast(AttackType);
 }
 
+bool AMiniCyphersCharacter::IsSatisfiedNormalAttack()
+{
+	return bCanAttack;
+}
+
 bool AMiniCyphersCharacter::IsPlayer()
 {
 	return Controller->IsPlayerController();

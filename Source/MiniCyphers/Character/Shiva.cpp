@@ -6,7 +6,7 @@
 
 bool AShiva::IsSatisfiedNormalAttack()
 {
-	return true;
+	return Super::IsSatisfiedNormalAttack();
 }
 
 bool AShiva::IsSatisfiedRightClickAttack()
