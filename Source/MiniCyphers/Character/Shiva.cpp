@@ -2,6 +2,7 @@
 
 
 #include "Shiva.h"
+#include "Projectile/ShivaNormalAttackProjectile.h"
 
 
 bool AShiva::IsSatisfiedNormalAttack()
@@ -36,6 +37,7 @@ bool AShiva::IsSatisfiedGrabSkill()
 
 void AShiva::OnUseNormalAttack()
 {
+
 }
 
 void AShiva::OnUseRightClickAttack()
