@@ -55,11 +55,11 @@ public:
 	bool bCanAttack = true;
 
 	virtual bool IsSatisfiedNormalAttack();
-	virtual bool IsSatisfiedRightClickAttack() { return true; }
-	virtual bool IsSatisfiedQSkill() { return true; }
+	virtual bool IsSatisfiedRightClickAttack();
+	virtual bool IsSatisfiedQSkill();
 	virtual bool IsSatisfiedUltimateSkill() { return true; }
 	virtual bool IsSatisfiedGrabSkill() { return true; }
-	virtual bool IsSatisfiedShiftAttack() { return true; }
+	virtual bool IsSatisfiedShiftAttack();
 
 	virtual void OnUseNormalAttack() {}
 	virtual void OnUseShiftLeftClickAttack() {}

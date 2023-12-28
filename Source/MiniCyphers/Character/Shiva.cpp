@@ -11,17 +11,17 @@ bool AShiva::IsSatisfiedNormalAttack()
 
 bool AShiva::IsSatisfiedRightClickAttack()
 {
-	return true;
+	return Super::IsSatisfiedRightClickAttack();
 }
 
 bool AShiva::IsSatisfiedShiftAttack()
 {
-	return true;
+	return Super::IsSatisfiedShiftAttack();
 }
 
 bool AShiva::IsSatisfiedQSkill()
 {
-	return true;
+	return Super::IsSatisfiedQSkill();
 }
 
 bool AShiva::IsSatisfiedUltimateSkill()

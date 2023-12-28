@@ -155,6 +155,21 @@ bool AMiniCyphersCharacter::IsSatisfiedNormalAttack()
 	return bCanAttack;
 }
 
+bool AMiniCyphersCharacter::IsSatisfiedRightClickAttack()
+{
+	return bCanAttack;
+}
+
+bool AMiniCyphersCharacter::IsSatisfiedQSkill()
+{
+	return bCanAttack;
+}
+
+bool AMiniCyphersCharacter::IsSatisfiedShiftAttack()
+{
+	return bCanAttack;
+}
+
 bool AMiniCyphersCharacter::IsPlayer()
 {
 	return Controller->IsPlayerController();
