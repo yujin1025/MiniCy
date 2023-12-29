@@ -9,10 +9,16 @@
 /**
  * 
  */
+
+class USceneComponent;
+
 UCLASS()
 class MINICYPHERS_API AShiva : public APlayableCharacter
 {
 	GENERATED_BODY()
+
+public:
+	AShiva();
 
 protected:
 	virtual bool IsSatisfiedNormalAttack() override;
@@ -28,5 +34,15 @@ protected:
 	virtual void OnUseQSkill() override;
 	virtual void OnUseUltimateSkill() override;
 	virtual void OnUseGrabSkill() override;
+
+
+public:
+	/** Projectile class to spawn */
+	UPROPERTY(EditDefaultsOnly, Category = Projectile)
+		TSubclassOf<class AShivaNormalAttackProjectile> ProjectileClass;
+
+	/** Location on gun mesh where projectiles should spawn. */
+	UPROPERTY(VisibleDefaultsOnly, Category = Mesh)
+		USceneComponent* NormalAttackProjectileStartLocation;
 	
 };

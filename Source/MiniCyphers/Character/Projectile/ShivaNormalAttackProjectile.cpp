@@ -43,3 +43,10 @@ void AShivaNormalAttackProjectile::Tick(float DeltaTime)
 {
 
 }
+
+
+AController* AShivaNormalAttackProjectile::SetCharacterController(AController* Controller)
+{
+	CharacterController = Controller;
+	return CharacterController;
+}
