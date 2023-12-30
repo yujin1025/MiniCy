@@ -33,6 +33,8 @@ public:
 	UPROPERTY(VisibleAnywhere, Category = Movement) //프로젝타일 무브먼트 컴포넌트
 		class UProjectileMovementComponent* ProjectileMovementComp;
 
+	void InitVelocity(const FVector& ShootDirection);
+
 	AController* SetCharacterController(AController* Controller);
 	AController* CharacterController;
 

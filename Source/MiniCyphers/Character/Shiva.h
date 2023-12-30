@@ -44,5 +44,8 @@ public:
 	/** Location on gun mesh where projectiles should spawn. */
 	UPROPERTY(VisibleDefaultsOnly, Category = Mesh)
 		USceneComponent* NormalAttackProjectileStartLocation;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Gameplay)
+		FVector NormalAttackStartLocation;
 	
 };
