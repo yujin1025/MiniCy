@@ -15,7 +15,18 @@ const FName AMiniCyphersAIController::TargetObjectKey(TEXT("TargetObject"));
 
 AMiniCyphersAIController::AMiniCyphersAIController()
 {
-	
+	static ConstructorHelpers::FObjectFinder<UBlackboardData> BBObject(TEXT("/Game/Assets/AI/BB_MiniCyphers.BB_MiniCyphers"));
+	if (BBObject.Succeeded())
+	{
+		BBAsset = BBObject.Object;
+	}
+
+	static ConstructorHelpers::FObjectFinder<UBehaviorTree> BTObject(TEXT("/Game/Assets/AI/BT_MiniCyphers.BT_MiniCyphers"));
+	if (BTObject.Succeeded())
+	{
+		BTAsset = BTObject.Object;
+	}
+
 }
 
 void AMiniCyphersAIController::OnPossess(APawn* InPawn)
