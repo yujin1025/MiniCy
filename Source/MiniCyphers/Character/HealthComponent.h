@@ -32,5 +32,7 @@ public:
 	// Called every frame
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 	void ChangeHealth(int Amount);
-		
+
+	UFUNCTION(BlueprintPure, Category = "Health")
+	int GetCurrentHealth() const { return CurrentHealth; }	
 };

@@ -7,7 +7,17 @@ AMiniCyphersPlayerState::AMiniCyphersPlayerState()
 {
 }
 
-void AMiniCyphersPlayerState::OnChangePlayerHealth(int objectId, int Amount)
+void AMiniCyphersPlayerState::OnChangePlayerHealth(int objectId, float Amount)
 {
 	OnPlayerHPChanged.Broadcast(objectId, Amount);
+	
+	if (Amount <= 0.0f)
+	{
+		AActor* Actor = GetOwner();
+		if (Actor)
+		{
+			//Actor->Destroy();
+			UE_LOG(LogTemp, Warning, TEXT("Destroyed!"));
+		}
+	}
 }

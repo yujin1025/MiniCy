@@ -28,7 +28,7 @@ struct FCharacterStatData : public FTableRowBase
 	GENERATED_BODY()
 
 public:
-	FCharacterStatData() : MaxHp(100.0f), MoveSpeed(5.0f) {}
+	FCharacterStatData() : MaxHp(100), MoveSpeed(5) {}
 
 	UPROPERTY()
 	int32 MaxHp;

@@ -11,12 +11,16 @@
 
 void UHPBarWidget::NativeConstruct()
 {
+	Super::NativeConstruct();
+	ProgressBar = Cast<UProgressBar>(GetWidgetFromName(TEXT("ProgressBar_19")));
+
 	auto* GameMode = Cast<AMiniCyphersGameMode>(GetWorld()->GetAuthGameMode());
 	if (GameMode == nullptr)
 		return;
 
-	GameMode->MyPlayerState->OnPlayerHPChanged.AddLambda([this](int id, int amount) -> void
+	GameMode->MyPlayerState->OnPlayerHPChanged.AddLambda([this](int id, float amount) -> void
 	{
-		ProgressBar->SetPercent(amount);
+		float PercentValue = amount / 100.0f;
+		ProgressBar->SetPercent(PercentValue);
 	});
 }

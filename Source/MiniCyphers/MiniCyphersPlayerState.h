@@ -6,7 +6,7 @@
 #include "GameFramework/PlayerState.h"
 #include "MiniCyphersPlayerState.generated.h"
 
-DECLARE_MULTICAST_DELEGATE_TwoParams(FOnHPChangedDelegate, int, int)
+DECLARE_MULTICAST_DELEGATE_TwoParams(FOnHPChangedDelegate, int, float)
 
 /**
  * 
@@ -23,7 +23,7 @@ public:
 	FOnHPChangedDelegate OnPlayerHPChanged;
 
 public:
-	void OnChangePlayerHealth(int objectId, int Amount);
+	void OnChangePlayerHealth(int objectId, float Amount);
 
 private:
 	float CurrentHP;
