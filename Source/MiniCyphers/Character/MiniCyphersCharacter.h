@@ -68,6 +68,9 @@ public:
 	virtual void OnUseUltimateSkill() {}
 	virtual void OnUseGrabSkill() {}
 
+	virtual void OnHit(AMiniCyphersCharacter* Attacker);
+
+
 public:
 	bool IsPlayer();
 

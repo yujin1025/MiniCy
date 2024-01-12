@@ -2,6 +2,7 @@
 
 
 #include "ShivaNormalAttackProjectile.h"
+#include "../MiniCyphersCharacter.h"
 #include "Components/SphereComponent.h"
 #include "GameFramework/ProjectileMovementComponent.h"
 
@@ -14,7 +15,7 @@ AShivaNormalAttackProjectile::AShivaNormalAttackProjectile()
 
 	CollisionComp->InitSphereRadius(5.0f);
 	CollisionComp->BodyInstance.SetCollisionProfileName("Projectile");
-	//CollisionComp->OnComponentHit.AddDynamic(this, &AShivaNormalAttackProjectile::OnHit);		// set up a notification for when this component hits something blocking
+	CollisionComp->OnComponentHit.AddDynamic(this, &AShivaNormalAttackProjectile::OnAttack);		// set up a notification for when this component hits something blocking
 
 	// Players can't walk on it
 	CollisionComp->SetWalkableSlopeOverride(FWalkableSlopeOverride(WalkableSlope_Unwalkable, 0.f));
@@ -52,9 +53,49 @@ void AShivaNormalAttackProjectile::InitVelocity(const FVector& ShootDirection)
 	ProjectileMovementComp->Velocity = ShootDirection * ProjectileMovementComp->InitialSpeed;
 }
 
+void AShivaNormalAttackProjectile::OnAttack(UPrimitiveComponent* HitComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, FVector NormalImpulse, const FHitResult& Hit)
+{
+	AMiniCyphersCharacter* MiniCyphersCharacter = Cast<AMiniCyphersCharacter>(OtherActor);
+	if ((OtherComp != nullptr) && MiniCyphersCharacter != nullptr)
+	{
+		//OtherComp->AddImpulseAtLocation(GetVelocity() * 100.0f, GetActorLocation()); //충격 추가하는 코드인데 지금은 필요 없어서 일단 비활성화 해둠
+
+		UWorld* const World = GetWorld();
+		if (World != nullptr)
+		{
+			//const FRotator SpawnRotation = GetActorRotation();
+			// MuzzleOffset is in camera space, so transform it to world space before offsetting from the character location to find the final muzzle position
+			//const FVector SpawnLocation = GetActorLocation();
+
+			//Set Spawn Collision Handling Override
+			//FActorSpawnParameters ActorSpawnParams;
+			//ActorSpawnParams.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AdjustIfPossibleButDontSpawnIfColliding;
+
+			// spawn the projectile at the muzzle
+			/*if (DamagedEffect != nullptr)
+			{
+				World->SpawnActor<AProjectileEffect>(DamagedEffect, SpawnLocation, SpawnRotation, ActorSpawnParams);
+			}*/
+
+				
+			MiniCyphersCharacter->OnHit(ProjectileOwner);
+
+
+			// 총을 쏨 > 총알이 어딘가에 맞았음(안사라지고) > 맞은 물체를 가져와서 > 맞은 물체가 떄릴수있는애면 > 데미지를 줘 
+			// OnFire > OnHit > HitResult.GetActor > if(Damagable) > HitResult의 TakeDamage 호출
+
+		}
+	}
+}
+
 
 AController* AShivaNormalAttackProjectile::SetCharacterController(AController* Controller)
 {
 	CharacterController = Controller;
 	return CharacterController;
+}
+
+void AShivaNormalAttackProjectile::SetProjectileOwner(AMiniCyphersCharacter* Character)
+{
+	ProjectileOwner = Character;
 }

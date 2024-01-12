@@ -102,7 +102,7 @@ void AMiniCyphersCharacter::Look(const FVector2D Value)
 	}
 }
 
-void AMiniCyphersCharacter::UseSkill(EAttackType AttackType)
+void AMiniCyphersCharacter::UseSkill(EAttackType AttackType) //캐릭터(나)가 때림
 {
 	if (ActionComponentMap.Contains(AttackType) == false) //useskill 이 attacktype을 받아서, 액션컴포넌트맵(=콤보액션컴포넌트)가 어택타입을 가지고 있으면... 맞는 거 실행
 		return;
@@ -168,6 +168,12 @@ bool AMiniCyphersCharacter::IsSatisfiedQSkill()
 bool AMiniCyphersCharacter::IsSatisfiedShiftAttack()
 {
 	return bCanAttack;
+}
+
+void AMiniCyphersCharacter::OnHit(AMiniCyphersCharacter* Attacker) //캐릭터(나)가 쳐맞음. Attack=때린놈
+{
+	//어태커 타입 참조, 테이블에서 정보 가져옴 (데미지 등)
+	//데미지만큼 헬스컴포넌트 체인지헬스
 }
 
 bool AMiniCyphersCharacter::IsPlayer()

@@ -6,9 +6,9 @@
 #include "MiniCyphersProjectile.h"
 #include "ShivaNormalAttackProjectile.generated.h"
 
-/**
- * 
- */
+
+class AMiniCyphersCharacter;
+
 UCLASS()
 class MINICYPHERS_API AShivaNormalAttackProjectile : public AMiniCyphersProjectile
 {
@@ -35,7 +35,13 @@ public:
 
 	void InitVelocity(const FVector& ShootDirection);
 
+	UFUNCTION()
+	void OnAttack(UPrimitiveComponent* HitComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, FVector NormalImpulse, const FHitResult& Hit);
+
 	AController* SetCharacterController(AController* Controller);
 	AController* CharacterController;
+
+	void SetProjectileOwner(AMiniCyphersCharacter* Character);
+	AMiniCyphersCharacter* ProjectileOwner;
 
 };

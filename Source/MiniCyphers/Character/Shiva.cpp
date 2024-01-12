@@ -76,6 +76,7 @@ void AShiva::OnUseNormalAttack()
 				return;
 			}
 			tempActor->SetCharacterController(GetController());
+			tempActor->SetProjectileOwner(this);
 
 		}
 	}
