@@ -69,6 +69,7 @@ public:
 	virtual void OnUseGrabSkill() {}
 
 	virtual void OnHit(AMiniCyphersCharacter* Attacker);
+	virtual void OnDie();
 
 
 public:
@@ -78,5 +79,8 @@ public:
 
 	void RotateToTarget(AMiniCyphersCharacter*& Target, float RotationSpeed);
 	void SetRotation(FRotator Rotation, float RotationSpeed);
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Pawn)
+		UAnimMontage* DeathMontage;
 };
 

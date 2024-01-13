@@ -173,7 +173,21 @@ bool AMiniCyphersCharacter::IsSatisfiedShiftAttack()
 void AMiniCyphersCharacter::OnHit(AMiniCyphersCharacter* Attacker) //캐릭터(나)가 쳐맞음. Attack=때린놈
 {
 	//어태커 타입 참조, 테이블에서 정보 가져옴 (데미지 등)
+	// 일단 임의 설정
+	/*int Damage = 10;
+
+	HealthComponent->ChangeHealth(-Damage, true);*/
 	//데미지만큼 헬스컴포넌트 체인지헬스
+
+	//여기서 이제 데미지 처리 안 함.
+	// 맞는 애니메이션이나 불러주셈
+
+
+}
+
+void AMiniCyphersCharacter::OnDie() //뎀지는 애니메이션
+{
+	PlayAnimMontage(DeathMontage, 1.0f);
 }
 
 bool AMiniCyphersCharacter::IsPlayer()

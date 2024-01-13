@@ -20,4 +20,7 @@ class MINICYPHERS_API AMiniCyphersGameState : public AGameStateBase
 
 private:
 	float CurrentHP;
+
+public:
+	void OnChangedHealth(int ObjectID, float Amount);
 };

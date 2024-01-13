@@ -13,6 +13,13 @@ AShiva::AShiva()
 	NormalAttackProjectileStartLocation->SetupAttachment(GetRootComponent());
 	NormalAttackProjectileStartLocation->SetRelativeLocation(FVector(10.0f, 48.4f, 10.0f));
 
+	/*static ConstructorHelpers::FObjectFinder<UAnimMontage> SHIVA_DEAD (TEXT("/Script/Engine.AnimMontage'/Game/Assets/BluePrints/Animation/Montage/Shiva/DeathMontage.DeathMontage'"));
+
+	if (SHIVA_DEAD.Succeeded())
+	{
+		DeathMontage = SHIVA_DEAD.Object;
+	}*/
+
 }
 
 bool AShiva::IsSatisfiedNormalAttack()
@@ -102,4 +109,9 @@ void AShiva::OnUseUltimateSkill()
 
 void AShiva::OnUseGrabSkill()
 {
+}
+
+void AShiva::OnDie()
+{
+	Super::OnDie();
 }

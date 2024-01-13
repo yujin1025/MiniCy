@@ -35,6 +35,8 @@ protected:
 	virtual void OnUseUltimateSkill() override;
 	virtual void OnUseGrabSkill() override;
 
+	virtual void OnDie() override;
+
 
 public:
 	/** Projectile class to spawn */
@@ -47,5 +49,6 @@ public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Gameplay)
 		FVector NormalAttackStartLocation;
+
 	
 };

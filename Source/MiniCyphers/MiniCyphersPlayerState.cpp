@@ -13,11 +13,7 @@ void AMiniCyphersPlayerState::OnChangePlayerHealth(int objectId, float Amount)
 	
 	if (Amount <= 0.0f)
 	{
-		AActor* Actor = GetOwner();
-		if (Actor)
-		{
-			//Actor->Destroy();
-			UE_LOG(LogTemp, Warning, TEXT("Destroyed!"));
-		}
+		
+		UE_LOG(LogTemp, Warning, TEXT("Destroyed!"));
 	}
 }
