@@ -29,7 +29,9 @@ bool UBTDecorator_IsLowHealth::CalculateRawConditionValue(UBehaviorTreeComponent
 	UHealthComponent* HealthComponent = MyCharacter->FindComponentByClass<UHealthComponent>();
 	if (HealthComponent == nullptr)
 		return false;
-	UE_LOG(LogTemp, Warning, TEXT("Monster's Current Health: %d"), HealthComponent->GetCurrentHealth());
 
-	return HealthComponent->GetCurrentHealth() > LowHealth;
+	int CurrentHealth = HealthComponent->GetCurrentHealth();
+	UE_LOG(LogTemp, Warning, TEXT("Monster's Current Health: %d"), CurrentHealth);
+	return (CurrentHealth >= MinHealth && CurrentHealth <= MaxHealth);
+
 }

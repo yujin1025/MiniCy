@@ -23,5 +23,8 @@ public:
 
 private:
 	UPROPERTY(EditAnywhere)
-	int LowHealth;
+	int MaxHealth;
+
+	UPROPERTY(EditAnywhere)
+	int MinHealth;
 };
