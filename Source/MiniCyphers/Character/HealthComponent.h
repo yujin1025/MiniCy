@@ -31,7 +31,7 @@ protected:
 public:	
 	// Called every frame
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
-	void ChangeHealth(int Amount, bool IsPlayer);
+	void ChangeHealth(AMiniCyphersCharacter* Attacker, int Amount, bool IsPlayer); //인자: 때린놈, 데미지량, 맞은놈 플레이어인지 여부
 
 	UFUNCTION(BlueprintPure, Category = "Health")
 	int GetCurrentHealth() const { return CurrentHealth; }	

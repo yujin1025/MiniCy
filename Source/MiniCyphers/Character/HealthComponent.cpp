@@ -46,7 +46,7 @@ void UHealthComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActo
 	// ...
 }
 
-void UHealthComponent::ChangeHealth(int Amount, bool IsPlayer) //영향 받는 애가 플레이어인지 여부
+void UHealthComponent::ChangeHealth(AMiniCyphersCharacter* Attacker, int Amount, bool IsPlayer) //영향 받는 애가 플레이어인지 여부
 {
 	auto* GameMode = Cast<AMiniCyphersGameMode>(GetWorld()->GetAuthGameMode());
 	if (GameMode == nullptr)
@@ -68,6 +68,7 @@ void UHealthComponent::ChangeHealth(int Amount, bool IsPlayer) //영향 받는 애가 
 	{
 		GameMode->MyGameState->OnChangedHealth(0, CurrentHealth);
 	}
+	
 
 	//UE_LOG(LogTemp, Warning, TEXT("%s current health: %d"), *GetName(), GetCurrentHealth());
 

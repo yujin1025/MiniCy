@@ -28,20 +28,22 @@ AShivaNormalAttackProjectile::AShivaNormalAttackProjectile()
 	// Use a ProjectileMovementComponent to govern this projectile's movement
 	ProjectileMovementComp = CreateDefaultSubobject<UProjectileMovementComponent>(TEXT("ProjectileComp"));
 	ProjectileMovementComp->UpdatedComponent = CollisionComp;
-	ProjectileMovementComp->InitialSpeed = 5000.f;
-	ProjectileMovementComp->MaxSpeed = 5000.f;
+	ProjectileMovementComp->InitialSpeed = 3000.f;
+	ProjectileMovementComp->MaxSpeed = 3000.f;
 	ProjectileMovementComp->bRotationFollowsVelocity = true;
 	ProjectileMovementComp->bShouldBounce = false;
 
 	// Die after 1 seconds by default
 	InitialLifeSpan = 3.0f;
 
+	//속도하고 수명 등 옵션들 블루프린트에서 수정해주셈 (임시)
+
 }
 
 void AShivaNormalAttackProjectile::BeginPlay()
 {
 	Super::BeginPlay();	
-	//InitVelocity()
+	//InitVelocity();
 }
 
 void AShivaNormalAttackProjectile::Tick(float DeltaTime)
@@ -72,9 +74,7 @@ void AShivaNormalAttackProjectile::OnAttack(UPrimitiveComponent* HitComp, AActor
 			if (DamagedHealthComponent == nullptr)
 				return;
 
-			DamagedHealthComponent->ChangeHealth(-10, false);
-			UE_LOG(LogTemp, Warning, TEXT("NonPlayer's current health: %d"), DamagedHealthComponent->GetCurrentHealth());
-
+			DamagedHealthComponent->ChangeHealth(ProjectileOwner, -10, false);
 
 			// 총을 쏨 > 총알이 어딘가에 맞았음(안사라지고) > 맞은 물체를 가져와서 > 맞은 물체가 떄릴수있는애면 > 데미지를 줘 
 			// OnFire > OnHit > HitResult.GetActor > if(Damagable) > HitResult의 TakeDamage 호출

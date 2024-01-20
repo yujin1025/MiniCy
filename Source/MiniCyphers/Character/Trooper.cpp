@@ -45,7 +45,8 @@ void ATrooper::OnUseShiftLeftClickAttack()
 	HealthComponent = FindComponentByClass<UHealthComponent>();
 	if (HealthComponent)
 	{
-		HealthComponent->ChangeHealth(-20, true); //이렇게하면 플레이어가아니라 몬스터가 깎임..
+		//HealthComponent->ChangeHealth(-20, true); //이렇게하면 플레이어가아니라 몬스터가 깎임..
+		//체인지헬스에 공격자 정보도 넣어 주세용 땡큐
 	}
 }
 
