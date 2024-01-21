@@ -60,6 +60,7 @@ void AShivaNormalAttackProjectile::InitVelocity(const FVector& ShootDirection)
 void AShivaNormalAttackProjectile::OnAttack(UPrimitiveComponent* HitComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, FVector NormalImpulse, const FHitResult& Hit)
 {
 	AMiniCyphersCharacter* DamagedCharacter = Cast<AMiniCyphersCharacter>(OtherActor); //투사체에 맞은 놈
+
 	if ((OtherComp != nullptr) && DamagedCharacter != nullptr)
 	{
 		//OtherComp->AddImpulseAtLocation(GetVelocity() * 100.0f, GetActorLocation()); //충격 추가하는 코드인데 지금은 필요 없어서 일단 비활성화 해둠
@@ -68,7 +69,7 @@ void AShivaNormalAttackProjectile::OnAttack(UPrimitiveComponent* HitComp, AActor
 		if (World != nullptr)
 		{
 							
-			DamagedCharacter->OnHit(ProjectileOwner); //이건 쳐맞은 애 애니메이션 재생용
+			//DamagedCharacter->OnHit(ProjectileOwner); //이건 쳐맞은 애 애니메이션 재생용
 
 			UHealthComponent* DamagedHealthComponent = DamagedCharacter->FindComponentByClass<UHealthComponent>();
 			if (DamagedHealthComponent == nullptr)
@@ -79,6 +80,7 @@ void AShivaNormalAttackProjectile::OnAttack(UPrimitiveComponent* HitComp, AActor
 			// 총을 쏨 > 총알이 어딘가에 맞았음(안사라지고) > 맞은 물체를 가져와서 > 맞은 물체가 떄릴수있는애면 > 데미지를 줘 
 			// OnFire > OnHit > HitResult.GetActor > if(Damagable) > HitResult의 TakeDamage 호출
 
+			//다 끝나고 디스트로이도 되어야 함!!
 		}
 	}
 }

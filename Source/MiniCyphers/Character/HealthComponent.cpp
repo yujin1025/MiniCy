@@ -52,25 +52,36 @@ void UHealthComponent::ChangeHealth(AMiniCyphersCharacter* Attacker, int Amount,
 	if (GameMode == nullptr)
 		return;
 
+	if (CurrentHealth <= 0)
+		return;
+
 	CurrentHealth += Amount;
+
+	//DamagedCharacter->OnHit(ProjectileOwner); //이건 쳐맞은 애 애니메이션 재생용
 
 	if (IsPlayer) //영향 받는 애가 플레이어
 	{
 		GameMode->MyPlayerState->OnChangePlayerHealth(0, CurrentHealth); // 플레이어 스테이트
 
-		if (CurrentHealth <= 0)
-		{
-			auto Player = Cast<AMiniCyphersCharacter>(GetOwner());
-			Player->OnDie();
-		}
 	}
 	else //영향 받는 애가 플레이어 아님
 	{
 		GameMode->MyGameState->OnChangedHealth(0, CurrentHealth);
 	}
-	
 
-	//UE_LOG(LogTemp, Warning, TEXT("%s current health: %d"), *GetName(), GetCurrentHealth());
+
+	auto Character = Cast<AMiniCyphersCharacter>(GetOwner());
+
+	if (CurrentHealth <= 0)
+	{
+		Character->OnDie();
+	}
+	else
+	{
+		Character->OnHit(Attacker);
+		//쳐맞은 애니메이션 재생
+	}
+
 
 }
 

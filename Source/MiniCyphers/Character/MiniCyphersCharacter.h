@@ -73,7 +73,7 @@ public:
 
 
 public:
-	bool IsPlayer();
+	bool IsPlayer(); //플레이어인지 여부
 
 	FVector GetLookVector(AMiniCyphersCharacter*& Target) const;
 
