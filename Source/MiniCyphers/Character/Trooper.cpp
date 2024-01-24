@@ -4,6 +4,8 @@
 #include "Trooper.h"
 #include "Kismet/GameplayStatics.h"
 #include "../Character/HealthComponent.h"
+#include "../MiniCyphersGameMode.h"
+#include "../MiniCyphersPlayerState.h"
 #include "../AI/MiniCyphersAIController.h"
 
 
@@ -42,12 +44,25 @@ void ATrooper::OnUseShiftLeftClickAttack()
 {
 	Super::OnUseShiftLeftClickAttack();
 
-	HealthComponent = FindComponentByClass<UHealthComponent>();
-	if (HealthComponent)
+	auto* GameMode = Cast<AMiniCyphersGameMode>(GetWorld()->GetAuthGameMode());
+
+	if (GameMode)
 	{
-		//HealthComponent->ChangeHealth(-20, true); //이렇게하면 플레이어가아니라 몬스터가 깎임..
-		//체인지헬스에 공격자 정보도 넣어 주세용 땡큐
+		AMiniCyphersPlayerState* CharPlayerState = GameMode->MyPlayerState;
+		if (CharPlayerState)
+		{
+			AMiniCyphersCharacter* PlayerCharacter = Cast<AMiniCyphersCharacter>(UGameplayStatics::GetPlayerCharacter(this, 0));
+			if (PlayerCharacter)
+			{
+				HealthComponent = PlayerCharacter->FindComponentByClass<UHealthComponent>();
+				if (HealthComponent)
+				{
+					HealthComponent->ChangeHealth(this, -10, true);
+				}
+			}
+		}
 	}
+	
 }
 
 void ATrooper::OnUseQSkill()

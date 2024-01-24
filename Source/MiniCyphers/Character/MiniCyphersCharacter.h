@@ -81,6 +81,30 @@ public:
 	void SetRotation(FRotator Rotation, float RotationSpeed);
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Pawn)
-		UAnimMontage* DeathMontage;
+	UAnimMontage* DeathMontage;
+
+	UPROPERTY(EditAnywhere, Category = "Combat")
+	class USoundBase* NormalEffectsSentinel;
+
+	UPROPERTY(EditAnywhere, Category = "Combat")
+	USoundBase* NormalEffectsTrooper;
+
+	UPROPERTY(EditAnywhere, Category = "Combat")
+	USoundBase* CriticalEffectsSentinel;
+
+	UPROPERTY(EditAnywhere, Category = "Combat")
+	USoundBase* CriticalEffectsTrooper;
+
+	UPROPERTY(EditAnywhere, Category = "Animations")
+	UAnimMontage* NormalAttackSentinel;
+
+	UPROPERTY(EditAnywhere, Category = "Animations")
+	UAnimMontage* NormalAttackTrooper;
+
+	UPROPERTY(EditAnywhere, Category = "Animations")
+	UAnimMontage* CriticalAttackSentinel;
+
+	UPROPERTY(EditAnywhere, Category = "Animations")
+	UAnimMontage* CriticalAttackTrooper;
 };
 
