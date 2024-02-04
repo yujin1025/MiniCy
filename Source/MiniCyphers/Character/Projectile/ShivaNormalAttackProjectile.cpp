@@ -81,6 +81,8 @@ void AShivaNormalAttackProjectile::OnAttack(UPrimitiveComponent* HitComp, AActor
 			// OnFire > OnHit > HitResult.GetActor > if(Damagable) > HitResult의 TakeDamage 호출
 
 			//다 끝나고 디스트로이도 되어야 함!!
+
+			Destroy();
 		}
 	}
 }
