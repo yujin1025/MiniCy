@@ -57,7 +57,7 @@ void ATrooper::OnUseShiftLeftClickAttack()
 				HealthComponent = PlayerCharacter->FindComponentByClass<UHealthComponent>();
 				if (HealthComponent)
 				{
-					HealthComponent->ChangeHealth(this, -10, true);
+					HealthComponent->ChangeHealth(this, -10);
 				}
 			}
 		}

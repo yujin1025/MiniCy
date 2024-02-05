@@ -66,7 +66,7 @@ void UBTTask_Attack::GetAttack(UBehaviorTreeComponent& OwnerComp)
 	if (AIAttacker == nullptr)
 		return;
 
-	HealthComponent->ChangeHealth(AIAttacker, -10, true);
+	HealthComponent->ChangeHealth(AIAttacker, -10);
 
 	UE_LOG(LogTemp, Warning, TEXT("Player's current health: %d"), HealthComponent->GetCurrentHealth());
 }

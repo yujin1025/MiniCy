@@ -75,7 +75,7 @@ void AShivaNormalAttackProjectile::OnAttack(UPrimitiveComponent* HitComp, AActor
 			if (DamagedHealthComponent == nullptr)
 				return;
 
-			DamagedHealthComponent->ChangeHealth(ProjectileOwner, -10, false);
+			DamagedHealthComponent->ChangeHealth(ProjectileOwner, -10);
 
 			// 총을 쏨 > 총알이 어딘가에 맞았음(안사라지고) > 맞은 물체를 가져와서 > 맞은 물체가 떄릴수있는애면 > 데미지를 줘 
 			// OnFire > OnHit > HitResult.GetActor > if(Damagable) > HitResult의 TakeDamage 호출

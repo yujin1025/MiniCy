@@ -46,7 +46,7 @@ void UHealthComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActo
 	// ...
 }
 
-void UHealthComponent::ChangeHealth(AMiniCyphersCharacter* Attacker, int Amount, bool IsPlayer) //영향 받는 애가 플레이어인지 여부
+void UHealthComponent::ChangeHealth(AMiniCyphersCharacter* Attacker, int Amount)
 {
 	auto* GameMode = Cast<AMiniCyphersGameMode>(GetWorld()->GetAuthGameMode());
 	if (GameMode == nullptr)
@@ -57,9 +57,9 @@ void UHealthComponent::ChangeHealth(AMiniCyphersCharacter* Attacker, int Amount,
 
 	CurrentHealth += Amount;
 
-	//DamagedCharacter->OnHit(ProjectileOwner); //이건 쳐맞은 애 애니메이션 재생용
+	auto Character = Cast<AMiniCyphersCharacter>(GetOwner());
 
-	if (IsPlayer) //영향 받는 애가 플레이어
+	if (Character->IsPlayer()) //영향 받는 애가 플레이어
 	{
 		GameMode->MyPlayerState->OnChangePlayerHealth(0, CurrentHealth); // 플레이어 스테이트
 
@@ -70,7 +70,6 @@ void UHealthComponent::ChangeHealth(AMiniCyphersCharacter* Attacker, int Amount,
 	}
 
 
-	auto Character = Cast<AMiniCyphersCharacter>(GetOwner());
 
 	if (CurrentHealth <= 0)
 	{
