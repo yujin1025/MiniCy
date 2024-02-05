@@ -37,6 +37,10 @@ private:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Action, meta = (AllowPrivateAccess = "true"))
 	TMap<EAttackType, UComboActionComponent*> ActionComponentMap;
 
+public:
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Id, meta = (AllowPrivateAccess = "true"))
+	int CharacterId;
+
 	UHealthComponent* HealthComponent;
 
 protected:
