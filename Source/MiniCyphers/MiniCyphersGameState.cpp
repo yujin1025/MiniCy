@@ -7,3 +7,7 @@ void AMiniCyphersGameState::OnChangedHealth(int ObjectID, float Amount)
 {
 
 }
+
+void AMiniCyphersGameState::OnChangedPhase(int PhaseNumber)
+{
+}

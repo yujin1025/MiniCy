@@ -20,7 +20,9 @@ class MINICYPHERS_API AMiniCyphersGameState : public AGameStateBase
 
 private:
 	float CurrentHP;
+	int CurrentPhaseNumber;
 
 public:
 	void OnChangedHealth(int ObjectID, float Amount);
+	void OnChangedPhase(int PhaseNumber);
 };

@@ -105,3 +105,109 @@ FCharacterStatData* AMiniCyphersGameMode::GetStatData(ECharacterType type)
 
 	return CharacterStatTable->FindRow<FCharacterStatData>(typeString, TEXT(""));
 }
+
+TArray<FQuestPhaseData*> AMiniCyphersGameMode::GetQuestPhaseDatas(int PhaseNumber)
+{
+	TArray<FQuestPhaseData*> PhaseDatas;
+
+	QuestPhaseTable->GetAllRows(TEXT(""), OUT PhaseDatas);
+
+	return PhaseDatas;
+}
+
+FQuestData* AMiniCyphersGameMode::GetQuestData(int QuestId)
+{
+	TArray<FQuestData*> QuestDatas;
+
+	QuestTable->GetAllRows(TEXT(""), OUT QuestDatas);
+
+	for (auto& QuestData : QuestDatas)
+	{
+		if (QuestData->QuestId != QuestId)
+			continue;
+
+		return QuestData;
+	}
+
+	return nullptr;
+}
+
+TArray<FQuestData*> AMiniCyphersGameMode::GetQuestDatas(int PhaseNumber)
+{
+	TArray<FQuestPhaseData*> PhaseDatas = GetQuestPhaseDatas(PhaseNumber);
+	TArray<FQuestData*> QuestDatas;
+
+	for (auto& PhaseData : PhaseDatas)
+	{
+		FQuestData* QuestData = GetQuestData(PhaseData->QuestId);
+		if (QuestData == nullptr)
+			continue;
+
+		QuestDatas.Add(QuestData);
+	}
+
+	return QuestDatas;
+}
+
+bool AMiniCyphersGameMode::TryChangePhase(int NextPhaseNumber)
+{
+	if (CurrentPhaseNumber >= 0)
+	{
+		TArray<FQuestData*> QuestDatas = GetQuestDatas(CurrentPhaseNumber);
+
+		for (auto& QuestData : QuestDatas)
+		{
+			int32* QuestProgress = QuestProgressDatas.Find(QuestData->QuestId);
+			if (QuestProgress == nullptr)
+				continue;
+
+			int Progress = *(QuestProgress);
+			if (Progress >= QuestData->MaxProgress)
+				continue;
+
+			return false;
+		}
+	}
+	
+	CurrentPhaseNumber = NextPhaseNumber;
+	OnChangedPhase(NextPhaseNumber);
+	return true;
+}
+
+void AMiniCyphersGameMode::OnChangedPhase(int PhaseNumber)
+{
+	TArray<FQuestData*> QuestDatas = GetQuestDatas(PhaseNumber);
+	
+	QuestProgressDatas.Reset();
+	for (auto& QuestData : QuestDatas)
+	{
+		QuestProgressDatas.Add(QuestData->QuestId, 0);
+	}
+
+	OnChangedQuestDelegate.Broadcast(QuestDatas, QuestProgressDatas);
+}
+
+bool AMiniCyphersGameMode::TryCompleteQuest(int QuestId)
+{
+	FQuestData* QuestData = GetQuestData(QuestId);
+	if (QuestData == nullptr)
+		return false;
+
+	int32* QuestProgress = QuestProgressDatas.Find(QuestId);
+	if (QuestProgress == nullptr)
+		return false;
+
+	int Progress = *(QuestProgress);
+	if (Progress >= QuestData->MaxProgress)
+		return false;
+
+	QuestProgressDatas[QuestId]++;
+	OnChangedQuest(QuestId);
+	return true;
+}
+
+void AMiniCyphersGameMode::OnChangedQuest(int QuestId)
+{
+	TArray<FQuestData*> QuestDatas = GetQuestDatas(CurrentPhaseNumber);
+	OnChangedQuestDelegate.Broadcast(QuestDatas, QuestProgressDatas);
+}

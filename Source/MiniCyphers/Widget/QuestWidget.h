@@ -7,6 +7,8 @@
 #include "QuestWidget.generated.h"
 
 class UListView;
+struct FQuestData;
+class AMiniCyphersGameMode;
 
 /**
  * 
@@ -19,6 +21,9 @@ class MINICYPHERS_API UQuestWidget : public UMiniCyphersWidget
 private:
 	UPROPERTY()
 	UListView* ListView;
+
+	UPROPERTY(EditAnyWhere)
+	UMiniCyphersWidget* ListViewEntry;
 
 protected:
 	virtual void NativeConstruct() override;
