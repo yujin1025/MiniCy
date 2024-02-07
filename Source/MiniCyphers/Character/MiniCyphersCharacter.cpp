@@ -10,6 +10,8 @@
 #include "Trooper.h"
 #include "Kismet/GameplayStatics.h"
 #include "ComboActionComponent.h"
+#include "SoundComponent.h"
+#include "RandomMotionComponent.h"
 
 DEFINE_LOG_CATEGORY(LogTemplateCharacter);
 
@@ -36,6 +38,8 @@ AMiniCyphersCharacter::AMiniCyphersCharacter()
 
 	HealthComponent = CreateDefaultSubobject<UHealthComponent>(TEXT("HealthComponent"));
 
+	RandomMotionComponent = CreateDefaultSubobject<URandomMotionComponent>(TEXT("RandomMotionComponent"));
+
 	ActionComponentMap.Empty();
 	for (int i = 0; i < (int)EAttackType::Max; i++)
 	{
@@ -45,6 +49,17 @@ AMiniCyphersCharacter::AMiniCyphersCharacter()
 		FString ComponentName = TEXT("ComboActionComponent [") + AttackTypeStr + "]";
 		auto Component = CreateDefaultSubobject<UComboActionComponent>((FName)*ComponentName);
 		ActionComponentMap.Add(AttackType, Component);
+	}
+
+	SoundComponentMap.Empty();
+	for (int i = 0; i < (int)EAttackType::Max; i++)
+	{
+		auto AttackType = (EAttackType)i;
+
+		FString AttackTypeStr = GetEnumNameAsString(AttackType);
+		FString ComponentName = TEXT("SoundComponent [") + AttackTypeStr + "]";
+		auto Component = CreateDefaultSubobject<USoundComponent>((FName)*ComponentName);
+		SoundComponentMap.Add(AttackType, Component);
 	}
 }
 
@@ -119,6 +134,12 @@ void AMiniCyphersCharacter::UseSkill(EAttackType AttackType) //캐릭터(나)가 때림
 	}
 
 	ActionComponentMap[AttackType]->DoCombo();
+	
+	/*
+	if (SoundComponentMap.Contains(AttackType) == false)
+		return;
+
+	SoundComponentMap[AttackType]->PlaySoundEffect();*/
 
 	switch (AttackType)
 	{
@@ -149,7 +170,6 @@ void AMiniCyphersCharacter::UseSkill(EAttackType AttackType) //캐릭터(나)가 때림
 
 	//useskill 이 attacktype을 받아서, 액션컴포넌트맵(=콤보액션컴포넌트)가 어택타입을 가지고 있으면... 맞는 거 실행
 
-
 }
 
 void AMiniCyphersCharacter::OnFinishedSkillMotion(EAttackType AttackType)
@@ -179,10 +199,10 @@ bool AMiniCyphersCharacter::IsSatisfiedShiftAttack()
 
 void AMiniCyphersCharacter::OnHit(AMiniCyphersCharacter* Attacker) //캐릭터(나)가 쳐맞음. Attack=때린놈
 {
+	/*
 	ASentinel* SentinelTarget = Cast<ASentinel>(this);
 	if (SentinelTarget)
-	{
-		UGameplayStatics::PlaySoundAtLocation(this, NormalEffectsSentinel, GetActorLocation());
+	{		UGameplayStatics::PlaySoundAtLocation(this, NormalEffectsSentinel, GetActorLocation());
 		PlayAnimMontage(NormalAttackSentinel);
 	}
 	else
@@ -193,7 +213,7 @@ void AMiniCyphersCharacter::OnHit(AMiniCyphersCharacter* Attacker) //캐릭터(나)�
 			UGameplayStatics::PlaySoundAtLocation(this, NormalEffectsTrooper, GetActorLocation());
 			PlayAnimMontage(NormalAttackTrooper);
 		}
-	}
+	}*/
 	//치명타 아직 기획안나옴 - 나오면 작업하기
 }
 
@@ -228,4 +248,12 @@ void AMiniCyphersCharacter::SetRotation(FRotator Rotation, float RotationSpeed)
 {
 	FRotator TargetRotation = FMath::RInterpTo(GetActorRotation(), Rotation, GetWorld()->GetDeltaSeconds(), RotationSpeed);
 	SetActorRotation(TargetRotation);
+}
+
+void AMiniCyphersCharacter::OnUseNormalAttack()
+{
+	if (RandomMotionComponent)
+	{
+		RandomMotionComponent->NormalRandomAttack();
+	}
 }

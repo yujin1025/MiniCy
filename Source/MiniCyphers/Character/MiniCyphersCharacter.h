@@ -9,6 +9,8 @@
 
 class UHealthComponent;
 class UComboActionComponent;
+class USoundComponent;
+class URandomMotionComponent;
 
 UENUM(BlueprintType)
 enum class EAttackType : uint8
@@ -41,6 +43,12 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Id, meta = (AllowPrivateAccess = "true"))
 	int CharacterId;
 
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Sound, meta = (AllowPrivateAccess = "true"))
+	TMap<EAttackType, USoundComponent*> SoundComponentMap;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Motion, meta = (AllowPrivateAccess = "true"))
+	URandomMotionComponent* RandomMotionComponent;
+
 	UHealthComponent* HealthComponent;
 
 protected:
@@ -65,7 +73,7 @@ public:
 	virtual bool IsSatisfiedGrabSkill() { return true; }
 	virtual bool IsSatisfiedShiftAttack();
 
-	virtual void OnUseNormalAttack() {}
+	virtual void OnUseNormalAttack();
 	virtual void OnUseShiftLeftClickAttack() {}
 	virtual void OnUseRightClickAttack() {}
 	virtual void OnUseQSkill() {}
@@ -87,6 +95,7 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Pawn)
 	UAnimMontage* DeathMontage;
 
+	/*
 	UPROPERTY(EditAnywhere, Category = "Combat")
 	class USoundBase* NormalEffectsSentinel;
 
@@ -109,6 +118,6 @@ public:
 	UAnimMontage* CriticalAttackSentinel;
 
 	UPROPERTY(EditAnywhere, Category = "Animations")
-	UAnimMontage* CriticalAttackTrooper;
+	UAnimMontage* CriticalAttackTrooper;*/
 };
 

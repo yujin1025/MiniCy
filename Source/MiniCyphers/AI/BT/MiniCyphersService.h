@@ -22,5 +22,7 @@ class MINICYPHERS_API UMiniCyphersService : public UBTService
 protected:
 	AMiniCyphersCharacter* GetCharacter(UBehaviorTreeComponent& OwnerComp);
 	UBlackboardComponent* GetBlackboardComponent(UBehaviorTreeComponent& OwnerComp);
-	AMiniCyphersCharacter* GetCharacter(const FOverlapResult& OverlapResult);
+
+public:
+	static AMiniCyphersCharacter* GetCharacter(const FOverlapResult& OverlapResult);
 };

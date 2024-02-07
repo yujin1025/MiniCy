@@ -7,7 +7,7 @@
 #include "AnimNotifyHitDetectionState.generated.h"
 
 class UHealthComponent;
-
+class AMiniCyphersCharacter;
 /**
  * 
  */
@@ -16,11 +16,24 @@ class MINICYPHERS_API UAnimNotifyHitDetectionState : public UAnimNotifyState
 {
 	GENERATED_BODY()
 
+public:
+	UAnimNotifyHitDetectionState();
+
+	void HitDetection(USkeletalMeshComponent* MeshComp);
 	virtual void NotifyBegin(USkeletalMeshComponent* MeshComp, UAnimSequenceBase* Animation, float TotalDuration, const FAnimNotifyEventReference& EventReference) override;
 	virtual void NotifyTick(USkeletalMeshComponent* MeshComp, UAnimSequenceBase* Animation, float FrameDeltaTime, const FAnimNotifyEventReference& EventReference) override;
 	virtual void NotifyEnd(USkeletalMeshComponent* MeshComp, UAnimSequenceBase* Animation, const FAnimNotifyEventReference& EventReference) override;
 
-
 	UHealthComponent* GetHealthComponent(USkeletalMeshComponent* MeshComp);
+	bool TryGetOverlapResult(AMiniCyphersCharacter* Owner, TArray<FOverlapResult>& OverlapResults);
+	bool TryGetOverlapTarget(AMiniCyphersCharacter* Owner, OUT AMiniCyphersCharacter*& FoundTarget);
 
+	AMiniCyphersCharacter* TargetCharacter;
+
+protected:
+	UPROPERTY(EditAnywhere)
+	bool bIsDouble;
+
+	float DetectRadius = 600.0f;
+	bool bHasTakenDamage;
 };

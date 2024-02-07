@@ -66,5 +66,5 @@ void UBTTask_Attack::GetAttack(UBehaviorTreeComponent& OwnerComp)
 	if (AIAttacker == nullptr)
 		return;
 
-	HealthComponent->ChangeHealth(AIAttacker, -10);
+	//HealthComponent->ChangeHealth(AIAttacker, -10);
 }

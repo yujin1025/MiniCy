@@ -13,14 +13,8 @@ UCLASS()
 class MINICYPHERS_API ASentinel : public ANonPlayableCharacter
 {
 	GENERATED_BODY()
-
-	UPROPERTY(EditAnywhere, Category = "Combat")
-	class USoundBase* NormalSentinel;
 	
 public:
 	ASentinel();
-
-protected:
-	virtual void OnUseNormalAttack() override;
 
 };
