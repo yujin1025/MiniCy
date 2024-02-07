@@ -9,6 +9,7 @@
 class UListView;
 struct FQuestData;
 class AMiniCyphersGameMode;
+class UQuestEntryWidget;
 
 /**
  * 
@@ -19,11 +20,8 @@ class MINICYPHERS_API UQuestWidget : public UMiniCyphersWidget
 	GENERATED_BODY()
 	
 private:
-	UPROPERTY()
-	UListView* ListView;
-
-	UPROPERTY(EditAnyWhere)
-	UMiniCyphersWidget* ListViewEntry;
+	UPROPERTY(meta=(BindWidget))
+	TObjectPtr<UListView> ListView_18;
 
 protected:
 	virtual void NativeConstruct() override;

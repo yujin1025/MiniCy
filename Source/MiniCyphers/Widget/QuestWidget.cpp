@@ -4,6 +4,8 @@
 #include "QuestWidget.h"
 #include "../MiniCyphersGameMode.h"
 #include "Components/ListView.h"
+#include "Blueprint/IUserObjectListEntry.h"
+#include "QuestEntryWidget.h"
 
 void UQuestWidget::NativeConstruct()
 {
@@ -15,7 +17,8 @@ void UQuestWidget::NativeConstruct()
 
 	GameMode->OnChangedQuestDelegate.AddLambda([this](TArray<FQuestData*> QuestDatas, TMap<int, int> QuestProgressMap) -> void
 	{
-		UE_LOG(LogTemp, Warning, TEXT("Quest Start"));
+			UQuestEntryWidget* Entry = NewObject<UQuestEntryWidget>(this, UQuestEntryWidget::StaticClass());
+			ListView_18->AddItem(Entry);
 	});
 
 	GameMode->TryChangePhase(0);
