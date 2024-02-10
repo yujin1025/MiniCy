@@ -7,6 +7,9 @@
 #include "Blueprint/IUserObjectListEntry.h"
 #include "QuestEntryWidget.generated.h"
 
+struct FQuestData;
+class UQuestProgressData;
+
 /**
  * 
  */
@@ -16,11 +19,14 @@ class MINICYPHERS_API UQuestEntryWidget : public UMiniCyphersWidget, public IUse
 	GENERATED_BODY()
 
 public:
-	UPROPERTY(EditAnywhere)
-	class UTextBlock* QuestDescriptionText;
+	UPROPERTY(EditAnywhere, meta = (BindWidget))
+	TObjectPtr<class UTextBlock> QuestDescriptionText;
 
 protected:
 	virtual void NativeOnListItemObjectSet(UObject* ListItemObject) override;
 	virtual void NativeConstruct() override;
+
+private:
+	void SetQuestData(int CurrentProgress, FQuestData* Data);
 
 };

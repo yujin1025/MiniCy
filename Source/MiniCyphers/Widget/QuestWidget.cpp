@@ -3,6 +3,7 @@
 
 #include "QuestWidget.h"
 #include "../MiniCyphersGameMode.h"
+#include "QuestProgressData.h"
 #include "Components/ListView.h"
 #include "Blueprint/IUserObjectListEntry.h"
 #include "QuestEntryWidget.h"
@@ -17,8 +18,19 @@ void UQuestWidget::NativeConstruct()
 
 	GameMode->OnChangedQuestDelegate.AddLambda([this](TArray<FQuestData*> QuestDatas, TMap<int, int> QuestProgressMap) -> void
 	{
-			UQuestEntryWidget* Entry = NewObject<UQuestEntryWidget>(this, UQuestEntryWidget::StaticClass());
-			ListView_18->AddItem(Entry);
+			ListView_18->ClearListItems();
+
+			for (auto& QuestData : QuestDatas)
+			{
+				auto* Data = NewObject<UQuestProgressData>(this, UQuestProgressData::StaticClass());
+				if (Data == nullptr)
+					continue;
+				
+				Data->Progress = QuestProgressMap[QuestData->QuestId];
+				Data->QuestData = QuestData;
+
+				ListView_18->AddItem(Data);
+			}
 	});
 
 	GameMode->TryChangePhase(0);

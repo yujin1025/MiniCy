@@ -10,6 +10,7 @@ class UListView;
 struct FQuestData;
 class AMiniCyphersGameMode;
 class UQuestEntryWidget;
+class UQuestProgressData;
 
 /**
  * 
