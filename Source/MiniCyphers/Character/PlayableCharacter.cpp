@@ -81,6 +81,7 @@ void APlayableCharacter::OnMove(const FInputActionValue& Value)
 	// input is a Vector2D
 	FVector2D MovementVector = Value.Get<FVector2D>();
 	Move(MovementVector);
+	OnMoveDelegate.Broadcast(MovementVector);
 }
 
 void APlayableCharacter::OnLook(const FInputActionValue& Value)
@@ -106,6 +107,7 @@ void APlayableCharacter::OnNormalAttack(const FInputActionValue& Value)
 		return;
 
 	UseSkill(isShift ? EAttackType::ShiftAttack : EAttackType::NormalAttack);
+	OnAttackDelegate.Broadcast();
 }
 
 void APlayableCharacter::OnRightClickAttack(const FInputActionValue& Value)

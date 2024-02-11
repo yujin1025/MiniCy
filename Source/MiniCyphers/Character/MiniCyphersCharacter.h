@@ -27,6 +27,8 @@ enum class EAttackType : uint8
 
 DECLARE_MULTICAST_DELEGATE_OneParam(FOnUseSkill, EAttackType)
 DECLARE_MULTICAST_DELEGATE_OneParam(FOnMove, FVector2D)
+DECLARE_MULTICAST_DELEGATE(FOnAttack)
+
 
 DECLARE_LOG_CATEGORY_EXTERN(LogTemplateCharacter, Log, All);
 
@@ -67,6 +69,7 @@ public:
 
 	FOnUseSkill OnUseSkillDelegate;
 	FOnMove OnMoveDelegate;
+	FOnAttack OnAttackDelegate;
 
 public:
 	bool bCanAttack = true;

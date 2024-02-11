@@ -20,6 +20,15 @@ void UQuestComponent::BeginPlay()
 
 		GameMode->MyGameState->TryCompleteQuest(0);
 	});
+
+	Character->OnAttackDelegate.AddLambda([this]() -> void
+	{
+		auto* GameMode = Cast<AMiniCyphersGameMode>(GetWorld()->GetAuthGameMode());
+		if (GameMode == nullptr)
+			return;
+
+		GameMode->MyGameState->TryCompleteQuest(1);
+	});
 }
 
 AMiniCyphersCharacter* UQuestComponent::GetCharacter()

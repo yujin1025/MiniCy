@@ -108,8 +108,6 @@ void AMiniCyphersCharacter::Move(const FVector2D Value)
 		// add movement 
 		AddMovementInput(ForwardDirection, Value.Y);
 		AddMovementInput(RightDirection, Value.X);
-
-		OnMoveDelegate.Broadcast(Value);
 	}
 }
 
