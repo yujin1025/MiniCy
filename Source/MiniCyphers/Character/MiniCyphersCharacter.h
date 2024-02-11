@@ -11,6 +11,7 @@ class UHealthComponent;
 class UComboActionComponent;
 class USoundComponent;
 class URandomMotionComponent;
+class UQuestComponent;
 
 UENUM(BlueprintType)
 enum class EAttackType : uint8
@@ -25,6 +26,8 @@ enum class EAttackType : uint8
 };
 
 DECLARE_MULTICAST_DELEGATE_OneParam(FOnUseSkill, EAttackType)
+DECLARE_MULTICAST_DELEGATE_OneParam(FOnMove, FVector2D)
+
 DECLARE_LOG_CATEGORY_EXTERN(LogTemplateCharacter, Log, All);
 
 UCLASS(config=Game)
@@ -50,6 +53,7 @@ public:
 	URandomMotionComponent* RandomMotionComponent;
 
 	UHealthComponent* HealthComponent;
+	UQuestComponent* QuestComponent;
 
 protected:
 	void Move(const FVector2D Value);
@@ -62,6 +66,7 @@ public:
 	void OnFinishedSkillMotion(EAttackType AttackType);
 
 	FOnUseSkill OnUseSkillDelegate;
+	FOnMove OnMoveDelegate;
 
 public:
 	bool bCanAttack = true;

@@ -6,6 +6,9 @@
 #include "MiniCyphersComponent.h"
 #include "QuestComponent.generated.h"
 
+class AMiniCyphersGameMode;
+class AMiniCyphersCharacter;
+
 /**
  * 
  */
@@ -14,7 +17,9 @@ class MINICYPHERS_API UQuestComponent : public UMiniCyphersComponent
 {
 	GENERATED_BODY()
 
-public:
+protected:
+	// Called when the game starts
+	virtual void BeginPlay() override;
 
-	
+	AMiniCyphersCharacter* GetCharacter();
 };

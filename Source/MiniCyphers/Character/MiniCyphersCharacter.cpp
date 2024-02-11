@@ -12,6 +12,7 @@
 #include "ComboActionComponent.h"
 #include "SoundComponent.h"
 #include "RandomMotionComponent.h"
+#include "QuestComponent.h"
 
 DEFINE_LOG_CATEGORY(LogTemplateCharacter);
 
@@ -37,7 +38,7 @@ AMiniCyphersCharacter::AMiniCyphersCharacter()
 	GetCharacterMovement()->BrakingDecelerationFalling = 1500.0f;
 
 	HealthComponent = CreateDefaultSubobject<UHealthComponent>(TEXT("HealthComponent"));
-
+	QuestComponent = CreateDefaultSubobject<UQuestComponent>(TEXT("UQuestComponent"));
 	RandomMotionComponent = CreateDefaultSubobject<URandomMotionComponent>(TEXT("RandomMotionComponent"));
 
 	ActionComponentMap.Empty();
@@ -107,6 +108,8 @@ void AMiniCyphersCharacter::Move(const FVector2D Value)
 		// add movement 
 		AddMovementInput(ForwardDirection, Value.Y);
 		AddMovementInput(RightDirection, Value.X);
+
+		OnMoveDelegate.Broadcast(Value);
 	}
 }
 
