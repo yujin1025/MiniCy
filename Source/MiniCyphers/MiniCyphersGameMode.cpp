@@ -1,4 +1,4 @@
-// Copyright Epic Games, Inc. All Rights Reserved.
+ï»¿// Copyright Epic Games, Inc. All Rights Reserved.
 
 #include "MiniCyphersGameMode.h"
 #include "Character/MiniCyphersCharacter.h"
@@ -72,7 +72,6 @@ void AMiniCyphersGameMode::OnPostLogin(AMiniCyphersPlayerController* NewPlayer)
 
 void AMiniCyphersGameMode::SpawnPlayer(ECharacterType Type)
 {
-	// ¾×ÅÍ ½ºÆù À§Ä¡ ¹× È¸Àü ÁöÁ¤
 	FVector SpawnLocation = FVector(900.0f, 1110.0f, 90.0f);
 	FRotator SpawnRotation = FRotator(0.0f, 0.0f, 0.0f);
 
@@ -90,7 +89,7 @@ void AMiniCyphersGameMode::SpawnPlayer(ECharacterType Type)
 	if (Character == nullptr)
 		return;
 
-	// ÇÃ·¹ÀÌ¾î ÄÁÆ®·Ñ·¯ ¾ò±â
+	// ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ ï¿½ï¿½Æ®ï¿½Ñ·ï¿½ ï¿½ï¿½ï¿½
 	APlayerController* PlayerController = UGameplayStatics::GetPlayerController(this, 0);
 	if (PlayerController == nullptr)
 		return;
