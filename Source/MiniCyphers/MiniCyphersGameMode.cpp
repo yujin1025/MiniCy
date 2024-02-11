@@ -109,10 +109,19 @@ FCharacterStatData* AMiniCyphersGameMode::GetStatData(ECharacterType type)
 TArray<FQuestPhaseData*> AMiniCyphersGameMode::GetQuestPhaseDatas(int PhaseNumber)
 {
 	TArray<FQuestPhaseData*> PhaseDatas;
+	TArray<FQuestPhaseData*> ResultPhaseDatas;
 
 	QuestPhaseTable->GetAllRows(TEXT(""), OUT PhaseDatas);
 
-	return PhaseDatas;
+	for (auto& Data : PhaseDatas)
+	{
+		if (Data->PhaseNumber != PhaseNumber)
+			continue;
+
+		ResultPhaseDatas.Add(Data);
+	}
+
+	return ResultPhaseDatas;
 }
 
 FQuestData* AMiniCyphersGameMode::GetQuestData(int QuestId)
