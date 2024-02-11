@@ -3,6 +3,7 @@
 
 #include "QuestWidget.h"
 #include "../MiniCyphersGameMode.h"
+#include "../MiniCyphersGameState.h"
 #include "QuestProgressData.h"
 #include "Components/ListView.h"
 #include "Blueprint/IUserObjectListEntry.h"
@@ -16,7 +17,7 @@ void UQuestWidget::NativeConstruct()
 	if (GameMode == nullptr)
 		return;
 
-	GameMode->OnChangedQuestDelegate.AddLambda([this](TArray<FQuestData*> QuestDatas, TMap<int, int> QuestProgressMap) -> void
+	GameMode->MyGameState->OnChangedQuestDelegate.AddLambda([this](TArray<FQuestData*> QuestDatas, TMap<int, int> QuestProgressMap) -> void
 	{
 			ListView_18->ClearListItems();
 
@@ -33,5 +34,5 @@ void UQuestWidget::NativeConstruct()
 			}
 	});
 
-	GameMode->TryChangePhase(0);
+	GameMode->MyGameState->TryChangePhase(0);
 }

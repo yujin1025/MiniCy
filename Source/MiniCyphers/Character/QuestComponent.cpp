@@ -4,6 +4,7 @@
 #include "QuestComponent.h"
 #include "MiniCyphersCharacter.h"
 #include "../MiniCyphersGameMode.h"
+#include "../MiniCyphersGameState.h"
 
 void UQuestComponent::BeginPlay()
 {
@@ -17,7 +18,7 @@ void UQuestComponent::BeginPlay()
 		if (GameMode == nullptr)
 			return;
 
-		GameMode->TryCompleteQuest(0);
+		GameMode->MyGameState->TryCompleteQuest(0);
 	});
 }
 
