@@ -24,11 +24,11 @@ public:
 	virtual void NotifyTick(USkeletalMeshComponent* MeshComp, UAnimSequenceBase* Animation, float FrameDeltaTime, const FAnimNotifyEventReference& EventReference) override;
 	virtual void NotifyEnd(USkeletalMeshComponent* MeshComp, UAnimSequenceBase* Animation, const FAnimNotifyEventReference& EventReference) override;
 
+	AMiniCyphersCharacter* GetCharacter(const FOverlapResult& OverlapResult);
+
 	UHealthComponent* GetHealthComponent(USkeletalMeshComponent* MeshComp);
 	bool TryGetOverlapResult(AMiniCyphersCharacter* Owner, TArray<FOverlapResult>& OverlapResults);
 	bool TryGetOverlapTarget(AMiniCyphersCharacter* Owner, OUT AMiniCyphersCharacter*& FoundTarget);
-
-	AMiniCyphersCharacter* TargetCharacter;
 
 protected:
 	UPROPERTY(EditAnywhere)

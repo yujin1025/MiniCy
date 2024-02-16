@@ -17,7 +17,7 @@ void UAnimNotifyHitDetectionState::HitDetection(USkeletalMeshComponent* MeshComp
 	if (bHasTakenDamage)
 		return;
 
-	TargetCharacter = nullptr;
+	AMiniCyphersCharacter* TargetCharacter = nullptr;
 
 	if (TryGetOverlapTarget(Cast<AMiniCyphersCharacter>(MeshComp->GetOwner()), TargetCharacter))
 	{
@@ -45,6 +45,16 @@ void UAnimNotifyHitDetectionState::NotifyTick(USkeletalMeshComponent* MeshComp, 
 
 void UAnimNotifyHitDetectionState::NotifyEnd(USkeletalMeshComponent* MeshComp, UAnimSequenceBase* Animation, const FAnimNotifyEventReference& EventReference)
 {
+	bHasTakenDamage = false;
+}
+
+AMiniCyphersCharacter* UAnimNotifyHitDetectionState::GetCharacter(const FOverlapResult& OverlapResult)
+{
+	auto* Actor = OverlapResult.GetActor();
+	if (Actor == nullptr)
+		return nullptr;
+
+	return Cast<AMiniCyphersCharacter>(Actor);
 }
 
 UHealthComponent* UAnimNotifyHitDetectionState::GetHealthComponent(USkeletalMeshComponent* MeshComp)
@@ -90,7 +100,7 @@ bool UAnimNotifyHitDetectionState::TryGetOverlapTarget(AMiniCyphersCharacter* Ow
 	{
 		for (auto const& OverlapResult : OverlapResults)
 		{
-			TargetCharacter = UMiniCyphersService::GetCharacter(OverlapResult);
+			auto* TargetCharacter = UMiniCyphersService::GetCharacter(OverlapResult);
 			if (TargetCharacter == nullptr)
 				continue;
 
