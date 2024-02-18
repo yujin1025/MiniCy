@@ -50,5 +50,8 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Gameplay)
 		FVector NormalAttackStartLocation;
 
-	
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Skills")
+	float SkillRange;
+
+	bool bInvincible;
 };

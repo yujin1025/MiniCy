@@ -8,6 +8,7 @@
 #include "../MiniCyphersGameMode.h"
 #include "../MiniCyphersGameState.h"
 #include "../MiniCyphersPlayerState.h"
+#include "Shiva.h"
 
 // Sets default values for this component's properties
 UHealthComponent::UHealthComponent()
@@ -53,6 +54,11 @@ void UHealthComponent::ChangeHealth(AMiniCyphersCharacter* Attacker, int Amount)
 		return;
 
 	if (CurrentHealth <= 0)
+		return;
+
+	//Shiva이면서 bInvincible이 true일때 무적  - 아직 확실X
+	AShiva* ShivaCharacter = Cast<AShiva>(GetOwner());
+	if (ShivaCharacter && ShivaCharacter->bInvincible)
 		return;
 
 	CurrentHealth += Amount;
