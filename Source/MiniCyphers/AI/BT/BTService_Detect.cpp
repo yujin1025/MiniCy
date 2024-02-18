@@ -15,25 +15,15 @@ void UBTService_Detect::TickNode(UBehaviorTreeComponent& OwnerComp, uint8* NodeM
 	if (MyCharacter == nullptr)
 		return;
 
-	auto* BlackBoard = GetBlackboardComponent(OwnerComp);
-	if (BlackBoard == nullptr)
-		return;
-
 	AMiniCyphersCharacter* DetectedTarget = nullptr;
 
-	auto* AttackerObject = BlackBoard->GetValueAsObject(AMiniCyphersAIController::AttackerObjectKey);
-	if (AttackerObject != nullptr)
-	{
-		DetectedTarget = Cast<AMiniCyphersCharacter>(AttackerObject);
-	}
-
-	if (DetectedTarget == nullptr)
+	if (TryGetAttackerTrackingResult(OwnerComp, OUT DetectedTarget) == false)
 	{
 		TryGetOverlapTarget(MyCharacter, OUT DetectedTarget);
 	}
 
 	SetDetectedTarget(OwnerComp, DetectedTarget);
-
+	OnTickNode(OwnerComp, DeltaSeconds);
 }
 
 bool UBTService_Detect::TryGetOverlapResult(AMiniCyphersCharacter* Owner, TArray<FOverlapResult>& OverlapResults)
@@ -64,7 +54,6 @@ bool UBTService_Detect::TryGetOverlapResult(AMiniCyphersCharacter* Owner, TArray
 bool UBTService_Detect::TryGetOverlapTarget(AMiniCyphersCharacter* Owner, OUT AMiniCyphersCharacter*& FoundTarget)
 {
 	TArray<FOverlapResult> OverlapResults;
-	bool bResult = false;
 
 	if (TryGetOverlapResult(Owner, OverlapResults))
 	{
@@ -77,13 +66,12 @@ bool UBTService_Detect::TryGetOverlapTarget(AMiniCyphersCharacter* Owner, OUT AM
 			if (TargetCharacter->IsPlayer() == false)
 				continue;
 
-			bResult = true;
 			FoundTarget = TargetCharacter;
 			break;
 		}
 	}
 
-	return bResult;
+	return FoundTarget != nullptr;
 }
 
 void UBTService_Detect::SetDetectedTarget(UBehaviorTreeComponent& OwnerComp, AMiniCyphersCharacter* TargetCharacter)
@@ -98,4 +86,37 @@ void UBTService_Detect::SetDetectedTarget(UBehaviorTreeComponent& OwnerComp, AMi
 	{
 		BlackBoard->SetValueAsVector(AMiniCyphersAIController::PatrolPosKey, TargetCharacter->GetActorLocation());
 	}
+}
+
+bool UBTService_Detect::TryGetAttackerTrackingResult(UBehaviorTreeComponent& OwnerComp, OUT AMiniCyphersCharacter*& FoundTarget)
+{
+	auto* BlackBoard = GetBlackboardComponent(OwnerComp);
+	if (BlackBoard == nullptr)
+		return false;
+
+	float RemainTrackingTime = BlackBoard->GetValueAsFloat(AMiniCyphersAIController::AttackerTrackingTimeKey);
+	if (RemainTrackingTime > 0.01f)
+	{
+		auto* AttackerObject = BlackBoard->GetValueAsObject(AMiniCyphersAIController::AttackerObjectKey);
+		if (AttackerObject != nullptr)
+		{
+			FoundTarget = Cast<AMiniCyphersCharacter>(AttackerObject);
+		}
+	}
+
+	return FoundTarget != nullptr;
+}
+
+void UBTService_Detect::OnTickNode(UBehaviorTreeComponent& OwnerComp, float DeltaSeconds)
+{
+	auto* BlackBoard = GetBlackboardComponent(OwnerComp);
+	if (BlackBoard == nullptr)
+		return;
+
+	float CurrentRemainTime = BlackBoard->GetValueAsFloat(AMiniCyphersAIController::AttackerTrackingTimeKey);
+	if (CurrentRemainTime < 0.01f)
+		return;
+
+	float RemainTime = CurrentRemainTime - DeltaSeconds;
+	BlackBoard->SetValueAsFloat(AMiniCyphersAIController::AttackerTrackingTimeKey, RemainTime < 0.0f ? 0.0f : RemainTime);
 }

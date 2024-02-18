@@ -22,6 +22,9 @@ protected:
 	bool TryGetOverlapResult(AMiniCyphersCharacter* Owner, TArray<FOverlapResult>& OverlapResults);
 	bool TryGetOverlapTarget(AMiniCyphersCharacter* Owner, OUT AMiniCyphersCharacter*& FoundTarget);
 	void SetDetectedTarget(UBehaviorTreeComponent& OwnerComp, AMiniCyphersCharacter* TargetCharacter);
+	bool TryGetAttackerTrackingResult(UBehaviorTreeComponent& OwnerComp, OUT AMiniCyphersCharacter*& FoundTarget);
+
+	void OnTickNode(UBehaviorTreeComponent& OwnerComp, float DeltaSeconds);
 
 private:
 	UPROPERTY(EditAnywhere)

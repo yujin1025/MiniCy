@@ -21,6 +21,7 @@ public:
 	static const FName PatrolPosKey;
 	static const FName TargetObjectKey;
 	static const FName AttackerObjectKey;
+	static const FName AttackerTrackingTimeKey;
 
 	virtual void OnPossess(APawn* InPawn) override;
 	virtual void OnUnPossess() override;
@@ -31,10 +32,15 @@ public:
 	UFUNCTION()
 	void OnDamaged(AMiniCyphersCharacter* Attacker, float Amount);
 
+
+
 private:
 	UPROPERTY(EditAnywhere)
 	class UBehaviorTree* BTAsset;
 	
 	UPROPERTY(EditAnywhere)
 	class UBlackboardData* BBAsset;
+
+	UPROPERTY(EditAnywhere)
+	float AttackerTrackingTime = 4.0f;
 };

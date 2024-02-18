@@ -15,6 +15,7 @@ const FName AMiniCyphersAIController::HomePosKey(TEXT("HomePos"));
 const FName AMiniCyphersAIController::PatrolPosKey(TEXT("PatrolPos"));
 const FName AMiniCyphersAIController::TargetObjectKey(TEXT("TargetObject"));
 const FName AMiniCyphersAIController::AttackerObjectKey(TEXT("AttackerObject"));
+const FName AMiniCyphersAIController::AttackerTrackingTimeKey(TEXT("AttackerTrackingTime"));
 
 
 AMiniCyphersAIController::AMiniCyphersAIController()
@@ -54,4 +55,5 @@ void AMiniCyphersAIController::SetCharacterPerception(AMiniCyphersCharacter* InC
 void AMiniCyphersAIController::OnDamaged(AMiniCyphersCharacter* Attacker, float Amount)
 {
 	Blackboard->SetValueAsObject(AttackerObjectKey, Attacker);
+	Blackboard->SetValueAsFloat(AttackerTrackingTimeKey, AttackerTrackingTime);
 }
