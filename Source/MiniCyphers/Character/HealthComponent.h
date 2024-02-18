@@ -4,11 +4,13 @@
 
 #include "CoreMinimal.h"
 #include "Components/ActorComponent.h"
+#include "GameFramework/PlayerState.h"
 #include "MiniCyphersComponent.h"
 #include "Engine/GameInstance.h"
 
 #include "HealthComponent.generated.h"
 
+DECLARE_MULTICAST_DELEGATE_TwoParams(FOnDamaged, AMiniCyphersCharacter*, float)
 
 
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
@@ -23,6 +25,9 @@ public:
 private:
 	int MaxHealth;
 	int CurrentHealth;
+
+public:
+	FOnDamaged OnDamaged;
 
 protected:
 	// Called when the game starts

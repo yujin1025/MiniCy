@@ -20,9 +20,16 @@ public:
 	static const FName HomePosKey;
 	static const FName PatrolPosKey;
 	static const FName TargetObjectKey;
+	static const FName AttackerObjectKey;
 
 	virtual void OnPossess(APawn* InPawn) override;
 	virtual void OnUnPossess() override;
+
+	UFUNCTION()
+	void SetCharacterPerception(AMiniCyphersCharacter* InChar);
+
+	UFUNCTION()
+	void OnDamaged(AMiniCyphersCharacter* Attacker, float Amount);
 
 private:
 	UPROPERTY(EditAnywhere)

@@ -17,16 +17,17 @@ void UAnimNotifyHitDetectionState::HitDetection(USkeletalMeshComponent* MeshComp
 	if (bHasTakenDamage)
 		return;
 
+	AMiniCyphersCharacter* MyCharacter = Cast<AMiniCyphersCharacter>(MeshComp->GetOwner());
 	AMiniCyphersCharacter* TargetCharacter = nullptr;
 
-	if (TryGetOverlapTarget(Cast<AMiniCyphersCharacter>(MeshComp->GetOwner()), TargetCharacter))
+	if (TryGetOverlapTarget(MyCharacter, TargetCharacter))
 	{
 		UHealthComponent* DamagedHealthComponent = TargetCharacter->FindComponentByClass<UHealthComponent>();
 
 		if (DamagedHealthComponent)
 		{
 			int DamageAmount = bIsDouble ? 20 : 10;
-			DamagedHealthComponent->ChangeHealth(TargetCharacter, -DamageAmount);
+			DamagedHealthComponent->ChangeHealth(MyCharacter, -DamageAmount);
 			bHasTakenDamage = true;
 		}
 	}

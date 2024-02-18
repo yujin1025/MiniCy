@@ -200,22 +200,7 @@ bool AMiniCyphersCharacter::IsSatisfiedShiftAttack()
 
 void AMiniCyphersCharacter::OnHit(AMiniCyphersCharacter* Attacker) //캐릭터(나)가 쳐맞음. Attack=때린놈
 {
-	/*
-	ASentinel* SentinelTarget = Cast<ASentinel>(this);
-	if (SentinelTarget)
-	{		UGameplayStatics::PlaySoundAtLocation(this, NormalEffectsSentinel, GetActorLocation());
-		PlayAnimMontage(NormalAttackSentinel);
-	}
-	else
-	{
-		ATrooper* TrooperTarget = Cast<ATrooper>(this);
-		if (TrooperTarget)
-		{
-			UGameplayStatics::PlaySoundAtLocation(this, NormalEffectsTrooper, GetActorLocation());
-			PlayAnimMontage(NormalAttackTrooper);
-		}
-	}*/
-	//치명타 아직 기획안나옴 - 나오면 작업하기
+	
 }
 
 void AMiniCyphersCharacter::OnDie() //뎀지는 애니메이션

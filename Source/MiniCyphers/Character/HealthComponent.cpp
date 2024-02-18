@@ -70,13 +70,18 @@ void UHealthComponent::ChangeHealth(AMiniCyphersCharacter* Attacker, int Amount)
 		UE_LOG(LogTemp, Warning, TEXT("Non Player Current Health: %f"), CurrentHealth);
 	}
 
-	if (CurrentHealth <= 0)
+	if (Amount < 0)
 	{
-		Character->OnDie();
-	}
-	else
-	{
-		Character->OnHit(Attacker);
+		if (CurrentHealth <= 0)
+		{
+			Character->OnDie();
+		}
+		else
+		{
+			Character->OnHit(Attacker);
+		}
+
+		OnDamaged.Broadcast(Attacker, CurrentHealth);
 	}
 }
 

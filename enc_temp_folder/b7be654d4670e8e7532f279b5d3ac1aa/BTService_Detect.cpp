@@ -30,10 +30,8 @@ void UBTService_Detect::TickNode(UBehaviorTreeComponent& OwnerComp, uint8* NodeM
 	if (DetectedTarget == nullptr)
 	{
 		TryGetOverlapTarget(MyCharacter, OUT DetectedTarget);
+		SetDetectedTarget(OwnerComp, DetectedTarget);
 	}
-
-	SetDetectedTarget(OwnerComp, DetectedTarget);
-
 }
 
 bool UBTService_Detect::TryGetOverlapResult(AMiniCyphersCharacter* Owner, TArray<FOverlapResult>& OverlapResults)
