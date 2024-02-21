@@ -73,7 +73,7 @@ void UHealthComponent::ChangeHealth(AMiniCyphersCharacter* Attacker, int Amount)
 	else
 	{
 		GameMode->MyGameState->OnChangedHealth(Character->CharacterId, CurrentHealth);
-		UE_LOG(LogTemp, Warning, TEXT("Non Player Current Health: %f"), CurrentHealth);
+		UE_LOG(LogTemp, Warning, TEXT("Non Player Number : (%d) Current Health: %d"), Character->CharacterId, CurrentHealth);
 	}
 
 	if (Amount < 0)

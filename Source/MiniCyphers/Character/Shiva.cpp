@@ -63,34 +63,20 @@ void AShiva::OnUseNormalAttack()
 		if (World != nullptr)
 		{
 			const FRotator SpawnRotation = GetControlRotation();
-			// MuzzleOffset is in camera space, so transform it to world space before offsetting from the character location to find the final muzzle position
-			//const FVector SpawnLocation = ((NormalAttackProjectileStartLocation != nullptr) ? NormalAttackProjectileStartLocation->GetComponentLocation() : GetActorLocation()) + SpawnRotation.RotateVector(GunOffset);
-			if (NormalAttackProjectileStartLocation == nullptr)
-			{
-				UE_LOG(LogTemp, Log, TEXT("Shiva NA Projectlie Start Location NULL"));
-				return;
-			}
 			const FVector SpawnLocation = NormalAttackProjectileStartLocation->GetComponentLocation();
-
-			//Set Spawn Collision Handling Override
+			
 			FActorSpawnParameters ActorSpawnParams;
-			//ActorSpawnParams.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AdjustIfPossibleButDontSpawnIfColliding;
-
-
-			// spawn the projectile at the muzzle
-			auto tempActor = World->SpawnActor<AShivaNormalAttackProjectile>(ProjectileClass, SpawnLocation, SpawnRotation, ActorSpawnParams);
-			if (tempActor == nullptr)
+			auto* tempActor = World->SpawnActor<AShivaNormalAttackProjectile>(ProjectileClass, SpawnLocation, SpawnRotation, ActorSpawnParams);
 			{
-				UE_LOG(LogTemp, Log, TEXT("tempActor NULL"));
-				return;
+			if (tempActor != nullptr)
+				tempActor->Initialize(this);
 			}
-			tempActor->SetCharacterController(GetController());
-			tempActor->SetProjectileOwner(this);
-
 		}
 	}
 	else
+	{
 		UE_LOG(LogTemp, Log, TEXT("ProjectileClass NULL"))
+	}
 }
 
 void AShiva::OnUseRightClickAttack()

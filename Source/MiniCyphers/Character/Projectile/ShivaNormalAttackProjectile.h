@@ -26,22 +26,20 @@ public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 	
+public:
+	UPROPERTY(EditAnywhere)
+	float AttackRange = 0.0f;
 
-	UPROPERTY(VisibleDefaultsOnly, Category = Projectile) //구체 콜리전 컴포넌트
-		class USphereComponent* CollisionComp;
+	UPROPERTY(VisibleDefaultsOnly, Category = Projectile)
+	class USphereComponent* CollisionComp;
 
-	UPROPERTY(VisibleAnywhere, Category = Movement) //프로젝타일 무브먼트 컴포넌트
-		class UProjectileMovementComponent* ProjectileMovementComp;
-
-	void InitVelocity(const FVector& ShootDirection);
+	UPROPERTY(VisibleAnywhere, Category = Movement)
+	class UProjectileMovementComponent* ProjectileMovementComp;
 
 	UFUNCTION()
 	void OnAttack(UPrimitiveComponent* HitComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, FVector NormalImpulse, const FHitResult& Hit);
 
-	AController* SetCharacterController(AController* Controller);
-	AController* CharacterController;
-
-	void SetProjectileOwner(AMiniCyphersCharacter* Character);
+	void Initialize(AMiniCyphersCharacter* Character);
 	AMiniCyphersCharacter* ProjectileOwner;
 
 };
