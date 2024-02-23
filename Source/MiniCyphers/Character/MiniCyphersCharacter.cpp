@@ -12,6 +12,7 @@
 #include "ComboActionComponent.h"
 #include "RandomMotionComponent.h"
 #include "QuestComponent.h"
+#include "HitDeadComponent.h"
 
 DEFINE_LOG_CATEGORY(LogTemplateCharacter);
 
@@ -39,6 +40,7 @@ AMiniCyphersCharacter::AMiniCyphersCharacter()
 	HealthComponent = CreateDefaultSubobject<UHealthComponent>(TEXT("HealthComponent"));
 	QuestComponent = CreateDefaultSubobject<UQuestComponent>(TEXT("UQuestComponent"));
 	RandomMotionComponent = CreateDefaultSubobject<URandomMotionComponent>(TEXT("RandomMotionComponent"));
+	HitDeadComponent = CreateDefaultSubobject<UHitDeadComponent>(TEXT("HitDeadComponent"));
 
 	ActionComponentMap.Empty();
 	for (int i = 0; i < (int)EAttackType::Max; i++)
@@ -188,12 +190,19 @@ bool AMiniCyphersCharacter::IsSatisfiedShiftAttack()
 
 void AMiniCyphersCharacter::OnHit(AMiniCyphersCharacter* Attacker) //캐릭터(나)가 쳐맞음. Attack=때린놈
 {
-	
+	if (HitDeadComponent)
+	{
+		HitDeadComponent->PlayHitMontage();
+	}
 }
 
 void AMiniCyphersCharacter::OnDie() //뎀지는 애니메이션
 {
-	PlayAnimMontage(DeathMontage, 1.0f);
+	//PlayAnimMontage(DeathMontage, 1.0f);
+	if (HitDeadComponent)
+	{
+		HitDeadComponent->PlayDeadMontage();
+	}
 }
 
 bool AMiniCyphersCharacter::IsPlayer()

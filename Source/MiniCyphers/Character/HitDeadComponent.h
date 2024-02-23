@@ -20,4 +20,14 @@ private:
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Animation, meta = (AllowPrivateAccess = "true"))
 	TArray<UAnimMontage*> DeadMontages;
+
+	int32 CurrentHitMontageIndex;
+	int32 CurrentDeadMontageIndex;
+
+public:
+	UFUNCTION(BlueprintCallable, Category = "Animation")
+	void PlayHitMontage();
+
+	UFUNCTION(BlueprintCallable, Category = "Animation")
+	void PlayDeadMontage();
 };

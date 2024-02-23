@@ -24,6 +24,8 @@ public:
 	virtual void NotifyTick(USkeletalMeshComponent* MeshComp, UAnimSequenceBase* Animation, float FrameDeltaTime, const FAnimNotifyEventReference& EventReference) override;
 	virtual void NotifyEnd(USkeletalMeshComponent* MeshComp, UAnimSequenceBase* Animation, const FAnimNotifyEventReference& EventReference) override;
 
+	virtual FCollisionShape MakeDetection(const float SphereRadius, const float Long);
+
 	AMiniCyphersCharacter* GetCharacter(const FOverlapResult& OverlapResult);
 
 	UHealthComponent* GetHealthComponent(USkeletalMeshComponent* MeshComp);
@@ -34,6 +36,8 @@ protected:
 	UPROPERTY(EditAnywhere)
 	bool bIsDouble;
 
-	float DetectRadius = 600.0f;
+	float DetectShort = 600.0f;
+	float DetectLong = 800.0f;
+
 	bool bHasTakenDamage;
 };

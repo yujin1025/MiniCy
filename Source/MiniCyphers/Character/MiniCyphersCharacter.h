@@ -12,6 +12,7 @@ class UComboActionComponent;
 class USoundComponent;
 class URandomMotionComponent;
 class UQuestComponent;
+class UHitDeadComponent;
 
 UENUM(BlueprintType)
 enum class EAttackType : uint8
@@ -50,6 +51,9 @@ public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Motion, meta = (AllowPrivateAccess = "true"))
 	URandomMotionComponent* RandomMotionComponent;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Motion, meta = (AllowPrivateAccess = "true"))
+	UHitDeadComponent* HitDeadComponent;
 
 	UHealthComponent* HealthComponent;
 	UQuestComponent* QuestComponent;
@@ -99,30 +103,5 @@ public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Pawn)
 	UAnimMontage* DeathMontage;
-
-	/*
-	UPROPERTY(EditAnywhere, Category = "Combat")
-	class USoundBase* NormalEffectsSentinel;
-
-	UPROPERTY(EditAnywhere, Category = "Combat")
-	USoundBase* NormalEffectsTrooper;
-
-	UPROPERTY(EditAnywhere, Category = "Combat")
-	USoundBase* CriticalEffectsSentinel;
-
-	UPROPERTY(EditAnywhere, Category = "Combat")
-	USoundBase* CriticalEffectsTrooper;
-
-	UPROPERTY(EditAnywhere, Category = "Animations")
-	UAnimMontage* NormalAttackSentinel;
-
-	UPROPERTY(EditAnywhere, Category = "Animations")
-	UAnimMontage* NormalAttackTrooper;
-
-	UPROPERTY(EditAnywhere, Category = "Animations")
-	UAnimMontage* CriticalAttackSentinel;
-
-	UPROPERTY(EditAnywhere, Category = "Animations")
-	UAnimMontage* CriticalAttackTrooper;*/
 };
 

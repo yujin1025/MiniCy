@@ -49,6 +49,12 @@ void UAnimNotifyHitDetectionState::NotifyEnd(USkeletalMeshComponent* MeshComp, U
 	bHasTakenDamage = false;
 }
 
+FCollisionShape UAnimNotifyHitDetectionState::MakeDetection(const float SphereRadius, const float Long)
+{
+	return FCollisionShape::MakeSphere(SphereRadius);
+	//구형태나 캡슐형태를 하고싶으면 그 곳에서 이 함수를 오버라이드하기, 만약 캡슐이면 거기선 2개 받는 식으로
+}
+
 AMiniCyphersCharacter* UAnimNotifyHitDetectionState::GetCharacter(const FOverlapResult& OverlapResult)
 {
 	auto* Actor = OverlapResult.GetActor();
@@ -81,12 +87,12 @@ bool UAnimNotifyHitDetectionState::TryGetOverlapResult(AMiniCyphersCharacter* Ow
 		Center,
 		FQuat::Identity,
 		ECollisionChannel::ECC_GameTraceChannel2,
-		FCollisionShape::MakeSphere(DetectRadius),
+		MakeDetection(DetectShort, DetectLong),
 		CollisionParam);
 
 	if (bResult)
 	{
-		DrawDebugSphere(World, Center, DetectRadius, 16, FColor::Red, false, 0.2f);
+		DrawDebugSphere(World, Center, DetectShort, 16, FColor::Red, false, 0.2f);
 	}
 
 	return bResult;

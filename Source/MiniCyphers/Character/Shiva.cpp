@@ -81,36 +81,7 @@ void AShiva::OnUseNormalAttack()
 
 void AShiva::OnUseRightClickAttack()
 {
-	if (GetCharacterMovement()->IsMovingOnGround())
-	{
-		ACharacter* HitCharacter = nullptr;
-		const FVector TraceStart = GetActorLocation();
-		const FVector TraceEnd = TraceStart + GetActorForwardVector() * SkillRange;
 
-		FHitResult HitResult;
-		FCollisionQueryParams CollisionParams;
-		CollisionParams.AddIgnoredActor(this); // 캐릭터 자신은 무시
-
-		// 레이 캐스트를 통해 캐릭터의 사정거리 안에 몬스터가 있는지 확인
-		if (GetWorld()->LineTraceSingleByChannel(HitResult, TraceStart, TraceEnd, ECC_Pawn, CollisionParams))
-		{
-			HitCharacter = Cast<ACharacter>(HitResult.GetActor());
-		}
-
-		if (HitCharacter)
-		{
-			UHealthComponent* DamagedHealthComponent = HitCharacter->FindComponentByClass<UHealthComponent>();
-
-			if (DamagedHealthComponent)
-			{
-				DamagedHealthComponent->ChangeHealth(this, -10); 
-			}
-		}
-		else
-		{
-			UE_LOG(LogTemp, Warning, TEXT("No Target"));
-		}
-	}
 }
 
 void AShiva::OnUseShiftLeftClickAttack()
