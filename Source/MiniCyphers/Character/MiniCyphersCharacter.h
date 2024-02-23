@@ -48,9 +48,6 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Id, meta = (AllowPrivateAccess = "true"))
 	int CharacterId;
 
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Sound, meta = (AllowPrivateAccess = "true"))
-	TMap<EAttackType, USoundComponent*> SoundComponentMap;
-
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Motion, meta = (AllowPrivateAccess = "true"))
 	URandomMotionComponent* RandomMotionComponent;
 

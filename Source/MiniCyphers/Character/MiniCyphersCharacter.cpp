@@ -10,7 +10,6 @@
 #include "Trooper.h"
 #include "Kismet/GameplayStatics.h"
 #include "ComboActionComponent.h"
-#include "SoundComponent.h"
 #include "RandomMotionComponent.h"
 #include "QuestComponent.h"
 
@@ -50,17 +49,6 @@ AMiniCyphersCharacter::AMiniCyphersCharacter()
 		FString ComponentName = TEXT("ComboActionComponent [") + AttackTypeStr + "]";
 		auto Component = CreateDefaultSubobject<UComboActionComponent>((FName)*ComponentName);
 		ActionComponentMap.Add(AttackType, Component);
-	}
-
-	SoundComponentMap.Empty();
-	for (int i = 0; i < (int)EAttackType::Max; i++)
-	{
-		auto AttackType = (EAttackType)i;
-
-		FString AttackTypeStr = GetEnumNameAsString(AttackType);
-		FString ComponentName = TEXT("SoundComponent [") + AttackTypeStr + "]";
-		auto Component = CreateDefaultSubobject<USoundComponent>((FName)*ComponentName);
-		SoundComponentMap.Add(AttackType, Component);
 	}
 }
 
