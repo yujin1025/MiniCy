@@ -88,6 +88,9 @@ void UAnimNotifyTeleport::NotifyBegin(USkeletalMeshComponent* MeshComp, UAnimSeq
 
     TargetLocation = FMath::Lerp(CurrentLocation, TargetLocation, 0.7f);
 
+    //float TargetHeight = HitResult.ImpactPoint.Z;
+    //FVector NewLocation = FVector(HitResult.ImpactPoint.X, HitResult.ImpactPoint.Y, TargetHeight);
+
     MyCharacter->SetActorLocation(TargetLocation);
 
     DrawDebugSphere(GetWorld(), TargetLocation, 10.0f, 12, FColor::Green, false, 5.0f); //마우스 클릭한 곳 디버그

@@ -139,7 +139,6 @@ void APlayableCharacter::OnNormalAttack(const FInputActionValue& Value)
 			OnAttackDelegate.Broadcast();
 		}
 	}
-
 }
 
 void APlayableCharacter::OnRightClickAttack(const FInputActionValue& Value)
