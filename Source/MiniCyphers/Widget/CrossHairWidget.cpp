@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+ï»¿// Fill out your copyright notice in the Description page of Project Settings.
 
 
 #include "CrossHairWidget.h"
@@ -21,17 +21,12 @@ void UCrossHairWidget::NativeTick(const FGeometry& MyGeometry, float InDeltaTime
     FVector2D AimScreenPosition = GetAimScreenPosition(AimPoint);
     FVector2D NewScreenPosition = GetScreenMousePosition();
 
-    FVector2D NewPosition = FVector2D(AimScreenPosition.X, NewScreenPosition.Y);
-    FWidgetTransform ImageTransform;
-    ImageTransform.Translation = NewPosition;
-
-    AimPoint->SetRenderTransform(ImageTransform);
+    FVector2D NewPosition = FVector2D(NewScreenPosition.X, NewScreenPosition.Y);
+    SetPositionInViewport(NewPosition);
 }
 
 FVector2D UCrossHairWidget::GetScreenMousePosition()
 {
-    FVector2D WorldMousePosition;
-
     APlayerController* PlayerController = GetOwningPlayer();
     if (PlayerController == nullptr)
         return FVector2D::ZeroVector;
@@ -41,35 +36,31 @@ FVector2D UCrossHairWidget::GetScreenMousePosition()
         return FVector2D::ZeroVector;
 
     AMiniCyphersCharacter* Character = Controller->GetCharacter();
-    if (Character)
+    if (Character == nullptr)
         return FVector2D::ZeroVector;
     
     FVector TargetLocation = Character->GetTargetPosition(ECollisionChannel::ECC_EngineTraceChannel1, 3500.0f);
 
     FVector2D ScreenPosition;
-    if (PlayerController->ProjectWorldLocationToScreen(TargetLocation, ScreenPosition))
-    {
-        WorldMousePosition.X = ScreenPosition.X;
-        WorldMousePosition.Y = ScreenPosition.Y;
-    }
-    return WorldMousePosition;
+    UGameplayStatics::ProjectWorldToScreen(PlayerController, TargetLocation, ScreenPosition);
+    return ScreenPosition;
 }
 
 FVector2D UCrossHairWidget::GetAimScreenPosition(UImage* AimImage)
 {
     if (!AimImage) return FVector2D::ZeroVector;
 
-    // ºÎ¸ğ À§Á¬ÀÎ Canvas PanelÀ» Ã£½À´Ï´Ù.
+    // ë¶€ëª¨ ìœ„ì ¯ì¸ Canvas Panelì„ ì°¾ìŠµë‹ˆë‹¤.
     UCanvasPanel* CanvasPanel = Cast<UCanvasPanel>(AimImage->GetParent());
     if (!CanvasPanel) return FVector2D::ZeroVector;
 
-    // MyImageÀÇ ·ÎÄÃ °ø°£ À§Ä¡¸¦ °¡Á®¿É´Ï´Ù.
+    // MyImageì˜ ë¡œì»¬ ê³µê°„ ìœ„ì¹˜ë¥¼ ê°€ì ¸ì˜µë‹ˆë‹¤.
     FVector2D LocalPosition = AimImage->GetCachedGeometry().LocalToAbsolute(FVector2D::ZeroVector);
 
-    // Canvas PanelÀÇ ·ÎÄÃ °ø°£ À§Ä¡¸¦ °¡Á®¿É´Ï´Ù.
+    // Canvas Panelì˜ ë¡œì»¬ ê³µê°„ ìœ„ì¹˜ë¥¼ ê°€ì ¸ì˜µë‹ˆë‹¤.
     FVector2D CanvasPosition = CanvasPanel->GetCachedGeometry().LocalToAbsolute(FVector2D::ZeroVector);
 
-    // MyImageÀÇ È­¸é °ø°£ À§Ä¡¸¦ °è»êÇÕ´Ï´Ù.
+    // MyImageì˜ í™”ë©´ ê³µê°„ ìœ„ì¹˜ë¥¼ ê³„ì‚°í•©ë‹ˆë‹¤.
     FVector2D ScreenPosition = LocalPosition + CanvasPosition;
 
     return ScreenPosition;
