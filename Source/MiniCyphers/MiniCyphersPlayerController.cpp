@@ -4,8 +4,6 @@
 #include "MiniCyphersPlayerController.h"
 #include "Character/MiniCyphersCharacter.h"
 #include "MiniCyphersPlayerState.h"
-#include "Camera/PlayerCameraManager.h"
-#include <Kismet/GameplayStatics.h>
 
 void AMiniCyphersPlayerController::PostInitializeComponents()
 {
