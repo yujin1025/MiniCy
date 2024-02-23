@@ -30,4 +30,7 @@ public:
 
 	UFUNCTION(BlueprintCallable, Category = "Animation")
 	void PlayDeadMontage();
+
+	bool bHit = false;
+	bool bDead = false;
 };

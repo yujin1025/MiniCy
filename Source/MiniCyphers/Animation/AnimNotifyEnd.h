@@ -13,7 +13,7 @@ class AMiniCyphersCharacter;
  * 
  */
 UCLASS()
-class MINICYPHERS_API UAnimNotifyEnd : public UAnimNotify
+class MINICYPHERS_API UAnimNotifyComboEnd : public UAnimNotify
 {
 	GENERATED_BODY()
 	

@@ -4,21 +4,17 @@
 
 #include "CoreMinimal.h"
 #include "MiniCyphersTaskNode.h"
-#include "BTTask_FindPatrolPos.generated.h"
+#include "BTTask_ClearTarget.generated.h"
 
 /**
  * 
  */
 UCLASS()
-class MINICYPHERS_API UBTTask_FindPatrolPos : public UMiniCyphersTaskNode
+class MINICYPHERS_API UBTTask_ClearTarget : public UMiniCyphersTaskNode
 {
 	GENERATED_BODY()
 	
-public:
-	UBTTask_FindPatrolPos();
+protected:
 	virtual EBTNodeResult::Type ExecuteTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory) override;
 
-private:
-	UPROPERTY(EditAnyWhere)
-	float FindTargetRadius = 5000.0f;
 };

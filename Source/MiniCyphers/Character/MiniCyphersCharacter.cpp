@@ -125,12 +125,6 @@ void AMiniCyphersCharacter::UseSkill(EAttackType AttackType) //캐릭터(나)가 때림
 	}
 
 	ActionComponentMap[AttackType]->DoCombo();
-	
-	/*
-	if (SoundComponentMap.Contains(AttackType) == false)
-		return;
-
-	SoundComponentMap[AttackType]->PlaySoundEffect();*/
 
 	switch (AttackType)
 	{
@@ -168,26 +162,6 @@ void AMiniCyphersCharacter::OnFinishedSkillMotion(EAttackType AttackType)
 	OnUseSkillDelegate.Broadcast(AttackType);
 }
 
-bool AMiniCyphersCharacter::IsSatisfiedNormalAttack()
-{
-	return bCanAttack;
-}
-
-bool AMiniCyphersCharacter::IsSatisfiedRightClickAttack()
-{
-	return bCanAttack;
-}
-
-bool AMiniCyphersCharacter::IsSatisfiedQSkill()
-{
-	return bCanAttack;
-}
-
-bool AMiniCyphersCharacter::IsSatisfiedShiftAttack()
-{
-	return bCanAttack;
-}
-
 void AMiniCyphersCharacter::OnHit(AMiniCyphersCharacter* Attacker) //캐릭터(나)가 쳐맞음. Attack=때린놈
 {
 	if (HitDeadComponent)
@@ -198,7 +172,6 @@ void AMiniCyphersCharacter::OnHit(AMiniCyphersCharacter* Attacker) //캐릭터(나)�
 
 void AMiniCyphersCharacter::OnDie() //뎀지는 애니메이션
 {
-	//PlayAnimMontage(DeathMontage, 1.0f);
 	if (HitDeadComponent)
 	{
 		HitDeadComponent->PlayDeadMontage();

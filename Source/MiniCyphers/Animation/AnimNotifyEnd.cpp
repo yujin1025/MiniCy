@@ -5,7 +5,7 @@
 #include "../Character/MiniCyphersCharacter.h"
 #include "../Character/ComboActionComponent.h"
 
-void UAnimNotifyEnd::Notify(USkeletalMeshComponent* MeshComp, UAnimSequenceBase* Animation, const FAnimNotifyEventReference& EventReference)
+void UAnimNotifyComboEnd::Notify(USkeletalMeshComponent* MeshComp, UAnimSequenceBase* Animation, const FAnimNotifyEventReference& EventReference)
 {
 	TArray<UComboActionComponent*> ComboComponents = GetComboComponents(MeshComp);
 	if (ComboComponents.IsEmpty())
@@ -17,7 +17,7 @@ void UAnimNotifyEnd::Notify(USkeletalMeshComponent* MeshComp, UAnimSequenceBase*
 	}
 }
 
-TArray<UComboActionComponent*> UAnimNotifyEnd::GetComboComponents(USkeletalMeshComponent* MeshComp)
+TArray<UComboActionComponent*> UAnimNotifyComboEnd::GetComboComponents(USkeletalMeshComponent* MeshComp)
 {
 	TArray<UComboActionComponent*> ComboComponents;
 
@@ -30,7 +30,7 @@ TArray<UComboActionComponent*> UAnimNotifyEnd::GetComboComponents(USkeletalMeshC
 	return ComboComponents;
 }
 
-AMiniCyphersCharacter* UAnimNotifyEnd::GetCharacter(USkeletalMeshComponent* MeshComp)
+AMiniCyphersCharacter* UAnimNotifyComboEnd::GetCharacter(USkeletalMeshComponent* MeshComp)
 {
 	auto owner = MeshComp->GetOwner();
 	if (owner == nullptr)

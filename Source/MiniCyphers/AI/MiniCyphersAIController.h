@@ -23,6 +23,7 @@ public:
 	static const FName AttackerObjectKey;
 	static const FName AttackerTrackingTimeKey;
 
+
 	virtual void OnPossess(APawn* InPawn) override;
 	virtual void OnUnPossess() override;
 

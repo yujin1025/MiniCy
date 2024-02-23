@@ -15,6 +15,7 @@
 #include "../MiniCyphersPlayerController.h"
 #include "../MiniCyphersPlayerState.h"
 #include "ItemActionComponent.h"
+#include "InputBlockComponent.h"
 
  APlayableCharacter::APlayableCharacter()
 {
@@ -30,7 +31,8 @@
 	FollowCamera->bUsePawnControlRotation = false; // Camera does not rotate relative to arm
 
 	ItemActionComponent = CreateDefaultSubobject<UItemActionComponent>(TEXT("ItemActionComponent"));
-
+	InputBlockComponent = CreateDefaultSubobject<UInputBlockComponent>(TEXT("InputBlockComponent"));
+	
 	AIControllerClass = nullptr;
 	AutoPossessAI = EAutoPossessAI::Disabled;
 
@@ -121,6 +123,27 @@ FVector APlayableCharacter::GetTargetPosition(ECollisionChannel Channel, float R
 
 	return End;
 }
+
+bool APlayableCharacter::IsSatisfiedNormalAttack()
+{
+	return !InputBlockComponent->bInputBlock;
+}
+
+bool APlayableCharacter::IsSatisfiedRightClickAttack()
+{
+	return !InputBlockComponent->bInputBlock;
+}
+
+bool APlayableCharacter::IsSatisfiedQSkill()
+{
+	return !InputBlockComponent->bInputBlock;
+}
+
+bool APlayableCharacter::IsSatisfiedShiftAttack()
+{
+	return !InputBlockComponent->bInputBlock;
+}
+
 
 void APlayableCharacter::OnNormalAttack(const FInputActionValue& Value)
 {

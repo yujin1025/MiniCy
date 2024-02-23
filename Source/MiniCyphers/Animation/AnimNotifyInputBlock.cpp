@@ -3,6 +3,7 @@
 
 #include "AnimNotifyInputBlock.h"
 #include "../Character/MiniCyphersCharacter.h"
+#include "../Character/InputBlockComponent.h"
 
 void UAnimNotifyInputBlock::NotifyBegin(USkeletalMeshComponent* MeshComp, UAnimSequenceBase* Animation, float TotalDuration, const FAnimNotifyEventReference& EventReference)
 {
@@ -10,13 +11,11 @@ void UAnimNotifyInputBlock::NotifyBegin(USkeletalMeshComponent* MeshComp, UAnimS
 	if (owner == nullptr)
 		return;
 
-	auto OwnerCharacter = Cast<AMiniCyphersCharacter>(owner);
-	if (OwnerCharacter == nullptr)
+	auto* InputBlockComp = owner->FindComponentByClass<UInputBlockComponent>();
+	if (InputBlockComp == nullptr)
 		return;
 
-	OwnerCharacter->bCanAttack = false;
-
-
+	InputBlockComp->bInputBlock = true;
 }
 
 void UAnimNotifyInputBlock::NotifyTick(USkeletalMeshComponent* MeshComp, UAnimSequenceBase* Animation, float FrameDeltaTime, const FAnimNotifyEventReference& EventReference)
@@ -30,10 +29,10 @@ void UAnimNotifyInputBlock::NotifyEnd(USkeletalMeshComponent* MeshComp, UAnimSeq
 	if (owner == nullptr)
 		return;
 
-	auto OwnerCharacter = Cast<AMiniCyphersCharacter>(owner);
-	if (OwnerCharacter == nullptr)
+	auto* InputBlockComp = owner->FindComponentByClass<UInputBlockComponent>();
+	if (InputBlockComp == nullptr)
 		return;
 
-	OwnerCharacter->bCanAttack = true;
+	InputBlockComp->bInputBlock = false;
 }
 

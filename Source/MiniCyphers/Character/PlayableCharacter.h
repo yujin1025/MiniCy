@@ -11,6 +11,7 @@ class UComboActionComponent;
 class USpringArmComponent;
 class UCameraComponent;
 class UItemActionComponent;
+class UInputBlockComponent;
 
 struct FInputActionValue;
 
@@ -55,6 +56,9 @@ class MINICYPHERS_API APlayableCharacter : public AMiniCyphersCharacter
 private:
 	UPROPERTY()
 	UItemActionComponent* ItemActionComponent;
+
+	UPROPERTY()
+	UInputBlockComponent* InputBlockComponent;
 	
 	UPROPERTY(EditAnywhere)
 	float RaycastTargetLength = 3500.0f;
@@ -93,4 +97,10 @@ public:
 
 protected:
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
+
+	virtual bool IsSatisfiedNormalAttack() override;
+	virtual bool IsSatisfiedRightClickAttack() override;
+	virtual bool IsSatisfiedQSkill() override;
+	virtual bool IsSatisfiedShiftAttack() override;
+
 };

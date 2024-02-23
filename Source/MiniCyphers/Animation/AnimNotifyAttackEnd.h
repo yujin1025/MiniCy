@@ -11,7 +11,7 @@
  * 
  */
 UCLASS()
-class MINICYPHERS_API UAnimNotifyAttackEnd : public UAnimNotifyEnd
+class MINICYPHERS_API UAnimNotifyAttackEnd : public UAnimNotifyComboEnd
 {
 	GENERATED_BODY()
 	

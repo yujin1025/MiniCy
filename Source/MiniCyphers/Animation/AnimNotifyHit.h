@@ -4,13 +4,13 @@
 
 #include "CoreMinimal.h"
 #include "Animation/AnimNotifies/AnimNotifyState.h"
-#include "AnimNotifyInputBlock.generated.h"
+#include "AnimNotifyHit.generated.h"
 
 /**
  * 
  */
 UCLASS()
-class MINICYPHERS_API UAnimNotifyInputBlock : public UAnimNotifyState
+class MINICYPHERS_API UAnimNotifyHit : public UAnimNotifyState
 {
 	GENERATED_BODY()
 	

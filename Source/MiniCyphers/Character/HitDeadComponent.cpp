@@ -21,6 +21,8 @@ void UHitDeadComponent::PlayHitMontage()
 			}
 		}
 	}
+
+	bHit = true;
 }
 
 void UHitDeadComponent::PlayDeadMontage()
@@ -41,4 +43,6 @@ void UHitDeadComponent::PlayDeadMontage()
 			}
 		}
 	}
+
+	bDead = true;
 }
