@@ -72,6 +72,7 @@ public:
 	FOnMove OnMoveDelegate;
 	FOnAttack OnAttackDelegate;
 
+
 public:
 	bool bCanAttack = true;
 
@@ -100,6 +101,8 @@ public:
 
 	void RotateToTarget(AMiniCyphersCharacter*& Target, float RotationSpeed);
 	void SetRotation(FRotator Rotation, float RotationSpeed);
+
+	virtual FVector GetTargetPosition(ECollisionChannel Channel, float RayCastDistance);
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Pawn)
 	UAnimMontage* DeathMontage;

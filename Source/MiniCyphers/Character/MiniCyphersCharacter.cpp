@@ -233,6 +233,11 @@ void AMiniCyphersCharacter::SetRotation(FRotator Rotation, float RotationSpeed)
 	SetActorRotation(TargetRotation);
 }
 
+FVector AMiniCyphersCharacter::GetTargetPosition(ECollisionChannel Channel, float RayCastDistance)
+{
+	return FVector::ZeroVector;
+}
+
 void AMiniCyphersCharacter::OnUseNormalAttack()
 {
 	if (RandomMotionComponent)

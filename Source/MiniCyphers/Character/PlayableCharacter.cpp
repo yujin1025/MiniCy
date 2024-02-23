@@ -101,14 +101,14 @@ AMiniCyphersPlayerController* APlayableCharacter::GetPlayerController()
 	return Cast<AMiniCyphersPlayerController>(Controller);
 }
 
-FVector APlayableCharacter::GetCameraTargetPosition(ECollisionChannel Channel)
+FVector APlayableCharacter::GetTargetPosition(ECollisionChannel Channel, float RayCastDistance)
 {
 	FVector CameraLocation;
 	FRotator CameraRotation;
 	Controller->GetPlayerViewPoint(CameraLocation, CameraRotation); // 플레이어의 시점을 가져옵니다.
 
 	FVector Start = CameraLocation; // 레이의 시작점은 카메라 위치입니다.
-	FVector End = Start + (CameraRotation.Vector() * RaycastTargetLength); // 레이의 끝점은 카메라의 방향을 따라서 RaycastLength만큼 떨어진 지점입니다.
+	FVector End = Start + (CameraRotation.Vector() * RayCastDistance); // 레이의 끝점은 카메라의 방향을 따라서 RaycastLength만큼 떨어진 지점입니다.
 
 	FHitResult HitResult;
 	FCollisionQueryParams CollisionParams;
