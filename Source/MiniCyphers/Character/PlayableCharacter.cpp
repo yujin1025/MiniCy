@@ -101,7 +101,7 @@ AMiniCyphersPlayerController* APlayableCharacter::GetPlayerController()
 	return Cast<AMiniCyphersPlayerController>(Controller);
 }
 
-FVector APlayableCharacter::GetCameraTargetPosition()
+FVector APlayableCharacter::GetCameraTargetPosition(ECollisionChannel Channel)
 {
 	FVector CameraLocation;
 	FRotator CameraRotation;
@@ -114,7 +114,7 @@ FVector APlayableCharacter::GetCameraTargetPosition()
 	FCollisionQueryParams CollisionParams;
 	CollisionParams.AddIgnoredActor(this); // 레이를 쏠 때 플레이어 캐릭터는 무시합니다.
 	// 레이캐스트를 수행합니다.
-	if (GetWorld()->LineTraceSingleByChannel(HitResult, Start, End, ECC_EngineTraceChannel1, CollisionParams))
+	if (GetWorld()->LineTraceSingleByChannel(HitResult, Start, End, Channel, CollisionParams))
 	{
 		AActor* HitActor = HitResult.GetActor();
 		if (HitActor)
