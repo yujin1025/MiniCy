@@ -105,7 +105,7 @@ bool UAnimNotifyHitDetectionState::TryGetOverlapTarget(AMiniCyphersCharacter* Ow
 			if (TargetCharacter == nullptr)
 				continue;
 
-			if (TargetCharacter->IsPlayer() == Owner->IsPlayer())
+			if (TargetCharacter->IsPlayer() == false)
 				continue;
 
 			bResult = true;
