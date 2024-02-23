@@ -116,12 +116,7 @@ FVector APlayableCharacter::GetTargetPosition(ECollisionChannel Channel, float R
 	// 레이캐스트를 수행합니다.
 	if (GetWorld()->LineTraceSingleByChannel(HitResult, Start, End, Channel, CollisionParams))
 	{
-		AActor* HitActor = HitResult.GetActor();
-		if (HitActor)
-		{
-			// 부딪힌 액터를 타겟으로 설정합니다.
-			return HitActor->GetActorLocation();
-		}
+		return FVector(HitResult.ImpactPoint.X, HitResult.ImpactPoint.Y, HitResult.ImpactPoint.Z);
 	}
 
 	return End;

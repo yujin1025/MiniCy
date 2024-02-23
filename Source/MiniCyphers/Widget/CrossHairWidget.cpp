@@ -6,6 +6,8 @@
 #include <Kismet/GameplayStatics.h>
 #include <Components/CanvasPanel.h>
 #include "Engine/LocalPlayer.h"
+#include <MiniCyphers/MiniCyphersPlayerController.h>
+#include "../Character/MiniCyphersCharacter.h"
 
 void UCrossHairWidget::NativeConstruct()
 {
@@ -34,18 +36,22 @@ FVector2D UCrossHairWidget::GetScreenMousePosition()
     if (PlayerController == nullptr)
         return FVector2D::ZeroVector;
 
-    APlayerCameraManager* CameraManager = PlayerController->PlayerCameraManager;
-    if (CameraManager)
-    {
-        FVector CameraLocation = CameraManager->GetCameraLocation();
-        FVector2D ScreenPosition;
-        if (PlayerController->ProjectWorldLocationToScreen(CameraLocation, ScreenPosition))
-        {
-            WorldMousePosition.X = ScreenPosition.X;
-            WorldMousePosition.Y = ScreenPosition.Y;
-        }
-    }
+    AMiniCyphersPlayerController* Controller = Cast<AMiniCyphersPlayerController>(PlayerController);
+    if (Controller == nullptr)
+        return FVector2D::ZeroVector;
 
+    AMiniCyphersCharacter* Character = Controller->GetCharacter();
+    if (Character)
+        return FVector2D::ZeroVector;
+    
+    FVector TargetLocation = Character->GetTargetPosition(ECollisionChannel::ECC_EngineTraceChannel1, 3500.0f);
+
+    FVector2D ScreenPosition;
+    if (PlayerController->ProjectWorldLocationToScreen(TargetLocation, ScreenPosition))
+    {
+        WorldMousePosition.X = ScreenPosition.X;
+        WorldMousePosition.Y = ScreenPosition.Y;
+    }
     return WorldMousePosition;
 }
 

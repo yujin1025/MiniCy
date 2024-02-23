@@ -20,10 +20,15 @@ void AMiniCyphersPlayerController::OnPossess(APawn* aPawn)
 
 void AMiniCyphersPlayerController::OnPossessCharacter(AMiniCyphersCharacter* aCharacter)
 {
-
+	this->OwnerCharacter = aCharacter;
 }
 
 AMiniCyphersPlayerState* AMiniCyphersPlayerController::GetState()
 {
 	return Cast<AMiniCyphersPlayerState>(PlayerState);
+}
+
+AMiniCyphersCharacter* AMiniCyphersPlayerController::GetCharacter()
+{
+	return OwnerCharacter;
 }

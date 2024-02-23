@@ -22,7 +22,9 @@ public:
 
 private:
 	void OnPossessCharacter(AMiniCyphersCharacter* aCharacter);
+	AMiniCyphersCharacter* OwnerCharacter;
 
 public:
 	AMiniCyphersPlayerState* GetState();
+	AMiniCyphersCharacter* GetCharacter();
 };
