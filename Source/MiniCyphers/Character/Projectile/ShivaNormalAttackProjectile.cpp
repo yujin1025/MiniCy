@@ -44,11 +44,21 @@ void AShivaNormalAttackProjectile::BeginPlay()
 void AShivaNormalAttackProjectile::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
+
+	if (ProjectileMovementComp)
+	{
+		ProjectileMovementComp->Velocity = ProjectileDirection * ProjectileMovementComp->InitialSpeed;
+	}
 }
 
 void AShivaNormalAttackProjectile::OnAttack(UPrimitiveComponent* HitComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, FVector NormalImpulse, const FHitResult& Hit)
 {
+	if (ProjectileOwner == nullptr)
+		return;
+	
 	AMiniCyphersCharacter* DamagedCharacter = Cast<AMiniCyphersCharacter>(OtherActor); //투사체에 맞은 놈
+	if (DamagedCharacter->IsPlayer() == ProjectileOwner->IsPlayer())
+		return;
 
 	if ((OtherComp != nullptr) && DamagedCharacter != nullptr)
 	{
@@ -68,7 +78,9 @@ void AShivaNormalAttackProjectile::OnAttack(UPrimitiveComponent* HitComp, AActor
 void AShivaNormalAttackProjectile::Initialize(AMiniCyphersCharacter* Character)
 {
 	ProjectileOwner = Character;
+}
 
-	FVector Direction = Character->GetActorRotation().Vector();
-	// ProjectileMovementComp->Velocity = Direction * ProjectileMovementComp->InitialSpeed;
+void AShivaNormalAttackProjectile::SetDirection(FVector Direction)
+{
+	ProjectileDirection = Direction;
 }

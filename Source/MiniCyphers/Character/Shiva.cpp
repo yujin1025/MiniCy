@@ -7,6 +7,7 @@
 #include "Components/CapsuleComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "HealthComponent.h"
+#include "../MiniCyphersPlayerController.h"
 
 AShiva::AShiva()
 {
@@ -57,25 +58,22 @@ bool AShiva::IsSatisfiedGrabSkill()
 void AShiva::OnUseNormalAttack()
 {
 	// try and fire a projectile
-	if (ProjectileClass != nullptr)
+	if (ProjectileClass == nullptr)
+		return;
+
+	UWorld* const World = GetWorld();
+	if (World != nullptr)
 	{
-		UWorld* const World = GetWorld();
-		if (World != nullptr)
-		{
-			const FRotator SpawnRotation = GetControlRotation();
-			const FVector SpawnLocation = NormalAttackProjectileStartLocation->GetComponentLocation();
-			
-			FActorSpawnParameters ActorSpawnParams;
-			auto* tempActor = World->SpawnActor<AShivaNormalAttackProjectile>(ProjectileClass, SpawnLocation, SpawnRotation, ActorSpawnParams);
-			{
-			if (tempActor != nullptr)
-				tempActor->Initialize(this);
-			}
-		}
-	}
-	else
-	{
-		UE_LOG(LogTemp, Log, TEXT("ProjectileClass NULL"))
+		const FVector SpawnLocation = NormalAttackProjectileStartLocation->GetComponentLocation();
+		const FVector SpawnRotation = (GetCameraTargetPosition() - SpawnLocation).GetSafeNormal();
+
+		FActorSpawnParameters ActorSpawnParams;
+		auto* Projectile = World->SpawnActor<AShivaNormalAttackProjectile>(ProjectileClass, SpawnLocation, SpawnRotation.Rotation(), ActorSpawnParams);
+		if (Projectile == nullptr)
+			return;
+
+		Projectile->Initialize(this);
+		Projectile->SetDirection(SpawnRotation);
 	}
 }
 

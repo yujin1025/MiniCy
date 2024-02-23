@@ -56,6 +56,9 @@ private:
 	UPROPERTY()
 	UItemActionComponent* ItemActionComponent;
 	
+	UPROPERTY(EditAnywhere)
+	float RaycastTargetLength = 3500.0f;
+
 	bool isShift = false;
 
 public:
@@ -76,9 +79,11 @@ private:
 	void OnMove(const FInputActionValue& Value);
 	void OnLook(const FInputActionValue& Value);
 
-private:
+protected:
 	AMiniCyphersPlayerState* GetState();
 	AMiniCyphersPlayerController* GetPlayerController();
+
+	FVector GetCameraTargetPosition();
 
 public:
 	/** Returns CameraBoom subobject **/
