@@ -39,7 +39,8 @@ FVector2D UCrossHairWidget::GetScreenMousePosition()
     if (Character == nullptr)
         return FVector2D::ZeroVector;
     
-    FVector TargetLocation = Character->GetTargetPosition(ECollisionChannel::ECC_EngineTraceChannel1, 3500.0f);
+    bool IsFoundTarget = false;
+    FVector TargetLocation = Character->GetTargetPosition(ECollisionChannel::ECC_EngineTraceChannel1, 3500.0f, IsFoundTarget);
 
     FVector2D ScreenPosition;
     UGameplayStatics::ProjectWorldToScreen(PlayerController, TargetLocation, ScreenPosition);

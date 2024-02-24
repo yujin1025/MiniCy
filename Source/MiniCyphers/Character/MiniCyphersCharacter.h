@@ -101,7 +101,7 @@ public:
 	void RotateToTarget(AMiniCyphersCharacter*& Target, float RotationSpeed);
 	void SetRotation(FRotator Rotation, float RotationSpeed);
 
-	virtual FVector GetTargetPosition(ECollisionChannel Channel, float RayCastDistance);
+	virtual FVector GetTargetPosition(ECollisionChannel Channel, float RayCastDistance, OUT bool& IsFoundTarget);
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Pawn)
 	UAnimMontage* DeathMontage;

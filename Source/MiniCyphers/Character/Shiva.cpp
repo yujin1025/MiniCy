@@ -65,7 +65,10 @@ void AShiva::OnUseNormalAttack()
 	if (World != nullptr)
 	{
 		const FVector SpawnLocation = NormalAttackProjectileStartLocation->GetComponentLocation();
-		const FVector SpawnRotation = (GetTargetPosition(ECollisionChannel::ECC_EngineTraceChannel1, 3500.0f) - SpawnLocation).GetSafeNormal();
+		
+		bool IsFoundTarget = false;
+		FVector TargetPosition = GetTargetPosition(ECollisionChannel::ECC_EngineTraceChannel1, 3500.0f, IsFoundTarget);
+		const FVector SpawnRotation = (TargetPosition - SpawnLocation).GetSafeNormal();
 
 		FActorSpawnParameters ActorSpawnParams;
 		auto* Projectile = World->SpawnActor<AShivaNormalAttackProjectile>(ProjectileClass, SpawnLocation, SpawnRotation.Rotation(), ActorSpawnParams);

@@ -87,7 +87,7 @@ protected:
 	AMiniCyphersPlayerState* GetState();
 	AMiniCyphersPlayerController* GetPlayerController();
 
-	virtual FVector GetTargetPosition(ECollisionChannel Channel, float RayCastDistance) override;
+	virtual FVector GetTargetPosition(ECollisionChannel Channel, float RayCastDistance, OUT bool& IsFoundTarget) override;
 
 public:
 	/** Returns CameraBoom subobject **/
