@@ -47,12 +47,12 @@ bool AShiva::IsSatisfiedQSkill()
 
 bool AShiva::IsSatisfiedUltimateSkill()
 {
-	return true;
+	return Super::IsSatisfiedUltimateSkill();
 }
 
 bool AShiva::IsSatisfiedGrabSkill()
 {
-	return true;
+	return Super::IsSatisfiedGrabSkill();
 }
 
 void AShiva::OnUseNormalAttack()

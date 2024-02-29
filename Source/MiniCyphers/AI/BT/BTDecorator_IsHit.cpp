@@ -20,14 +20,5 @@ bool UBTDecorator_IsHit::CalculateRawConditionValue(UBehaviorTreeComponent& Owne
 		return false;
 
 	bool bHit = HitDeadComponent->bHit;
-	if (bHit)
-	{
-		MyCharacter->GetCharacterMovement()->StopActiveMovement();
-	}
-	else
-	{
-		MyCharacter->GetCharacterMovement()->SetMovementMode(EMovementMode::MOVE_Walking);
-	}
-
 	return HitDeadComponent->bHit || HitDeadComponent->bDead;
 }

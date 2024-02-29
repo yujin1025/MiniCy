@@ -63,6 +63,12 @@ private:
 	UPROPERTY(EditAnywhere)
 	float RaycastTargetLength = 3500.0f;
 
+	UPROPERTY(EditAnywhere)
+	float CameraPitchUpLock = 20.0f;
+
+	UPROPERTY(EditAnywhere)
+	float CameraPitchDownLock = -30.0f;
+
 	bool isShift = false;
 
 public:
@@ -82,6 +88,9 @@ private:
 
 	void OnMove(const FInputActionValue& Value);
 	void OnLook(const FInputActionValue& Value);
+
+protected:
+	virtual void Look(const FVector2D Value) override;
 
 protected:
 	AMiniCyphersPlayerState* GetState();

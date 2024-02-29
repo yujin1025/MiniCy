@@ -22,12 +22,19 @@ public:
 private:
 	FVector CurrentLocation;
 	FVector TargetLocation;
+	bool IsFoundTarget = false;
 
-	float FrameProgressingTime;
-	float MaxFrameProgressingTime = 0.7f;
+	float FrameProgressingTime = 0.0f;
+
+	UPROPERTY(EditAnywhere)
+	float TeleportDistance = 1000.0f;
+
+	UPROPERTY(EditAnywhere)
+	float TeleportDistanceMaxPercent = 0.8f;
+
+	UPROPERTY(EditAnywhere)
+	float TeleportAnimationSpeedRate = 0.2f;
 	
 	UPROPERTY(EditAnywhere)
 	float SpeedRate = 3.0f;
-
-	bool IsFoundTarget = false;
 };

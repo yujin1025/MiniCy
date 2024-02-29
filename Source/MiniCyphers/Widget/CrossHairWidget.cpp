@@ -18,11 +18,8 @@ void UCrossHairWidget::NativeTick(const FGeometry& MyGeometry, float InDeltaTime
 {
     Super::NativeTick(MyGeometry, InDeltaTime);
 
-    FVector2D AimScreenPosition = GetAimScreenPosition(AimPoint);
     FVector2D NewScreenPosition = GetScreenMousePosition();
-
-    FVector2D NewPosition = FVector2D(NewScreenPosition.X, NewScreenPosition.Y);
-    SetPositionInViewport(NewPosition);
+    SetPositionInViewport(NewScreenPosition);
 }
 
 FVector2D UCrossHairWidget::GetScreenMousePosition()

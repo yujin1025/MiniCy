@@ -9,12 +9,12 @@
 
 UAnimNotifyHitDetectionState::UAnimNotifyHitDetectionState()
 {
-    bIsDouble = false;
+   
 }
 
 void UAnimNotifyHitDetectionState::HitDetection(USkeletalMeshComponent* MeshComp)
 {
-	if (bHasTakenDamage)
+	if (CurrentAttackCount >= MaxAttackCount)
 		return;
 
 	AMiniCyphersCharacter* MyCharacter = Cast<AMiniCyphersCharacter>(MeshComp->GetOwner());
@@ -26,16 +26,15 @@ void UAnimNotifyHitDetectionState::HitDetection(USkeletalMeshComponent* MeshComp
 
 		if (DamagedHealthComponent)
 		{
-			int DamageAmount = bIsDouble ? 20 : 10;
 			DamagedHealthComponent->ChangeHealth(MyCharacter, -DamageAmount);
-			bHasTakenDamage = true;
+			CurrentAttackCount++;
 		}
 	}
 }
 
 void UAnimNotifyHitDetectionState::NotifyBegin(USkeletalMeshComponent* MeshComp, UAnimSequenceBase* Animation, float TotalDuration, const FAnimNotifyEventReference& EventReference)
 {
-	bHasTakenDamage = false;
+	CurrentAttackCount = 0;
 	HitDetection(MeshComp);
 }
 
@@ -46,7 +45,7 @@ void UAnimNotifyHitDetectionState::NotifyTick(USkeletalMeshComponent* MeshComp, 
 
 void UAnimNotifyHitDetectionState::NotifyEnd(USkeletalMeshComponent* MeshComp, UAnimSequenceBase* Animation, const FAnimNotifyEventReference& EventReference)
 {
-	bHasTakenDamage = false;
+	CurrentAttackCount = 0;
 }
 
 FCollisionShape UAnimNotifyHitDetectionState::MakeDetection(const float SphereRadius, const float Long)

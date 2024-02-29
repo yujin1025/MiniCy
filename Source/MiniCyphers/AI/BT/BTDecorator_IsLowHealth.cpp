@@ -31,7 +31,5 @@ bool UBTDecorator_IsLowHealth::CalculateRawConditionValue(UBehaviorTreeComponent
 		return false;
 
 	int CurrentHealth = HealthComponent->GetCurrentHealth();
-	UE_LOG(LogTemp, Warning, TEXT("Monster's Current Health: %d"), CurrentHealth);
 	return (CurrentHealth >= MinHealth && CurrentHealth <= MaxHealth);
-
 }

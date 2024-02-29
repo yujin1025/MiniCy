@@ -33,11 +33,18 @@ public:
 	bool TryGetOverlapTarget(AMiniCyphersCharacter* Owner, OUT AMiniCyphersCharacter*& FoundTarget);
 
 protected:
+
 	UPROPERTY(EditAnywhere)
-	bool bIsDouble;
+	int MaxAttackCount = 1;
 
+	int CurrentAttackCount = 0;
+
+	UPROPERTY(EditAnywhere)
+	int DamageAmount;
+
+	UPROPERTY(EditAnywhere)
 	float DetectShort = 600.0f;
+	
+	UPROPERTY(EditAnywhere)
 	float DetectLong = 800.0f;
-
-	bool bHasTakenDamage;
 };

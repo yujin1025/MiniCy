@@ -13,11 +13,21 @@ void UAnimNotifyTeleport::NotifyBegin(USkeletalMeshComponent* MeshComp, UAnimSeq
     IsFoundTarget = false;
 
     CurrentLocation = MyCharacter->GetActorLocation();
-    TargetLocation = MyCharacter->GetTargetPosition(ECollisionChannel::ECC_EngineTraceChannel1, 1000.0f, IsFoundTarget);
+    
+    auto AttackTargetLocation = MyCharacter->GetTargetPosition(ECollisionChannel::ECC_GameTraceChannel2, TeleportDistance, IsFoundTarget);
+    if (IsFoundTarget)
+    {
+        TargetLocation = FVector(AttackTargetLocation.X, AttackTargetLocation.Y, CurrentLocation.Z);;
+    }
+    else
+    {
+        bool NoUseFoundTarget = false;
+        auto Location = MyCharacter->GetTargetPosition(ECollisionChannel::ECC_WorldStatic, TeleportDistance, NoUseFoundTarget);
+        TargetLocation = FVector(Location.X, Location.Y, CurrentLocation.Z);
+    }
 
     FrameProgressingTime = 0.0f;
-
-    DrawDebugSphere(GetWorld(), TargetLocation, 10.0f, 12, FColor::Green, false, 5.0f); //마우스 클릭한 곳 디버그
+    Animation->RateScale = TeleportAnimationSpeedRate;
 }
 
 void UAnimNotifyTeleport::NotifyTick(USkeletalMeshComponent* MeshComp, UAnimSequenceBase* Animation, float FrameDeltaTime, const FAnimNotifyEventReference& EventReference)
@@ -26,17 +36,19 @@ void UAnimNotifyTeleport::NotifyTick(USkeletalMeshComponent* MeshComp, UAnimSequ
     if (!MyCharacter)
         return;
 
-    if (FrameProgressingTime >= MaxFrameProgressingTime)
+    if (FrameProgressingTime >= 0.8f)
         return;
 
-    FrameProgressingTime += FrameDeltaTime * SpeedRate;
+    FrameProgressingTime += FrameDeltaTime;
 
-    auto LerpLocation = FMath::Lerp(CurrentLocation, TargetLocation, FrameProgressingTime);
+    auto LerpLocation = FMath::VInterpTo(CurrentLocation, TargetLocation, FrameProgressingTime, SpeedRate);
     MyCharacter->SetActorLocation(LerpLocation);
 }
 
 void UAnimNotifyTeleport::NotifyEnd(USkeletalMeshComponent* MeshComp, UAnimSequenceBase* Animation, const FAnimNotifyEventReference& EventReference)
 {
+    Animation->RateScale = 1.0f;
+    
     AMiniCyphersCharacter* MyCharacter = Cast<AMiniCyphersCharacter>(MeshComp->GetOwner());
     if (!MyCharacter)
         return;

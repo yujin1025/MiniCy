@@ -51,6 +51,9 @@ AMiniCyphersCharacter::AMiniCyphersCharacter()
 		FString ComponentName = TEXT("ComboActionComponent [") + AttackTypeStr + "]";
 		auto Component = CreateDefaultSubobject<UComboActionComponent>((FName)*ComponentName);
 		ActionComponentMap.Add(AttackType, Component);
+
+		ActionCoolTimeMap.Add(AttackType, 5.0f);
+		CurrentActionCoolTimeMap.Add(AttackType, 0.0f);
 	}
 }
 
@@ -111,9 +114,24 @@ void AMiniCyphersCharacter::Look(const FVector2D Value)
 	}
 }
 
+bool AMiniCyphersCharacter::CheckCoolTime(EAttackType AttackType)
+{
+	if (ActionCoolTimeMap.Contains(AttackType) == false)
+		return true;
+
+	if (CurrentActionCoolTimeMap.Contains(AttackType) == false)
+		return true;
+
+	float CurrentCoolTime = CurrentActionCoolTimeMap[AttackType];
+	return CurrentCoolTime <= FDateTime::Now().GetSecond();
+}
+
 void AMiniCyphersCharacter::UseSkill(EAttackType AttackType) //캐릭터(나)가 때림
 {
 	if (ActionComponentMap.Contains(AttackType) == false)
+		return;
+
+	if (ActionCoolTimeMap.Contains(AttackType) == false)
 		return;
 
 	for (auto& MapPair : ActionComponentMap)
@@ -125,6 +143,7 @@ void AMiniCyphersCharacter::UseSkill(EAttackType AttackType) //캐릭터(나)가 때림
 	}
 
 	ActionComponentMap[AttackType]->DoCombo();
+	CurrentActionCoolTimeMap[AttackType] = FDateTime::Now().GetSecond() + ActionCoolTimeMap[AttackType];
 
 	switch (AttackType)
 	{
@@ -210,6 +229,36 @@ FVector AMiniCyphersCharacter::GetTargetPosition(ECollisionChannel Channel, floa
 {
 	IsFoundTarget = false;
 	return FVector::ZeroVector;
+}
+
+bool AMiniCyphersCharacter::IsSatisfiedNormalAttack()
+{
+	return CheckCoolTime(EAttackType::NormalAttack);
+}
+
+bool AMiniCyphersCharacter::IsSatisfiedRightClickAttack()
+{
+	return CheckCoolTime(EAttackType::RightClickAttack);
+}
+
+bool AMiniCyphersCharacter::IsSatisfiedQSkill()
+{
+	return CheckCoolTime(EAttackType::QSkillAttack);
+}
+
+bool AMiniCyphersCharacter::IsSatisfiedUltimateSkill()
+{
+	return CheckCoolTime(EAttackType::UltimateAttack);
+}
+
+bool AMiniCyphersCharacter::IsSatisfiedGrabSkill()
+{
+	return CheckCoolTime(EAttackType::GrabSkillAttack);
+}
+
+bool AMiniCyphersCharacter::IsSatisfiedShiftAttack()
+{
+	return CheckCoolTime(EAttackType::ShiftAttack);
 }
 
 void AMiniCyphersCharacter::OnUseNormalAttack()

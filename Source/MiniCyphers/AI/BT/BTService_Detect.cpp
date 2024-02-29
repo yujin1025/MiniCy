@@ -39,7 +39,7 @@ bool UBTService_Detect::TryGetOverlapResult(AMiniCyphersCharacter* Owner, TArray
 		OverlapResults,
 		Center,
 		FQuat::Identity,
-		ECollisionChannel::ECC_GameTraceChannel2,
+		ECollisionChannel::ECC_Pawn,
 		FCollisionShape::MakeSphere(DetectRadius),
 		CollisionParam);
 

@@ -45,6 +45,11 @@ private:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Action, meta = (AllowPrivateAccess = "true"))
 	TMap<EAttackType, UComboActionComponent*> ActionComponentMap;
 
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Action, meta = (AllowPrivateAccess = "true"))
+	TMap<EAttackType, float> ActionCoolTimeMap;
+
+	TMap<EAttackType, float> CurrentActionCoolTimeMap;
+
 public:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Id, meta = (AllowPrivateAccess = "true"))
 	int CharacterId;
@@ -60,7 +65,9 @@ public:
 
 protected:
 	void Move(const FVector2D Value);
-	void Look(const FVector2D Value);
+	virtual void Look(const FVector2D Value);
+
+	bool CheckCoolTime(EAttackType AttackType);
 
 	FString GetEnumNameAsString(EAttackType EnumValue);
 
@@ -75,12 +82,12 @@ public:
 
 public:
 
-	virtual bool IsSatisfiedNormalAttack() { return true; }
-	virtual bool IsSatisfiedRightClickAttack() { return true; }
-	virtual bool IsSatisfiedQSkill() { return true; }
-	virtual bool IsSatisfiedUltimateSkill() { return true; }
-	virtual bool IsSatisfiedGrabSkill() { return true; }
-	virtual bool IsSatisfiedShiftAttack() { return true; }
+	virtual bool IsSatisfiedNormalAttack();
+	virtual bool IsSatisfiedRightClickAttack();
+	virtual bool IsSatisfiedQSkill();
+	virtual bool IsSatisfiedUltimateSkill();
+	virtual bool IsSatisfiedGrabSkill();
+	virtual bool IsSatisfiedShiftAttack();
 
 	virtual void OnUseNormalAttack();
 	virtual void OnUseShiftLeftClickAttack() {}

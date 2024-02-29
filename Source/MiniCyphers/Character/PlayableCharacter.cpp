@@ -93,6 +93,16 @@ void APlayableCharacter::OnLook(const FInputActionValue& Value)
 	Look(LookAxisVector);
 }
 
+void APlayableCharacter::Look(const FVector2D Value)
+{
+	Super::Look(Value);
+
+	FRotator Rotation = Controller->GetControlRotation();
+	float CurrentRotation = Rotation.Pitch > 270.0f ? Rotation.Pitch - 360.0f : Rotation.Pitch;
+	Rotation.Pitch = FMath::Clamp(CurrentRotation, CameraPitchDownLock, CameraPitchUpLock);
+	Controller->SetControlRotation(Rotation);
+}
+
 AMiniCyphersPlayerState* APlayableCharacter::GetState()
 {
 	return Cast<AMiniCyphersPlayerState>(GetPlayerState());
@@ -132,22 +142,22 @@ FVector APlayableCharacter::GetTargetPosition(ECollisionChannel Channel, float R
 
 bool APlayableCharacter::IsSatisfiedNormalAttack()
 {
-	return !InputBlockComponent->bInputBlock;
+	return Super::IsSatisfiedNormalAttack() && !InputBlockComponent->bInputBlock;
 }
 
 bool APlayableCharacter::IsSatisfiedRightClickAttack()
 {
-	return !InputBlockComponent->bInputBlock;
+	return Super::IsSatisfiedRightClickAttack() && !InputBlockComponent->bInputBlock;
 }
 
 bool APlayableCharacter::IsSatisfiedQSkill()
 {
-	return !InputBlockComponent->bInputBlock;
+	return Super::IsSatisfiedQSkill() && !InputBlockComponent->bInputBlock;
 }
 
 bool APlayableCharacter::IsSatisfiedShiftAttack()
 {
-	return !InputBlockComponent->bInputBlock;
+	return Super::IsSatisfiedShiftAttack() && !InputBlockComponent->bInputBlock;
 }
 
 
