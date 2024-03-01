@@ -22,7 +22,7 @@ void UBTService_Detect::TickNode(UBehaviorTreeComponent& OwnerComp, uint8* NodeM
 	OnTickNode(OwnerComp, DeltaSeconds);
 }
 
-void UBTService_Detect::FindTarget(UBehaviorTreeComponent& OwnerComp, AMiniCyphersCharacter* MyCharacter, OUT AMiniCyphersCharacter* DetectedTarget)
+void UBTService_Detect::FindTarget(UBehaviorTreeComponent& OwnerComp, AMiniCyphersCharacter* MyCharacter, OUT AMiniCyphersCharacter*& DetectedTarget)
 {
 	if (TryGetAttackerTrackingResult(OwnerComp, OUT DetectedTarget) == false)
 	{
