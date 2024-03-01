@@ -23,4 +23,7 @@ private:
 	UPROPERTY(EditAnywhere)
 	float DetectRadius = 600.0f;
 	
+public:
+	UPROPERTY(EditDefaultsOnly, Category = Projectile)
+	TSubclassOf<class ATowerShot> ProjectileClass;
 };

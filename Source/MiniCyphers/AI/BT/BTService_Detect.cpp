@@ -57,6 +57,35 @@ bool UBTService_Detect::TryGetOverlapResult(AMiniCyphersCharacter* Owner, TArray
 	return bResult;
 }
 
+bool UBTService_Detect::TryGetOverlapTargets(AMiniCyphersCharacter* Owner, OUT TArray<AMiniCyphersCharacter*>& FoundTargets)
+{
+	TArray<FOverlapResult> OverlapResults;
+
+	if (TryGetOverlapResult(Owner, OverlapResults))
+	{
+		for (auto const& OverlapResult : OverlapResults)
+		{
+			auto* TargetCharacter = GetCharacter(OverlapResult);
+			if (TargetCharacter == nullptr)
+				continue;
+
+			if (IsPlayerDetect && TargetCharacter->IsPlayer())
+			{
+				FoundTargets.Add(TargetCharacter);
+				continue;
+			}
+
+			if (!IsPlayerDetect && TargetCharacter->IsPlayer() == false)
+			{
+				FoundTargets.Add(TargetCharacter);
+				continue;
+			}
+		}
+	}
+
+	return FoundTargets.Num() > 0;
+}
+
 bool UBTService_Detect::TryGetOverlapTarget(AMiniCyphersCharacter* Owner, OUT AMiniCyphersCharacter*& FoundTarget)
 {
 	TArray<FOverlapResult> OverlapResults;

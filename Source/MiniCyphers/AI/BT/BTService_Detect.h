@@ -20,6 +20,8 @@ protected:
 	virtual void TickNode(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory, float DeltaSeconds) override;
 	virtual void FindTarget(UBehaviorTreeComponent& OwnerComp, AMiniCyphersCharacter* MyCharacter, OUT AMiniCyphersCharacter*& DetectedTarget);
 	bool TryGetOverlapResult(AMiniCyphersCharacter* Owner, TArray<FOverlapResult>& OverlapResults);
+
+	bool TryGetOverlapTargets(AMiniCyphersCharacter* Owner, OUT TArray<AMiniCyphersCharacter*>& FoundTargets);
 	bool TryGetOverlapTarget(AMiniCyphersCharacter* Owner, OUT AMiniCyphersCharacter*& FoundTarget);
 	void SetDetectedTarget(UBehaviorTreeComponent& OwnerComp, AMiniCyphersCharacter* TargetCharacter);
 	bool TryGetAttackerTrackingResult(UBehaviorTreeComponent& OwnerComp, OUT AMiniCyphersCharacter*& FoundTarget);

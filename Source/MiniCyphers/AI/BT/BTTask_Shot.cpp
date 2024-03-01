@@ -4,6 +4,7 @@
 #include "BTTask_Shot.h"
 #include "../MiniCyphersAIController.h"
 #include "../../Character/MiniCyphersCharacter.h"
+#include "../../Character/Projectile/TowerShot.h"
 #include "BehaviorTree/BlackboardComponent.h"
 #include "DrawDebugHelpers.h"
 
@@ -23,21 +24,12 @@ EBTNodeResult::Type UBTTask_Shot::ExecuteTask(UBehaviorTreeComponent& OwnerComp,
 	if (TargetCharacter == nullptr)
 		return EBTNodeResult::Failed;
 
-	UWorld* World = GetWorld();
-	if (World)
-	{
-		FVector TargetLocation = TargetCharacter->GetActorLocation();
-		DrawDebugSphere(World, TargetLocation, 200.0f, 16, FColor::Red, false, 0.2f);
-	}
+	UWorld* const World = GetWorld();
 
-	return EBTNodeResult::InProgress;
+	auto* Projectile = World->SpawnActor<ATowerShot>(ProjectileClass, TargetCharacter->GetActorLocation(), FRotator::ZeroRotator);
+	if (Projectile == nullptr)
+		return EBTNodeResult::Failed;
+	
+
+	return EBTNodeResult::Succeeded;
 }
-
-/*
-void UBTTask_Shot::TickTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory, float DeltaSeconds)
-{
-	Super::TickTask(OwnerComp, NodeMemory, DeltaSeconds);
-
-
-
-}*/
