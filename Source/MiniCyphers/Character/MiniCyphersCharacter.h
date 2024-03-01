@@ -80,7 +80,7 @@ public:
 	FOnAttack OnAttackDelegate;
 
 private:
-	bool isAttacking = false;
+	bool isProgressingSkillMotion = false;
 
 public:
 

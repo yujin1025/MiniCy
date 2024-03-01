@@ -128,6 +128,9 @@ bool AMiniCyphersCharacter::CheckCoolTime(EAttackType AttackType)
 
 void AMiniCyphersCharacter::UseSkill(EAttackType AttackType) //캐릭터(나)가 때림
 {
+	if (isProgressingSkillMotion)
+		return;
+
 	if (ActionComponentMap.Contains(AttackType) == false)
 		return;
 
@@ -172,12 +175,12 @@ void AMiniCyphersCharacter::UseSkill(EAttackType AttackType) //캐릭터(나)가 때림
 		break;
 	}
 
-	isAttacking = true;
+	isProgressingSkillMotion = true;
 }
 
 void AMiniCyphersCharacter::OnFinishedSkillMotion(EAttackType AttackType)
 {
-	isAttacking = false;
+	isProgressingSkillMotion = false;
 	OnUseSkillDelegate.Broadcast(AttackType);
 }
 

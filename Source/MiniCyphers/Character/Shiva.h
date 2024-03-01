@@ -41,14 +41,14 @@ protected:
 public:
 	/** Projectile class to spawn */
 	UPROPERTY(EditDefaultsOnly, Category = Projectile)
-		TSubclassOf<class AShivaShadowKnife> ProjectileClass;
+	TSubclassOf<class AShivaShadowKnife> ProjectileClass;
 
 	/** Location on gun mesh where projectiles should spawn. */
 	UPROPERTY(VisibleDefaultsOnly, Category = Mesh)
-		USceneComponent* NormalAttackProjectileStartLocation;
+	USceneComponent* NormalAttackProjectileStartLocation;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Gameplay)
-		FVector NormalAttackStartLocation;
+	FVector NormalAttackStartLocation;
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Skills")
 	float SkillRange;

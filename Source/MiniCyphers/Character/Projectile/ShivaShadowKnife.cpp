@@ -27,18 +27,15 @@ AShivaShadowKnife::AShivaShadowKnife()
 	// Use a ProjectileMovementComponent to govern this projectile's movement
 	ProjectileMovementComp = CreateDefaultSubobject<UProjectileMovementComponent>(TEXT("ProjectileComp"));
 	ProjectileMovementComp->UpdatedComponent = CollisionComp;
-	ProjectileMovementComp->InitialSpeed = 3000.f;
-	ProjectileMovementComp->MaxSpeed = 3000.f;
 	ProjectileMovementComp->bRotationFollowsVelocity = true;
 	ProjectileMovementComp->bShouldBounce = false;
-
-	// Die after 1 seconds by default
-	InitialLifeSpan = 3.0f;
 }
 
 void AShivaShadowKnife::BeginPlay()
 {
 	Super::BeginPlay();	
+
+	InitialLifeSpan = LifeSeconds;
 }
 
 void AShivaShadowKnife::Tick(float DeltaTime)
@@ -47,7 +44,7 @@ void AShivaShadowKnife::Tick(float DeltaTime)
 
 	if (ProjectileMovementComp)
 	{
-		ProjectileMovementComp->Velocity = ProjectileDirection * ProjectileMovementComp->InitialSpeed;
+		ProjectileMovementComp->Velocity = ProjectileDirection * ProjectileSpeed;
 	}
 }
 
@@ -60,19 +57,38 @@ void AShivaShadowKnife::OnAttack(UPrimitiveComponent* HitComp, AActor* OtherActo
 	if (DamagedCharacter->IsPlayer() == ProjectileOwner->IsPlayer())
 		return;
 
-	if ((OtherComp != nullptr) && DamagedCharacter != nullptr)
-	{
-		UWorld* const World = GetWorld();
-		if (World != nullptr)
-		{
-			UHealthComponent* DamagedHealthComponent = DamagedCharacter->FindComponentByClass<UHealthComponent>();
-			if (DamagedHealthComponent == nullptr)
-				return;
+	UWorld* const World = GetWorld();
+	if (World == nullptr)
+		return;
 
-			DamagedHealthComponent->ChangeHealth(ProjectileOwner, -10);
-			Destroy();
+	if (OtherComp == nullptr)
+		return;
+
+	const FVector SpawnLocation = OtherComp->GetComponentLocation();
+	FActorSpawnParameters ActorSpawnParams;
+	
+	if (DamagedCharacter != nullptr)
+	{
+		UHealthComponent* DamagedHealthComponent = DamagedCharacter->FindComponentByClass<UHealthComponent>();
+		if (DamagedHealthComponent == nullptr)
+			return;
+
+		DamagedHealthComponent->ChangeHealth(ProjectileOwner, -10);
+
+		if (EnemyHitParticleEffect)
+		{
+			World->SpawnActor<AActor>(EnemyHitParticleEffect, SpawnLocation, GetActorRotation(), ActorSpawnParams);
 		}
 	}
+	else
+	{
+		if (WallHitParticleEffect)
+		{
+			World->SpawnActor<AActor>(WallHitParticleEffect, SpawnLocation, GetActorRotation(), ActorSpawnParams);
+		}
+	}
+
+	Destroy();
 }
 
 void AShivaShadowKnife::Initialize(AMiniCyphersCharacter* Character)
