@@ -3,36 +3,47 @@
 
 #include "HitDeadComponent.h"
 
-void UHitDeadComponent::PlayHitMontage()
+void UHitDeadComponent::PlayHitMontage(EDamageType DamageType)
 {
-	if (HitMontages.Num() > 0)
+	if (DamageType == EDamageType::Stand)
 	{
+		int32 MontageCount = StandHitMontages.Num();
+		if (MontageCount <= 0)
+			return;
+
 		AMiniCyphersCharacter* Character = Cast<AMiniCyphersCharacter>(GetOwner());
-		if (Character)
-		{
-			int32 MontageCount = HitMontages.Num();
-			if (MontageCount > 0)
-			{
-				CurrentHitMontageIndex = (CurrentHitMontageIndex + 1) % MontageCount;
-				Character->PlayAnimMontage(HitMontages[CurrentHitMontageIndex]);
-			}
-		}
+		if (Character == nullptr)
+			return;
+
+		CurrentHitMontageIndex = (CurrentHitMontageIndex + 1) % MontageCount;
+		Character->PlayAnimMontage(StandHitMontages[CurrentHitMontageIndex]);
 	}
+	else if (DamageType == EDamageType::Airborne)
+	{
+		int32 MontageCount = AirborneHitMontages.Num();
+		if (MontageCount <= 0)
+			return;
+
+		AMiniCyphersCharacter* Character = Cast<AMiniCyphersCharacter>(GetOwner());
+		if (Character == nullptr)
+			return;
+
+		CurrentAirborneHitMontageIndex = (CurrentAirborneHitMontageIndex + 1) % MontageCount;
+		Character->PlayAnimMontage(StandHitMontages[CurrentAirborneHitMontageIndex]);
+	}
+	
 }
 
 void UHitDeadComponent::PlayDeadMontage()
 {
-	if (DeadMontages.Num() > 0)
-	{
-		AMiniCyphersCharacter* Character = Cast<AMiniCyphersCharacter>(GetOwner());
-		if (Character)
-		{
-			int32 MontageCount = DeadMontages.Num();
-			if (MontageCount > 0)
-			{
-				CurrentDeadMontageIndex = (CurrentDeadMontageIndex + 1) % MontageCount;
-				Character->PlayAnimMontage(DeadMontages[CurrentDeadMontageIndex]);
-			}
-		}
-	}
+	int32 MontageCount = DeadMontages.Num();
+	if (MontageCount <= 0)
+		return;
+
+	AMiniCyphersCharacter* Character = Cast<AMiniCyphersCharacter>(GetOwner());
+	if (Character == nullptr)
+		return;
+
+	CurrentDeadMontageIndex = (CurrentDeadMontageIndex + 1) % MontageCount;
+	Character->PlayAnimMontage(DeadMontages[CurrentDeadMontageIndex]);
 }

@@ -37,7 +37,7 @@ protected:
 public:	
 	// Called every frame
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
-	void ChangeHealth(AMiniCyphersCharacter* Attacker, EDamageType DamageType, int DamageAmount, float UpperHeight, float KnockBackDistance, bool isMelee);
+	void ChangeHealth(AMiniCyphersCharacter* Attacker, EDamageType DamageType, int DamageAmount, float UpperVelocity, float KnockBackDistance, bool isMelee);
 
 	UFUNCTION(BlueprintPure, Category = "Health")
 	int GetCurrentHealth() const { return CurrentHealth; }	

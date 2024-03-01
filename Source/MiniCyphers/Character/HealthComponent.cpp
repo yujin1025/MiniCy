@@ -47,7 +47,7 @@ void UHealthComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActo
 	// ...
 }
 
-void UHealthComponent::ChangeHealth(AMiniCyphersCharacter* Attacker, EDamageType DamageType, int HealthAmount, float UpperHeight, float KnockBackDistance, bool isMelee)
+void UHealthComponent::ChangeHealth(AMiniCyphersCharacter* Attacker, EDamageType DamageType, int HealthAmount, float UpperVelocity, float KnockBackDistance, bool isMelee)
 {
 	auto* GameMode = Cast<AMiniCyphersGameMode>(GetWorld()->GetAuthGameMode());
 	if (GameMode == nullptr)
@@ -55,15 +55,10 @@ void UHealthComponent::ChangeHealth(AMiniCyphersCharacter* Attacker, EDamageType
 
 	if (CurrentHealth <= 0)
 		return;
-
-	//Shiva이면서 bInvincible이 true일때 무적  - 아직 확실X
-	AShiva* ShivaCharacter = Cast<AShiva>(GetOwner());
-	if (ShivaCharacter && ShivaCharacter->bInvincible)
+	
+	auto* Character = GetCyphersCharacter();
+	if (Character == nullptr || Character->bInvincible)
 		return;
-
-	CurrentHealth += HealthAmount;
-
-	auto Character = Cast<AMiniCyphersCharacter>(GetOwner());
 
 	if (Character->IsPlayer()) // 영향 받는 애가 플레이어
 	{
@@ -76,6 +71,8 @@ void UHealthComponent::ChangeHealth(AMiniCyphersCharacter* Attacker, EDamageType
 		UE_LOG(LogTemp, Warning, TEXT("Non Player Number : (%d) Current Health: %d"), Character->CharacterId, CurrentHealth);
 	}
 
+	CurrentHealth += HealthAmount;
+
 	if (HealthAmount < 0)
 	{
 		if (CurrentHealth <= 0)
@@ -84,7 +81,7 @@ void UHealthComponent::ChangeHealth(AMiniCyphersCharacter* Attacker, EDamageType
 		}
 		else
 		{
-			Character->OnHit(Attacker);
+			Character->OnHit(Attacker, DamageType, FMath::Abs(HealthAmount), UpperVelocity, KnockBackDistance, isMelee);
 		}
 
 		OnDamaged.Broadcast(Attacker, CurrentHealth);

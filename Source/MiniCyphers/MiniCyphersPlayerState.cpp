@@ -13,7 +13,6 @@ void AMiniCyphersPlayerState::OnChangePlayerHealth(int objectId, float Amount)
 	
 	if (Amount <= 0.0f)
 	{
-		
 		UE_LOG(LogTemp, Warning, TEXT("Destroyed!"));
 	}
 }

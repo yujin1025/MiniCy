@@ -26,7 +26,7 @@ void UAnimNotifyAttackState::TryAttack(USkeletalMeshComponent* MeshComp)
 
 		if (DamagedHealthComponent)
 		{
-			DamagedHealthComponent->ChangeHealth(MyCharacter, DamageType , -DamageAmount, UpperHeight, KnockBackDistance, IsMelee);
+			DamagedHealthComponent->ChangeHealth(MyCharacter, DamageType , -DamageAmount, UpperVelocity, KnockBackDistance, IsMelee);
 			CurrentAttackCount++;
 		}
 	}

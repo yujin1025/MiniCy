@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
+#include "../Animation/AnimNotifyAttackState.h"
 #include "Logging/LogMacros.h"
 #include "MiniCyphersCharacter.generated.h"
 
@@ -100,7 +101,7 @@ public:
 	virtual void OnUseUltimateSkill() {}
 	virtual void OnUseGrabSkill() {}
 
-	virtual void OnHit(AMiniCyphersCharacter* Attacker);
+	virtual void OnHit(AMiniCyphersCharacter* Attacker, EDamageType DamageType, int HealthAmount, float UpperVelocity, float KnockBackDistance, bool isMelee);
 	virtual void OnDie();
 
 public:

@@ -191,11 +191,19 @@ void AMiniCyphersCharacter::OnFinishedSkillMotion(EAttackType AttackType)
 	OnUseSkillDelegate.Broadcast(AttackType);
 }
 
-void AMiniCyphersCharacter::OnHit(AMiniCyphersCharacter* Attacker) //캐릭터(나)가 쳐맞음. Attack=때린놈
+void AMiniCyphersCharacter::OnHit(AMiniCyphersCharacter* Attacker, EDamageType DamageType, int DamageAmount, float UpperVelocity, float KnockBackDistance, bool isMelee)
 {
+	if (DamageType == EDamageType::Airborne)
+	{
+		GetCharacterMovement()->JumpZVelocity = UpperVelocity;
+		Jump();
+	}
+
+	Move(FVector2D(0, -KnockBackDistance));
+
 	if (HitDeadComponent)
 	{
-		HitDeadComponent->PlayHitMontage();
+		HitDeadComponent->PlayHitMontage(DamageType);
 	}
 }
 

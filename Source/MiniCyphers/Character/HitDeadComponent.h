@@ -16,17 +16,21 @@ class MINICYPHERS_API UHitDeadComponent : public UMiniCyphersComponent
 	
 private:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Animation, meta = (AllowPrivateAccess = "true"))
-	TArray<UAnimMontage*> HitMontages;
+	TArray<UAnimMontage*> StandHitMontages;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Animation, meta = (AllowPrivateAccess = "true"))
+	TArray<UAnimMontage*> AirborneHitMontages;
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Animation, meta = (AllowPrivateAccess = "true"))
 	TArray<UAnimMontage*> DeadMontages;
 
 	int32 CurrentHitMontageIndex;
 	int32 CurrentDeadMontageIndex;
+	int32 CurrentAirborneHitMontageIndex;
 
 public:
 	UFUNCTION(BlueprintCallable, Category = "Animation")
-	void PlayHitMontage();
+	void PlayHitMontage(EDamageType DamageType);
 
 	UFUNCTION(BlueprintCallable, Category = "Animation")
 	void PlayDeadMontage();

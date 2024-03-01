@@ -70,7 +70,7 @@ protected:
 	float KnockBackDistance = 50.0f;
 
 	UPROPERTY(EditAnywhere)
-	float UpperHeight = 100.0f;
+	float UpperVelocity = 100.0f;
 
 	UPROPERTY(EditAnywhere)
 	bool IsMelee = false;

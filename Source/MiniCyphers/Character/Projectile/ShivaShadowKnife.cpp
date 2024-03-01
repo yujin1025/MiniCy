@@ -55,10 +55,6 @@ void AShivaShadowKnife::OnAttack(UPrimitiveComponent* HitComp, AActor* OtherActo
 	if (ProjectileOwner == nullptr)
 		return;
 	
-	AMiniCyphersCharacter* DamagedCharacter = Cast<AMiniCyphersCharacter>(OtherActor); //투사체에 맞은 놈
-	if (DamagedCharacter->IsPlayer() == ProjectileOwner->IsPlayer())
-		return;
-
 	UWorld* const World = GetWorld();
 	if (World == nullptr)
 		return;
@@ -66,7 +62,11 @@ void AShivaShadowKnife::OnAttack(UPrimitiveComponent* HitComp, AActor* OtherActo
 	if (OtherComp == nullptr)
 		return;
 
-	const FVector SpawnLocation = OtherComp->GetComponentLocation();
+	AMiniCyphersCharacter* DamagedCharacter = Cast<AMiniCyphersCharacter>(OtherActor); //투사체에 맞은 놈
+	if (DamagedCharacter != nullptr && DamagedCharacter->IsPlayer() == ProjectileOwner->IsPlayer())
+		return;
+
+	const FVector SpawnLocation = Hit.ImpactPoint;
 	FActorSpawnParameters ActorSpawnParams;
 	UParticleSystemComponent* ParticleSystemComponent = nullptr;
 	
