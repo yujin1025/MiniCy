@@ -83,6 +83,13 @@ FString AMiniCyphersCharacter::GetEnumNameAsString(EAttackType EnumValue)
 	return "";
 }
 
+void AMiniCyphersCharacter::Tick(float DeltaTime)
+{
+	Super::Tick(DeltaTime);
+
+	CurrentDeltaTime += DeltaTime;
+}
+
 
 void AMiniCyphersCharacter::Move(const FVector2D Value)
 {
@@ -123,7 +130,7 @@ bool AMiniCyphersCharacter::CheckCoolTime(EAttackType AttackType)
 		return true;
 
 	float CurrentCoolTime = CurrentActionCoolTimeMap[AttackType];
-	return CurrentCoolTime <= FDateTime::Now().GetSecond();
+	return CurrentCoolTime <= CurrentDeltaTime;
 }
 
 void AMiniCyphersCharacter::UseSkill(EAttackType AttackType) //캐릭터(나)가 때림
@@ -146,7 +153,7 @@ void AMiniCyphersCharacter::UseSkill(EAttackType AttackType) //캐릭터(나)가 때림
 	}
 
 	ActionComponentMap[AttackType]->DoCombo();
-	CurrentActionCoolTimeMap[AttackType] = FDateTime::Now().GetSecond() + ActionCoolTimeMap[AttackType];
+	CurrentActionCoolTimeMap[AttackType] = CurrentDeltaTime + ActionCoolTimeMap[AttackType];
 
 	switch (AttackType)
 	{

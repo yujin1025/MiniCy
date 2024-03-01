@@ -70,6 +70,7 @@ protected:
 	bool CheckCoolTime(EAttackType AttackType);
 
 	FString GetEnumNameAsString(EAttackType EnumValue);
+	virtual void Tick(float DeltaTime) override;
 
 public:
 	void UseSkill(EAttackType AttackType);
@@ -81,6 +82,7 @@ public:
 
 private:
 	bool isProgressingSkillMotion = false;
+	float CurrentDeltaTime = 0.0f;
 
 public:
 
@@ -101,13 +103,13 @@ public:
 	virtual void OnHit(AMiniCyphersCharacter* Attacker);
 	virtual void OnDie();
 
-
 public:
 	bool IsPlayer(); //플레이어인지 여부
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Pawn)
 	bool isPlayerTeam = false;
 
+	bool bInvincible = false;
 
 	FVector GetLookVector(AMiniCyphersCharacter*& Target) const;
 
@@ -115,8 +117,5 @@ public:
 	void SetRotation(FRotator Rotation, float RotationSpeed);
 
 	virtual FVector GetTargetPosition(ECollisionChannel Channel, float RayCastDistance, OUT bool& IsFoundTarget);
-
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Pawn)
-	UAnimMontage* DeathMontage;
 };
 

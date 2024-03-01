@@ -47,7 +47,7 @@ void UHealthComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActo
 	// ...
 }
 
-void UHealthComponent::ChangeHealth(AMiniCyphersCharacter* Attacker, int Amount)
+void UHealthComponent::ChangeHealth(AMiniCyphersCharacter* Attacker, EDamageType DamageType, int HealthAmount, float UpperHeight, float KnockBackDistance, bool isMelee)
 {
 	auto* GameMode = Cast<AMiniCyphersGameMode>(GetWorld()->GetAuthGameMode());
 	if (GameMode == nullptr)
@@ -61,7 +61,7 @@ void UHealthComponent::ChangeHealth(AMiniCyphersCharacter* Attacker, int Amount)
 	if (ShivaCharacter && ShivaCharacter->bInvincible)
 		return;
 
-	CurrentHealth += Amount;
+	CurrentHealth += HealthAmount;
 
 	auto Character = Cast<AMiniCyphersCharacter>(GetOwner());
 
@@ -76,7 +76,7 @@ void UHealthComponent::ChangeHealth(AMiniCyphersCharacter* Attacker, int Amount)
 		UE_LOG(LogTemp, Warning, TEXT("Non Player Number : (%d) Current Health: %d"), Character->CharacterId, CurrentHealth);
 	}
 
-	if (Amount < 0)
+	if (HealthAmount < 0)
 	{
 		if (CurrentHealth <= 0)
 		{

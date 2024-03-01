@@ -19,6 +19,7 @@ enum class EDetectType
 UENUM()
 enum class EDamageType
 {
+	None = -1,
 	Stand = 0,
 	Airborne = 1,
 };
@@ -70,6 +71,9 @@ protected:
 
 	UPROPERTY(EditAnywhere)
 	float UpperHeight = 100.0f;
+
+	UPROPERTY(EditAnywhere)
+	bool IsMelee = false;
 
 	UPROPERTY(EditAnywhere)
 	EDamageType DamageType = EDamageType::Stand;

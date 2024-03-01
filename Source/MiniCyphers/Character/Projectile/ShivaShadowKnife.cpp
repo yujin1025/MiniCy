@@ -33,13 +33,6 @@ AShivaShadowKnife::AShivaShadowKnife()
 	ProjectileMovementComp->bShouldBounce = false;
 }
 
-void AShivaShadowKnife::BeginPlay()
-{
-	Super::BeginPlay();	
-
-	InitialLifeSpan = LifeSeconds;
-}
-
 void AShivaShadowKnife::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
@@ -48,6 +41,13 @@ void AShivaShadowKnife::Tick(float DeltaTime)
 	{
 		ProjectileMovementComp->Velocity = ProjectileDirection * ProjectileSpeed;
 	}
+
+	if (CurrentDeltaTime > LifeSeconds)
+	{
+		Destroy();
+	}
+
+	CurrentDeltaTime += DeltaTime;
 }
 
 void AShivaShadowKnife::OnAttack(UPrimitiveComponent* HitComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, FVector NormalImpulse, const FHitResult& Hit)
@@ -76,16 +76,16 @@ void AShivaShadowKnife::OnAttack(UPrimitiveComponent* HitComp, AActor* OtherActo
 		if (DamagedHealthComponent == nullptr)
 			return;
 
-		DamagedHealthComponent->ChangeHealth(ProjectileOwner, -10);
+		DamagedHealthComponent->ChangeHealth(ProjectileOwner, EDamageType::Stand, -DamageAmount, 0, KnockBackDistance, false);
 
-		if (ParticleSystemComponent && EnemyHitParticleEffect)
+		if (EnemyHitParticleEffect)
 		{
 			ParticleSystemComponent = UGameplayStatics::SpawnEmitterAtLocation(GetWorld(), EnemyHitParticleEffect, SpawnLocation);
 		}
 	}
 	else
 	{
-		if (ParticleSystemComponent && WallHitParticleEffect)
+		if (WallHitParticleEffect)
 		{
 			ParticleSystemComponent = UGameplayStatics::SpawnEmitterAtLocation(GetWorld(), WallHitParticleEffect, SpawnLocation);
 		}
@@ -93,7 +93,6 @@ void AShivaShadowKnife::OnAttack(UPrimitiveComponent* HitComp, AActor* OtherActo
 
 	if (ParticleSystemComponent)
 	{
-		ParticleSystemComponent->bAutoDestroy = true;
 		ParticleSystemComponent->SetRelativeScale3D(FVector(ParticleScale));
 	}
 

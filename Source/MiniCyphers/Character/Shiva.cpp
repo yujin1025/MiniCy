@@ -14,8 +14,6 @@ AShiva::AShiva()
 	NormalAttackProjectileStartLocation = CreateDefaultSubobject<USceneComponent>(TEXT("NormalAttackProjctileStartLocation"));
 	NormalAttackProjectileStartLocation->SetupAttachment(GetRootComponent());
 	NormalAttackProjectileStartLocation->SetRelativeLocation(FVector(10.0f, 48.4f, 10.0f));
-
-	SkillRange = 200.0f;
 }
 
 bool AShiva::IsSatisfiedNormalAttack()

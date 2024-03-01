@@ -37,34 +37,8 @@ void UBTTask_Attack::TickTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemo
 
 	if (bIsProcessing)
 	{
-		GetAttack(OwnerComp);
 		FinishLatentTask(OwnerComp, EBTNodeResult::Succeeded);
 	}
 
 	bIsProcessing = false;
-}
-
-void UBTTask_Attack::GetAttack(UBehaviorTreeComponent& OwnerComp)
-{
-	auto* BlackBoard = GetBlackboardComponent(OwnerComp);
-	if (BlackBoard == nullptr)
-		return;
-
-	auto TargetObject = BlackBoard->GetValueAsObject(AMiniCyphersAIController::TargetObjectKey);
-	if (TargetObject == nullptr)
-		return;
-
-	auto* TargetCharacter = Cast<AMiniCyphersCharacter>(TargetObject);
-	if (TargetCharacter == nullptr)
-		return;
-
-	UHealthComponent* HealthComponent = TargetCharacter->FindComponentByClass<UHealthComponent>();
-	if (HealthComponent == nullptr)
-		return;
-
-	auto* AIAttacker = GetCharacter(OwnerComp);
-	if (AIAttacker == nullptr)
-		return;
-
-	HealthComponent->ChangeHealth(AIAttacker, -10);
 }

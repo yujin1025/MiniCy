@@ -18,10 +18,6 @@ public:
 	// Sets default values for this actor's properties
 	AShivaShadowKnife();
 
-protected:
-	// Called when the game starts or when spawned
-	virtual void BeginPlay() override;
-
 public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
@@ -45,6 +41,11 @@ public:
 private:
 	AMiniCyphersCharacter* ProjectileOwner;
 	FVector ProjectileDirection;
+
+	float CurrentDeltaTime = 0.0f;
+
+	UPROPERTY(EditAnywhere)
+	int DamageAmount = 5;
 
 	UPROPERTY(EditAnywhere)
 	float KnockBackDistance = 50.0f;

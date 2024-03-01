@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "Components/ActorComponent.h"
 #include "GameFramework/PlayerState.h"
+#include "../Animation/AnimNotifyAttackState.h"
 #include "MiniCyphersComponent.h"
 #include "Engine/GameInstance.h"
 
@@ -36,7 +37,7 @@ protected:
 public:	
 	// Called every frame
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
-	void ChangeHealth(AMiniCyphersCharacter* Attacker, int Amount);
+	void ChangeHealth(AMiniCyphersCharacter* Attacker, EDamageType DamageType, int DamageAmount, float UpperHeight, float KnockBackDistance, bool isMelee);
 
 	UFUNCTION(BlueprintPure, Category = "Health")
 	int GetCurrentHealth() const { return CurrentHealth; }	
