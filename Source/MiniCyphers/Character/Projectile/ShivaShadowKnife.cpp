@@ -1,13 +1,13 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 
-#include "ShivaNormalAttackProjectile.h"
+#include "ShivaShadowKnife.h"
 #include "../MiniCyphersCharacter.h"
 #include "../HealthComponent.h"
 #include "Components/SphereComponent.h"
 #include "GameFramework/ProjectileMovementComponent.h"
 
-AShivaNormalAttackProjectile::AShivaNormalAttackProjectile()
+AShivaShadowKnife::AShivaShadowKnife()
 {
 	// Use a sphere as a simple collision representation
 	CollisionComp = CreateDefaultSubobject<USphereComponent>(TEXT("SphereComp"));
@@ -15,7 +15,7 @@ AShivaNormalAttackProjectile::AShivaNormalAttackProjectile()
 
 	CollisionComp->InitSphereRadius(AttackRange);
 	CollisionComp->BodyInstance.SetCollisionProfileName("Projectile");
-	CollisionComp->OnComponentHit.AddDynamic(this, &AShivaNormalAttackProjectile::OnAttack);
+	CollisionComp->OnComponentHit.AddDynamic(this, &AShivaShadowKnife::OnAttack);
 
 	// Players can't walk on it
 	CollisionComp->SetWalkableSlopeOverride(FWalkableSlopeOverride(WalkableSlope_Unwalkable, 0.f));
@@ -36,12 +36,12 @@ AShivaNormalAttackProjectile::AShivaNormalAttackProjectile()
 	InitialLifeSpan = 3.0f;
 }
 
-void AShivaNormalAttackProjectile::BeginPlay()
+void AShivaShadowKnife::BeginPlay()
 {
 	Super::BeginPlay();	
 }
 
-void AShivaNormalAttackProjectile::Tick(float DeltaTime)
+void AShivaShadowKnife::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
@@ -51,7 +51,7 @@ void AShivaNormalAttackProjectile::Tick(float DeltaTime)
 	}
 }
 
-void AShivaNormalAttackProjectile::OnAttack(UPrimitiveComponent* HitComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, FVector NormalImpulse, const FHitResult& Hit)
+void AShivaShadowKnife::OnAttack(UPrimitiveComponent* HitComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, FVector NormalImpulse, const FHitResult& Hit)
 {
 	if (ProjectileOwner == nullptr)
 		return;
@@ -75,12 +75,12 @@ void AShivaNormalAttackProjectile::OnAttack(UPrimitiveComponent* HitComp, AActor
 	}
 }
 
-void AShivaNormalAttackProjectile::Initialize(AMiniCyphersCharacter* Character)
+void AShivaShadowKnife::Initialize(AMiniCyphersCharacter* Character)
 {
 	ProjectileOwner = Character;
 }
 
-void AShivaNormalAttackProjectile::SetDirection(FVector Direction)
+void AShivaShadowKnife::SetDirection(FVector Direction)
 {
 	ProjectileDirection = Direction;
 }

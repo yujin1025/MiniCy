@@ -172,12 +172,12 @@ void AMiniCyphersCharacter::UseSkill(EAttackType AttackType) //캐릭터(나)가 때림
 		break;
 	}
 
-	//useskill 이 attacktype을 받아서, 액션컴포넌트맵(=콤보액션컴포넌트)가 어택타입을 가지고 있으면... 맞는 거 실행
-
+	isAttacking = true;
 }
 
 void AMiniCyphersCharacter::OnFinishedSkillMotion(EAttackType AttackType)
 {
+	isAttacking = false;
 	OnUseSkillDelegate.Broadcast(AttackType);
 }
 

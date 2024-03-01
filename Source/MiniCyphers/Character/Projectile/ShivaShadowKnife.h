@@ -4,19 +4,19 @@
 
 #include "CoreMinimal.h"
 #include "MiniCyphersProjectile.h"
-#include "ShivaNormalAttackProjectile.generated.h"
+#include "ShivaShadowKnife.generated.h"
 
 
 class AMiniCyphersCharacter;
 
 UCLASS()
-class MINICYPHERS_API AShivaNormalAttackProjectile : public AMiniCyphersProjectile
+class MINICYPHERS_API AShivaShadowKnife : public AMiniCyphersProjectile
 {
 	GENERATED_BODY()
 
 public:
 	// Sets default values for this actor's properties
-	AShivaNormalAttackProjectile();
+	AShivaShadowKnife();
 
 protected:
 	// Called when the game starts or when spawned
@@ -46,4 +46,6 @@ private:
 	AMiniCyphersCharacter* ProjectileOwner;
 	FVector ProjectileDirection;
 
+	UPROPERTY(EditAnywhere)
+	float KnockBackDistance = 50.0f;
 };

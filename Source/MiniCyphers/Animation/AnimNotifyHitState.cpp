@@ -1,11 +1,11 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 
-#include "AnimNotifyHit.h"
+#include "AnimNotifyHitState.h"
 #include "../Character/MiniCyphersCharacter.h"
 #include "../Character/HitDeadComponent.h"
 
-void UAnimNotifyHit::NotifyBegin(USkeletalMeshComponent* MeshComp, UAnimSequenceBase* Animation, float TotalDuration, const FAnimNotifyEventReference& EventReference)
+void UAnimNotifyHitState::NotifyBegin(USkeletalMeshComponent* MeshComp, UAnimSequenceBase* Animation, float TotalDuration, const FAnimNotifyEventReference& EventReference)
 {
 	auto owner = MeshComp->GetOwner();
 	if (owner == nullptr)
@@ -18,12 +18,12 @@ void UAnimNotifyHit::NotifyBegin(USkeletalMeshComponent* MeshComp, UAnimSequence
 	HitDeadComponent->bHit = true;
 }
 
-void UAnimNotifyHit::NotifyTick(USkeletalMeshComponent* MeshComp, UAnimSequenceBase* Animation, float FrameDeltaTime, const FAnimNotifyEventReference& EventReference)
+void UAnimNotifyHitState::NotifyTick(USkeletalMeshComponent* MeshComp, UAnimSequenceBase* Animation, float FrameDeltaTime, const FAnimNotifyEventReference& EventReference)
 {
 
 }
 
-void UAnimNotifyHit::NotifyEnd(USkeletalMeshComponent* MeshComp, UAnimSequenceBase* Animation, const FAnimNotifyEventReference& EventReference)
+void UAnimNotifyHitState::NotifyEnd(USkeletalMeshComponent* MeshComp, UAnimSequenceBase* Animation, const FAnimNotifyEventReference& EventReference)
 {
 	auto owner = MeshComp->GetOwner();
 	if (owner == nullptr)

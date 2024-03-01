@@ -9,6 +9,7 @@ void URandomMotionComponent::NormalRandomAttack()
 	auto character = this->GetCyphersCharacter();
 	if (character == nullptr)
 		return;
+
 	if (RandomMontages.Num() > 0)
 	{
 		if (RandomMontages[0] && RandomMontages[1])

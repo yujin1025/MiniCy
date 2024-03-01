@@ -7,42 +7,32 @@ void UHitDeadComponent::PlayHitMontage()
 {
 	if (HitMontages.Num() > 0)
 	{
-		if (GetOwner() && GetOwner()->IsA(AMiniCyphersCharacter::StaticClass()))
+		AMiniCyphersCharacter* Character = Cast<AMiniCyphersCharacter>(GetOwner());
+		if (Character)
 		{
-			AMiniCyphersCharacter* Character = Cast<AMiniCyphersCharacter>(GetOwner());
-			if (Character)
+			int32 MontageCount = HitMontages.Num();
+			if (MontageCount > 0)
 			{
-				int32 MontageCount = HitMontages.Num();
-				if (MontageCount > 0)
-				{
-					CurrentHitMontageIndex = (CurrentHitMontageIndex + 1) % MontageCount;
-					Character->PlayAnimMontage(HitMontages[CurrentHitMontageIndex]);
-				}
+				CurrentHitMontageIndex = (CurrentHitMontageIndex + 1) % MontageCount;
+				Character->PlayAnimMontage(HitMontages[CurrentHitMontageIndex]);
 			}
 		}
 	}
-
-	bHit = true;
 }
 
 void UHitDeadComponent::PlayDeadMontage()
 {
 	if (DeadMontages.Num() > 0)
 	{
-		if (GetOwner() && GetOwner()->IsA(AMiniCyphersCharacter::StaticClass()))
+		AMiniCyphersCharacter* Character = Cast<AMiniCyphersCharacter>(GetOwner());
+		if (Character)
 		{
-			AMiniCyphersCharacter* Character = Cast<AMiniCyphersCharacter>(GetOwner());
-			if (Character)
+			int32 MontageCount = DeadMontages.Num();
+			if (MontageCount > 0)
 			{
-				int32 MontageCount = DeadMontages.Num();
-				if (MontageCount > 0)
-				{
-					CurrentDeadMontageIndex = (CurrentDeadMontageIndex + 1) % MontageCount;
-					Character->PlayAnimMontage(DeadMontages[CurrentDeadMontageIndex]);
-				}
+				CurrentDeadMontageIndex = (CurrentDeadMontageIndex + 1) % MontageCount;
+				Character->PlayAnimMontage(DeadMontages[CurrentDeadMontageIndex]);
 			}
 		}
 	}
-
-	bDead = true;
 }

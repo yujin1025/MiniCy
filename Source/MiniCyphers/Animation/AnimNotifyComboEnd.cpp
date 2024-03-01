@@ -1,7 +1,7 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 
-#include "AnimNotifyEnd.h"
+#include "AnimNotifyComboEnd.h"
 #include "../Character/MiniCyphersCharacter.h"
 #include "../Character/ComboActionComponent.h"
 

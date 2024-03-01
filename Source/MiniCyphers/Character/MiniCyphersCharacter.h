@@ -79,6 +79,8 @@ public:
 	FOnMove OnMoveDelegate;
 	FOnAttack OnAttackDelegate;
 
+private:
+	bool isAttacking = false;
 
 public:
 

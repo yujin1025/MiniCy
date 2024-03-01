@@ -2,7 +2,7 @@
 
 
 #include "Shiva.h"
-#include "Projectile/ShivaNormalAttackProjectile.h"
+#include "Projectile/ShivaShadowKnife.h"
 #include "Components/SceneComponent.h"
 #include "Components/CapsuleComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
@@ -71,7 +71,7 @@ void AShiva::OnUseNormalAttack()
 		const FVector SpawnRotation = (TargetPosition - SpawnLocation).GetSafeNormal();
 
 		FActorSpawnParameters ActorSpawnParams;
-		auto* Projectile = World->SpawnActor<AShivaNormalAttackProjectile>(ProjectileClass, SpawnLocation, SpawnRotation.Rotation(), ActorSpawnParams);
+		auto* Projectile = World->SpawnActor<AShivaShadowKnife>(ProjectileClass, SpawnLocation, SpawnRotation.Rotation(), ActorSpawnParams);
 		if (Projectile == nullptr)
 			return;
 

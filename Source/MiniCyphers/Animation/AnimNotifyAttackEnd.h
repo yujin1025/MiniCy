@@ -3,7 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "AnimNotifyEnd.h"
+#include "AnimNotifyComboEnd.h"
 #include "../Character/MiniCyphersCharacter.h"
 #include "AnimNotifyAttackEnd.generated.h"
 

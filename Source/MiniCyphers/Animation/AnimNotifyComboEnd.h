@@ -4,7 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "Animation/AnimNotifies/AnimNotify.h"
-#include "AnimNotifyEnd.generated.h"
+#include "AnimNotifyComboEnd.generated.h"
 
 class UComboActionComponent;
 class AMiniCyphersCharacter;

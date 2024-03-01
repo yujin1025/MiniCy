@@ -80,6 +80,9 @@ void APlayableCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputC
 
 void APlayableCharacter::OnMove(const FInputActionValue& Value)
 {
+	if (InputBlockComponent->bInputBlock)
+		return;
+
 	// input is a Vector2D
 	FVector2D MovementVector = Value.Get<FVector2D>();
 	Move(MovementVector);
@@ -88,6 +91,9 @@ void APlayableCharacter::OnMove(const FInputActionValue& Value)
 
 void APlayableCharacter::OnLook(const FInputActionValue& Value)
 {
+	if (InputBlockComponent->bInputBlock)
+		return;
+
 	// input is a Vector2D
 	FVector2D LookAxisVector = Value.Get<FVector2D>();
 	Look(LookAxisVector);

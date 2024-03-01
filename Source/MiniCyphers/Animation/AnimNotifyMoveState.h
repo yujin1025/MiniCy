@@ -4,13 +4,13 @@
 
 #include "CoreMinimal.h"
 #include "MiniCyphersAnimNotifyState.h"
-#include "AnimNotifyTeleport.generated.h"
+#include "AnimNotifyMoveState.generated.h"
 
 /**
  * 
  */
 UCLASS()
-class MINICYPHERS_API UAnimNotifyTeleport : public UMiniCyphersAnimNotifyState
+class MINICYPHERS_API UAnimNotifyMoveState : public UMiniCyphersAnimNotifyState
 {
 	GENERATED_BODY()
 	
@@ -19,10 +19,9 @@ public:
 	virtual void NotifyTick(USkeletalMeshComponent* MeshComp, UAnimSequenceBase* Animation, float FrameDeltaTime, const FAnimNotifyEventReference& EventReference) override;
 	virtual void NotifyEnd(USkeletalMeshComponent* MeshComp, UAnimSequenceBase* Animation, const FAnimNotifyEventReference& EventReference) override;
 
-private:
+protected:
 	FVector CurrentLocation;
 	FVector TargetLocation;
-	bool IsFoundTarget = false;
 
 	float FrameProgressingTime = 0.0f;
 
@@ -32,9 +31,6 @@ private:
 	UPROPERTY(EditAnywhere)
 	float TeleportDistanceMaxPercent = 0.8f;
 
-	UPROPERTY(EditAnywhere)
-	float TeleportAnimationSpeedRate = 0.2f;
-	
 	UPROPERTY(EditAnywhere)
 	float SpeedRate = 3.0f;
 };

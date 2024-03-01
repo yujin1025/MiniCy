@@ -41,7 +41,7 @@ protected:
 public:
 	/** Projectile class to spawn */
 	UPROPERTY(EditDefaultsOnly, Category = Projectile)
-		TSubclassOf<class AShivaNormalAttackProjectile> ProjectileClass;
+		TSubclassOf<class AShivaShadowKnife> ProjectileClass;
 
 	/** Location on gun mesh where projectiles should spawn. */
 	UPROPERTY(VisibleDefaultsOnly, Category = Mesh)
