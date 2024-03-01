@@ -50,10 +50,13 @@ private:
 	float KnockBackDistance = 50.0f;
 
 	UPROPERTY(EditDefaultsOnly, Category = Projectile)
-	TSubclassOf<AActor> EnemyHitParticleEffect;
+	UParticleSystem* EnemyHitParticleEffect;
 
 	UPROPERTY(EditDefaultsOnly, Category = Projectile)
-	TSubclassOf<AActor> WallHitParticleEffect;
+	UParticleSystem* WallHitParticleEffect;
+
+	UPROPERTY(EditAnywhere)
+	float ParticleScale = 1.0f;
 
 	UPROPERTY(EditAnywhere)
 	float LifeSeconds = 1.5f;

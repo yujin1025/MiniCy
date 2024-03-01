@@ -6,6 +6,8 @@
 #include "../HealthComponent.h"
 #include "Components/SphereComponent.h"
 #include "GameFramework/ProjectileMovementComponent.h"
+#include <Kismet/GameplayStatics.h>
+#include "Particles/ParticleSystemComponent.h"
 
 AShivaShadowKnife::AShivaShadowKnife()
 {
@@ -66,6 +68,7 @@ void AShivaShadowKnife::OnAttack(UPrimitiveComponent* HitComp, AActor* OtherActo
 
 	const FVector SpawnLocation = OtherComp->GetComponentLocation();
 	FActorSpawnParameters ActorSpawnParams;
+	UParticleSystemComponent* ParticleSystemComponent = nullptr;
 	
 	if (DamagedCharacter != nullptr)
 	{
@@ -75,17 +78,23 @@ void AShivaShadowKnife::OnAttack(UPrimitiveComponent* HitComp, AActor* OtherActo
 
 		DamagedHealthComponent->ChangeHealth(ProjectileOwner, -10);
 
-		if (EnemyHitParticleEffect)
+		if (ParticleSystemComponent && EnemyHitParticleEffect)
 		{
-			World->SpawnActor<AActor>(EnemyHitParticleEffect, SpawnLocation, GetActorRotation(), ActorSpawnParams);
+			ParticleSystemComponent = UGameplayStatics::SpawnEmitterAtLocation(GetWorld(), EnemyHitParticleEffect, SpawnLocation);
 		}
 	}
 	else
 	{
-		if (WallHitParticleEffect)
+		if (ParticleSystemComponent && WallHitParticleEffect)
 		{
-			World->SpawnActor<AActor>(WallHitParticleEffect, SpawnLocation, GetActorRotation(), ActorSpawnParams);
+			ParticleSystemComponent = UGameplayStatics::SpawnEmitterAtLocation(GetWorld(), WallHitParticleEffect, SpawnLocation);
 		}
+	}
+
+	if (ParticleSystemComponent)
+	{
+		ParticleSystemComponent->bAutoDestroy = true;
+		ParticleSystemComponent->SetRelativeScale3D(FVector(ParticleScale));
 	}
 
 	Destroy();
