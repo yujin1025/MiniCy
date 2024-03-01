@@ -30,5 +30,14 @@ EBTNodeResult::Type UBTTask_Shot::ExecuteTask(UBehaviorTreeComponent& OwnerComp,
 		DrawDebugSphere(World, TargetLocation, 200.0f, 16, FColor::Red, false, 0.2f);
 	}
 
-	return EBTNodeResult::Succeeded;
+	return EBTNodeResult::InProgress;
 }
+
+/*
+void UBTTask_Shot::TickTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory, float DeltaSeconds)
+{
+	Super::TickTask(OwnerComp, NodeMemory, DeltaSeconds);
+
+
+
+}*/

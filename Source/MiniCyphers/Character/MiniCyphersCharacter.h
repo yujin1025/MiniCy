@@ -105,6 +105,10 @@ public:
 public:
 	bool IsPlayer(); //플레이어인지 여부
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Pawn)
+	bool isPlayerTeam = false;
+
+
 	FVector GetLookVector(AMiniCyphersCharacter*& Target) const;
 
 	void RotateToTarget(AMiniCyphersCharacter*& Target, float RotationSpeed);

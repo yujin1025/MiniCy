@@ -199,7 +199,7 @@ void AMiniCyphersCharacter::OnDie() //뎀지는 애니메이션
 
 bool AMiniCyphersCharacter::IsPlayer()
 {
-	return Controller->IsPlayerController();
+	return Controller->IsPlayerController() || isPlayerTeam;
 }
 
 FVector AMiniCyphersCharacter::GetLookVector(AMiniCyphersCharacter*& Target) const

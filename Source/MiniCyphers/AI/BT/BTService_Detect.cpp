@@ -16,15 +16,21 @@ void UBTService_Detect::TickNode(UBehaviorTreeComponent& OwnerComp, uint8* NodeM
 		return;
 
 	AMiniCyphersCharacter* DetectedTarget = nullptr;
+	FindTarget(OwnerComp, MyCharacter, OUT DetectedTarget);
+	
+	SetDetectedTarget(OwnerComp, DetectedTarget);
+	OnTickNode(OwnerComp, DeltaSeconds);
+}
 
+void UBTService_Detect::FindTarget(UBehaviorTreeComponent& OwnerComp, AMiniCyphersCharacter* MyCharacter, OUT AMiniCyphersCharacter* DetectedTarget)
+{
 	if (TryGetAttackerTrackingResult(OwnerComp, OUT DetectedTarget) == false)
 	{
 		TryGetOverlapTarget(MyCharacter, OUT DetectedTarget);
 	}
-
-	SetDetectedTarget(OwnerComp, DetectedTarget);
-	OnTickNode(OwnerComp, DeltaSeconds);
 }
+
+
 
 bool UBTService_Detect::TryGetOverlapResult(AMiniCyphersCharacter* Owner, TArray<FOverlapResult>& OverlapResults)
 {
@@ -63,7 +69,10 @@ bool UBTService_Detect::TryGetOverlapTarget(AMiniCyphersCharacter* Owner, OUT AM
 			if (TargetCharacter == nullptr)
 				continue;
 
-			if (TargetCharacter->IsPlayer() == false)
+			//IsPlayerDetect : player인지 detect하는거 : true인게 trooper, sentinel
+			//TargetCharacter->IsPlayer : true인게 shiva, tower
+			if ((IsPlayerDetect && TargetCharacter->IsPlayer() == false) ||
+				(!IsPlayerDetect && TargetCharacter->IsPlayer()))
 				continue;
 
 			FoundTarget = TargetCharacter;
