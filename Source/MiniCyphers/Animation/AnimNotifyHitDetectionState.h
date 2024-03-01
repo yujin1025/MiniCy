@@ -3,7 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "Animation/AnimNotifies/AnimNotifyState.h"
+#include "MiniCyphersAnimNotifyState.h"
 #include "AnimNotifyHitDetectionState.generated.h"
 
 class UHealthComponent;
@@ -12,7 +12,7 @@ class AMiniCyphersCharacter;
  * 
  */
 UCLASS()
-class MINICYPHERS_API UAnimNotifyHitDetectionState : public UAnimNotifyState
+class MINICYPHERS_API UAnimNotifyHitDetectionState : public UMiniCyphersAnimNotifyState
 {
 	GENERATED_BODY()
 

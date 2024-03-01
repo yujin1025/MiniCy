@@ -3,14 +3,14 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "Animation/AnimNotifies/AnimNotifyState.h"
+#include "MiniCyphersAnimNotifyState.h"
 #include "AnimNotifyInputBlock.generated.h"
 
 /**
  * 
  */
 UCLASS()
-class MINICYPHERS_API UAnimNotifyInputBlock : public UAnimNotifyState
+class MINICYPHERS_API UAnimNotifyInputBlock : public UMiniCyphersAnimNotifyState
 {
 	GENERATED_BODY()
 	

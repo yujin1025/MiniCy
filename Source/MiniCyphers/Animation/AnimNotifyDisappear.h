@@ -3,14 +3,14 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "Animation/AnimNotifies/AnimNotifyState.h"
+#include "MiniCyphersAnimNotifyState.h"
 #include "AnimNotifyDisappear.generated.h"
 
 /**
  * 
  */
 UCLASS()
-class MINICYPHERS_API UAnimNotifyDisappear : public UAnimNotifyState
+class MINICYPHERS_API UAnimNotifyDisappear : public UMiniCyphersAnimNotifyState
 {
 	GENERATED_BODY()
 
