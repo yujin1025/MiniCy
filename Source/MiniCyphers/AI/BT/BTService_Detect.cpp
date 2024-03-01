@@ -69,14 +69,17 @@ bool UBTService_Detect::TryGetOverlapTarget(AMiniCyphersCharacter* Owner, OUT AM
 			if (TargetCharacter == nullptr)
 				continue;
 
-			//IsPlayerDetect : player인지 detect하는거 : true인게 trooper, sentinel
-			//TargetCharacter->IsPlayer : true인게 shiva, tower
-			if ((IsPlayerDetect && TargetCharacter->IsPlayer() == false) ||
-				(!IsPlayerDetect && TargetCharacter->IsPlayer()))
-				continue;
+			if (IsPlayerDetect && TargetCharacter->IsPlayer())
+			{
+				FoundTarget = TargetCharacter;
+				break;
+			}
 
-			FoundTarget = TargetCharacter;
-			break;
+			if (!IsPlayerDetect && TargetCharacter->IsPlayer() == false)
+			{
+				FoundTarget = TargetCharacter;
+				break;
+			}
 		}
 	}
 

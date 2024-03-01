@@ -40,5 +40,6 @@ void UAnimNotifyKillHeelTeleport::NotifyEnd(USkeletalMeshComponent* MeshComp, UA
     if (!IsFoundTarget)
     {
         MyCharacter->StopAnimMontage();
+        MyCharacter->OnFinishedSkillMotion(EAttackType::ShiftAttack);
     }
 }
