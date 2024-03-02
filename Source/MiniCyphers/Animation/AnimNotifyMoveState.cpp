@@ -6,6 +6,7 @@
 void UAnimNotifyMoveState::NotifyBegin(USkeletalMeshComponent* MeshComp, UAnimSequenceBase* Animation, float TotalDuration, const FAnimNotifyEventReference& EventReference)
 {
     FrameProgressingTime = 0.0f;
+    CurrentLocation = MeshComp->GetComponentLocation();
 }
 
 void UAnimNotifyMoveState::NotifyTick(USkeletalMeshComponent* MeshComp, UAnimSequenceBase* Animation, float FrameDeltaTime, const FAnimNotifyEventReference& EventReference)

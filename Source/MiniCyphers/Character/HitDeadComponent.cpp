@@ -29,21 +29,32 @@ void UHitDeadComponent::PlayHitMontage(EDamageType DamageType)
 			return;
 
 		CurrentAirborneHitMontageIndex = (CurrentAirborneHitMontageIndex + 1) % MontageCount;
-		Character->PlayAnimMontage(StandHitMontages[CurrentAirborneHitMontageIndex]);
+		Character->PlayAnimMontage(AirborneHitMontages[CurrentAirborneHitMontageIndex]);
 	}
-	
+	else if (DamageType == EDamageType::PowerKnockBack)
+	{
+		int32 MontageCount = PowerKnockBackMontages.Num();
+		if (MontageCount <= 0)
+			return;
+
+		AMiniCyphersCharacter* Character = Cast<AMiniCyphersCharacter>(GetOwner());
+		if (Character == nullptr)
+			return;
+
+		CurrentPowerKnockBackMontageIndex = (CurrentPowerKnockBackMontageIndex + 1) % MontageCount;
+		Character->PlayAnimMontage(PowerKnockBackMontages[CurrentPowerKnockBackMontageIndex]);
+	}
+
+	bHit = true;
 }
 
 void UHitDeadComponent::PlayDeadMontage()
 {
-	int32 MontageCount = DeadMontages.Num();
-	if (MontageCount <= 0)
-		return;
-
 	AMiniCyphersCharacter* Character = Cast<AMiniCyphersCharacter>(GetOwner());
 	if (Character == nullptr)
 		return;
 
-	CurrentDeadMontageIndex = (CurrentDeadMontageIndex + 1) % MontageCount;
-	Character->PlayAnimMontage(DeadMontages[CurrentDeadMontageIndex]);
+	Character->PlayAnimMontage(DeadMontage);
+
+	bDead = true;
 }

@@ -82,7 +82,6 @@ public:
 	FOnAttack OnAttackDelegate;
 
 private:
-	bool isProgressingSkillMotion = false;
 	float CurrentDeltaTime = 0.0f;
 
 public:
@@ -111,6 +110,9 @@ public:
 	bool isPlayerTeam = false;
 
 	bool bInvincible = false;
+	bool bSuperArmor = false;
+	bool isProgressingSkillMotion = false;
+	bool isDead = false;
 
 	FVector GetLookVector(AMiniCyphersCharacter*& Target) const;
 

@@ -93,6 +93,9 @@ void AMiniCyphersCharacter::Tick(float DeltaTime)
 
 void AMiniCyphersCharacter::Move(const FVector2D Value)
 {
+	if (isDead)
+		return;
+
 	if (Controller != nullptr)
 	{
 		// find out which way is forward
@@ -113,6 +116,9 @@ void AMiniCyphersCharacter::Move(const FVector2D Value)
 
 void AMiniCyphersCharacter::Look(const FVector2D Value)
 {
+	if (isDead)
+		return;
+
 	if (Controller != nullptr)
 	{
 		// add yaw and pitch input to controller
@@ -135,6 +141,9 @@ bool AMiniCyphersCharacter::CheckCoolTime(EAttackType AttackType)
 
 void AMiniCyphersCharacter::UseSkill(EAttackType AttackType) //캐릭터(나)가 때림
 {
+	if (isDead)
+		return;
+
 	if (isProgressingSkillMotion)
 		return;
 
@@ -193,13 +202,19 @@ void AMiniCyphersCharacter::OnFinishedSkillMotion(EAttackType AttackType)
 
 void AMiniCyphersCharacter::OnHit(AMiniCyphersCharacter* Attacker, EDamageType DamageType, int DamageAmount, float UpperVelocity, float KnockBackDistance, bool isMelee)
 {
-	if (DamageType == EDamageType::Airborne)
+	if (isDead)
+		return;
+
+	if (!bSuperArmor && DamageType == EDamageType::Airborne)
 	{
 		GetCharacterMovement()->JumpZVelocity = UpperVelocity;
 		Jump();
 	}
 
-	Move(FVector2D(0, -KnockBackDistance));
+	if (!bSuperArmor)
+	{
+		Move(FVector2D(0, -KnockBackDistance));
+	}
 
 	if (HitDeadComponent)
 	{
@@ -207,8 +222,13 @@ void AMiniCyphersCharacter::OnHit(AMiniCyphersCharacter* Attacker, EDamageType D
 	}
 }
 
-void AMiniCyphersCharacter::OnDie() //뎀지는 애니메이션
+void AMiniCyphersCharacter::OnDie()
 {
+	if (isDead)
+		return;
+
+	isDead = true;
+
 	if (HitDeadComponent)
 	{
 		HitDeadComponent->PlayDeadMontage();
@@ -251,32 +271,32 @@ FVector AMiniCyphersCharacter::GetTargetPosition(ECollisionChannel Channel, floa
 
 bool AMiniCyphersCharacter::IsSatisfiedNormalAttack()
 {
-	return CheckCoolTime(EAttackType::NormalAttack);
+	return CheckCoolTime(EAttackType::NormalAttack) && !isDead;
 }
 
 bool AMiniCyphersCharacter::IsSatisfiedRightClickAttack()
 {
-	return CheckCoolTime(EAttackType::RightClickAttack);
+	return CheckCoolTime(EAttackType::RightClickAttack) && !isDead;
 }
 
 bool AMiniCyphersCharacter::IsSatisfiedQSkill()
 {
-	return CheckCoolTime(EAttackType::QSkillAttack);
+	return CheckCoolTime(EAttackType::QSkillAttack) && !isDead;
 }
 
 bool AMiniCyphersCharacter::IsSatisfiedUltimateSkill()
 {
-	return CheckCoolTime(EAttackType::UltimateAttack);
+	return CheckCoolTime(EAttackType::UltimateAttack) && !isDead;
 }
 
 bool AMiniCyphersCharacter::IsSatisfiedGrabSkill()
 {
-	return CheckCoolTime(EAttackType::GrabSkillAttack);
+	return CheckCoolTime(EAttackType::GrabSkillAttack) && !isDead;
 }
 
 bool AMiniCyphersCharacter::IsSatisfiedShiftAttack()
 {
-	return CheckCoolTime(EAttackType::ShiftAttack);
+	return CheckCoolTime(EAttackType::ShiftAttack) && !isDead;
 }
 
 void AMiniCyphersCharacter::OnUseNormalAttack()

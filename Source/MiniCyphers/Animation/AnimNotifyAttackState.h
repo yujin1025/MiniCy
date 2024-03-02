@@ -22,6 +22,7 @@ enum class EDamageType
 	None = -1,
 	Stand = 0,
 	Airborne = 1,
+	PowerKnockBack = 2,
 };
 
 /**

@@ -22,10 +22,13 @@ private:
 	TArray<UAnimMontage*> AirborneHitMontages;
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Animation, meta = (AllowPrivateAccess = "true"))
-	TArray<UAnimMontage*> DeadMontages;
+	TArray<UAnimMontage*> PowerKnockBackMontages;
+
+	UPROPERTY(EditAnywhere)
+	UAnimMontage* DeadMontage;
 
 	int32 CurrentHitMontageIndex;
-	int32 CurrentDeadMontageIndex;
+	int32 CurrentPowerKnockBackMontageIndex;
 	int32 CurrentAirborneHitMontageIndex;
 
 public:

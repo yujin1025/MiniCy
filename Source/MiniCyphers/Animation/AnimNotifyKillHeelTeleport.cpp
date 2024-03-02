@@ -13,8 +13,6 @@ void UAnimNotifyKillHeelTeleport::NotifyBegin(USkeletalMeshComponent* MeshComp, 
         return;
 
     IsFoundTarget = false;
-
-    CurrentLocation = MyCharacter->GetActorLocation();
     
     auto AttackTargetLocation = MyCharacter->GetTargetPosition(ECollisionChannel::ECC_GameTraceChannel2, TeleportDistance, IsFoundTarget);
     if (IsFoundTarget)
