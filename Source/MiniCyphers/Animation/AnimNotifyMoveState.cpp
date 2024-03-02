@@ -6,7 +6,7 @@
 void UAnimNotifyMoveState::NotifyBegin(USkeletalMeshComponent* MeshComp, UAnimSequenceBase* Animation, float TotalDuration, const FAnimNotifyEventReference& EventReference)
 {
     FrameProgressingTime = 0.0f;
-    CurrentLocation = MeshComp->GetComponentLocation();
+    CurrentLocation = MeshComp->GetOwner()->GetActorLocation();
 }
 
 void UAnimNotifyMoveState::NotifyTick(USkeletalMeshComponent* MeshComp, UAnimSequenceBase* Animation, float FrameDeltaTime, const FAnimNotifyEventReference& EventReference)
@@ -21,5 +21,9 @@ void UAnimNotifyMoveState::NotifyTick(USkeletalMeshComponent* MeshComp, UAnimSeq
 }
 
 void UAnimNotifyMoveState::NotifyEnd(USkeletalMeshComponent* MeshComp, UAnimSequenceBase* Animation, const FAnimNotifyEventReference& EventReference)
+{
+}
+
+void UAnimNotifyMoveState::FindTarget(USkeletalMeshComponent* MeshComp)
 {
 }

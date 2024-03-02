@@ -85,7 +85,6 @@ private:
 	float CurrentDeltaTime = 0.0f;
 
 public:
-
 	virtual bool IsSatisfiedNormalAttack();
 	virtual bool IsSatisfiedRightClickAttack();
 	virtual bool IsSatisfiedQSkill();
@@ -102,7 +101,14 @@ public:
 
 	virtual void OnHit(AMiniCyphersCharacter* Attacker, EDamageType DamageType, int HealthAmount, float UpperVelocity, float KnockBackDistance, bool isMelee);
 	virtual void OnDie();
+	
+protected:
+	bool TryGetOverlapResult(AMiniCyphersCharacter* Character, TArray<FOverlapResult>& OverlapResults);
 
+	bool TryGetOverlapTargets(AMiniCyphersCharacter* Character, OUT TArray<AMiniCyphersCharacter*>& FoundTargets);
+	bool TryGetOverlapTarget(AMiniCyphersCharacter* Character, OUT AMiniCyphersCharacter*& FoundTarget);
+
+	void SetAnimationSpeedRate(float Rate);
 public:
 	bool IsPlayer(); //플레이어인지 여부
 
@@ -113,6 +119,8 @@ public:
 	bool bSuperArmor = false;
 	bool isProgressingSkillMotion = false;
 	bool isDead = false;
+
+	float DetectRadius = 1000.0f;
 
 	FVector GetLookVector(AMiniCyphersCharacter*& Target) const;
 

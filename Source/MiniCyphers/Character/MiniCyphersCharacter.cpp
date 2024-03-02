@@ -216,6 +216,8 @@ void AMiniCyphersCharacter::OnHit(AMiniCyphersCharacter* Attacker, EDamageType D
 		Move(FVector2D(0, -KnockBackDistance));
 	}
 
+	SetAnimationSpeedRate(0.5f);
+
 	if (HitDeadComponent)
 	{
 		HitDeadComponent->PlayHitMontage(DamageType);
@@ -305,4 +307,92 @@ void AMiniCyphersCharacter::OnUseNormalAttack()
 	{
 		RandomMotionComponent->NormalRandomAttack();
 	}
+}
+
+bool AMiniCyphersCharacter::TryGetOverlapResult(AMiniCyphersCharacter* Character, TArray<FOverlapResult>& OverlapResults)
+{
+	auto* World = Character->GetWorld();
+	if (World == nullptr)
+		return false;
+
+	FVector Center = Character->GetActorLocation();
+	FCollisionQueryParams CollisionParam(NAME_None, false, Character);
+
+	bool bResult = World->OverlapMultiByChannel(
+		OverlapResults,
+		Center,
+		FQuat::Identity,
+		ECollisionChannel::ECC_Pawn,
+		FCollisionShape::MakeSphere(DetectRadius),
+		CollisionParam);
+
+	if (bResult)
+	{
+		DrawDebugSphere(World, Center, DetectRadius, 16, FColor::Red, false, 0.2f);
+	}
+
+	return bResult;
+}
+
+bool AMiniCyphersCharacter::TryGetOverlapTargets(AMiniCyphersCharacter* Character, OUT TArray<AMiniCyphersCharacter*>& FoundTargets)
+{
+	TArray<FOverlapResult> OverlapResults;
+
+	if (TryGetOverlapResult(Character, OverlapResults))
+	{
+		for (auto const& OverlapResult : OverlapResults)
+		{
+			auto* TargetCharacter = Cast<AMiniCyphersCharacter>(OverlapResult.GetActor());
+			if (TargetCharacter == nullptr)
+				continue;
+
+			if (IsPlayer() != TargetCharacter->IsPlayer())
+			{
+				FoundTargets.Add(TargetCharacter);
+				continue;
+			}
+		}
+	}
+
+	return FoundTargets.Num() > 0;
+}
+
+bool AMiniCyphersCharacter::TryGetOverlapTarget(AMiniCyphersCharacter* Character, OUT AMiniCyphersCharacter*& FoundTarget)
+{
+	TArray<FOverlapResult> OverlapResults;
+
+	if (TryGetOverlapResult(Character, OverlapResults))
+	{
+		for (auto const& OverlapResult : OverlapResults)
+		{
+			auto* TargetCharacter = Cast<AMiniCyphersCharacter>(OverlapResult.GetActor());
+			if (TargetCharacter == nullptr)
+				continue;
+
+			if (IsPlayer() != TargetCharacter->IsPlayer())
+			{
+				FoundTarget = TargetCharacter;
+				break;
+			}
+		}
+	}
+
+	return FoundTarget != nullptr;
+}
+
+void AMiniCyphersCharacter::SetAnimationSpeedRate(float Rate)
+{
+	auto* MyMesh = GetMesh();
+	if (MyMesh == nullptr)
+		return;
+
+	auto* AnimInstance = MyMesh->GetAnimInstance();
+	if (AnimInstance == nullptr)
+		return;
+
+	auto* CurrentMontange = AnimInstance->GetCurrentActiveMontage();
+	if (CurrentMontange == nullptr)
+		return;
+
+	AnimInstance->Montage_SetPlayRate(CurrentMontange, Rate);
 }

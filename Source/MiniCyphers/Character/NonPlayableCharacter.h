@@ -17,4 +17,6 @@ class MINICYPHERS_API ANonPlayableCharacter : public AMiniCyphersCharacter
 public:
 	ANonPlayableCharacter();
 	
+public:
+	virtual FVector GetTargetPosition(ECollisionChannel Channel, float RayCastDistance, OUT bool& IsFoundTarget) override;
 };

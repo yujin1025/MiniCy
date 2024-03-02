@@ -8,23 +8,8 @@ void UAnimNotifyKillHeelTeleport::NotifyBegin(USkeletalMeshComponent* MeshComp, 
 {
     Super::NotifyBegin(MeshComp, Animation, TotalDuration, EventReference);
 
-    AMiniCyphersCharacter* MyCharacter = Cast<AMiniCyphersCharacter>(MeshComp->GetOwner());
-    if (MyCharacter == nullptr)
-        return;
-
     IsFoundTarget = false;
-    
-    auto AttackTargetLocation = MyCharacter->GetTargetPosition(ECollisionChannel::ECC_GameTraceChannel2, TeleportDistance, IsFoundTarget);
-    if (IsFoundTarget)
-    {
-        TargetLocation = FVector(AttackTargetLocation.X, AttackTargetLocation.Y, CurrentLocation.Z);;
-    }
-    else
-    {
-        bool NoUseFoundTarget = false;
-        auto Location = MyCharacter->GetTargetPosition(ECollisionChannel::ECC_WorldStatic, TeleportDistance, NoUseFoundTarget);
-        TargetLocation = FVector(Location.X, Location.Y, CurrentLocation.Z);
-    }
+    FindTarget(MeshComp);
 }
 
 void UAnimNotifyKillHeelTeleport::NotifyEnd(USkeletalMeshComponent* MeshComp, UAnimSequenceBase* Animation, const FAnimNotifyEventReference& EventReference)
@@ -39,5 +24,24 @@ void UAnimNotifyKillHeelTeleport::NotifyEnd(USkeletalMeshComponent* MeshComp, UA
     {
         MyCharacter->StopAnimMontage();
         MyCharacter->OnFinishedSkillMotion(EAttackType::ShiftAttack);
+    }
+}
+
+void UAnimNotifyKillHeelTeleport::FindTarget(USkeletalMeshComponent* MeshComp)
+{
+    AMiniCyphersCharacter* MyCharacter = Cast<AMiniCyphersCharacter>(MeshComp->GetOwner());
+    if (MyCharacter == nullptr)
+        return;
+
+    auto AttackTargetLocation = MyCharacter->GetTargetPosition(ECollisionChannel::ECC_GameTraceChannel2, MoveDistance, IsFoundTarget);
+    if (IsFoundTarget)
+    {
+        TargetLocation = FVector(AttackTargetLocation.X, AttackTargetLocation.Y, CurrentLocation.Z);;
+    }
+    else
+    {
+        bool NoUseFoundTarget = false;
+        auto Location = MyCharacter->GetTargetPosition(ECollisionChannel::ECC_WorldStatic, MoveDistance, NoUseFoundTarget);
+        TargetLocation = FVector(Location.X, Location.Y, CurrentLocation.Z);
     }
 }

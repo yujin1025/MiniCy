@@ -19,6 +19,7 @@ public:
 	virtual void NotifyTick(USkeletalMeshComponent* MeshComp, UAnimSequenceBase* Animation, float FrameDeltaTime, const FAnimNotifyEventReference& EventReference) override;
 	virtual void NotifyEnd(USkeletalMeshComponent* MeshComp, UAnimSequenceBase* Animation, const FAnimNotifyEventReference& EventReference) override;
 
+	virtual void FindTarget(USkeletalMeshComponent* MeshComp);
 protected:
 	FVector CurrentLocation;
 	FVector TargetLocation;
@@ -26,7 +27,7 @@ protected:
 	float FrameProgressingTime = 0.0f;
 
 	UPROPERTY(EditAnywhere)
-	float TeleportDistance = 1000.0f;
+	float MoveDistance = 1000.0f;
 
 	UPROPERTY(EditAnywhere)
 	float TeleportDistanceMaxPercent = 0.8f;
