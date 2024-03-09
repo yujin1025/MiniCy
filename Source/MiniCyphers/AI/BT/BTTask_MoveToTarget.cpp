@@ -20,29 +20,29 @@ EBTNodeResult::Type UBTTask_MoveToTarget::ExecuteTask(UBehaviorTreeComponent& Ow
     if (AIController == nullptr)
         return EBTNodeResult::Failed;
 
-	auto* BlackBoard = GetBlackboardComponent(OwnerComp);
-	if (BlackBoard == nullptr)
+	auto* MyCharacter = GetCharacter(OwnerComp);
+	if (MyCharacter == nullptr)
 		return EBTNodeResult::Failed;
+
+	auto* OtherCharacter = MyCharacter->GetTarget();
+	if (OtherCharacter == nullptr)
+		return EBTNodeResult::Failed;
+
+	MyCharacter->RotateToTarget(OtherCharacter, 5.0f);
+
+	AIController->SetFocus(OtherCharacter);
+	AIController->MoveToActor(OtherCharacter, 200.0f);
 
 	return EBTNodeResult::Succeeded;
 }
 
-void UBTTask_MoveToTarget::TickTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory, float DeltaSeconds)
+void UBTTask_MoveToTarget::OnTaskFinished(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory, EBTNodeResult::Type TaskResult)
 {
-	Super::TickTask(OwnerComp, NodeMemory, DeltaSeconds);
+	Super::OnTaskFinished(OwnerComp, NodeMemory, TaskResult);
 
-	auto* MyCharacter = GetCharacter(OwnerComp);
-	if (MyCharacter == nullptr)
+	AAIController* AIController = OwnerComp.GetAIOwner();
+	if (AIController == nullptr)
 		return;
 
-	auto* OtherCharacter = MyCharacter->GetTarget();
-	if (OtherCharacter == nullptr)
-		return;
-
-	FVector CurrentLocation = MyCharacter->GetActorLocation();
-	FVector TargetLocation = OtherCharacter->GetActorLocation();
-	FVector TargetDirection = (TargetLocation - CurrentLocation).GetSafeNormal();
-
-	MyCharacter->RotateToTarget(OtherCharacter, 5.0f);
-	MyCharacter->Move(FVector2D(0, 1000));
+	AIController->StopMovement();
 }

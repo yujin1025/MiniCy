@@ -4,13 +4,13 @@
 
 #include "CoreMinimal.h"
 #include "MiniCyphersTaskNode.h"
-#include "BTTask_ClearTarget.generated.h"
+#include "BTTask_StopMove.generated.h"
 
 /**
  * 
  */
 UCLASS()
-class MINICYPHERS_API UBTTask_ClearTarget : public UMiniCyphersTaskNode
+class MINICYPHERS_API UBTTask_StopMove : public UMiniCyphersTaskNode
 {
 	GENERATED_BODY()
 	
