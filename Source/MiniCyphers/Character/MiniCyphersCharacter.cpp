@@ -162,7 +162,7 @@ void AMiniCyphersCharacter::UseSkill(EAttackType AttackType) //캐릭터(나)가 때림
 	if (IsDead)
 		return;
 
-	if (IsProgressingSkillMotion)
+	if (ProgressingAttackType != EAttackType::Max)
 		return;
 
 	if (ActionComponentMap.Contains(AttackType) == false)
@@ -209,12 +209,12 @@ void AMiniCyphersCharacter::UseSkill(EAttackType AttackType) //캐릭터(나)가 때림
 		break;
 	}
 
-	IsProgressingSkillMotion = true;
+	ProgressingAttackType = AttackType;
 }
 
 void AMiniCyphersCharacter::OnFinishedSkillMotion(EAttackType AttackType)
 {
-	IsProgressingSkillMotion = false;
+	ProgressingAttackType = EAttackType::Max;
 	OnUseSkillDelegate.Broadcast(AttackType);
 }
 
@@ -245,6 +245,11 @@ void AMiniCyphersCharacter::OnHit(AMiniCyphersCharacter* Attacker, EDamageType D
 		}
 
 		HitDeadComponent->OnHit(DamageType, StiffTime);
+	}
+
+	if (ProgressingAttackType != EAttackType::Max)
+	{
+		OnFinishedSkillMotion(ProgressingAttackType);
 	}
 }
 

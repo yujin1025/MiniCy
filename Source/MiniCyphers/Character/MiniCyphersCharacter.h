@@ -131,8 +131,9 @@ public:
 
 	bool bSuperArmor = false;
 	bool bInvincible = false;
-	bool IsProgressingSkillMotion = false;
 	bool IsDead = false;
+
+	EAttackType ProgressingAttackType = EAttackType::Max;
 
 	FVector KnockBackDirection = FVector::ZeroVector;
 	float RemainStiffTime = 0.0f;
