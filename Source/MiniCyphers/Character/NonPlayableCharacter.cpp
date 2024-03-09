@@ -4,22 +4,21 @@
 #include "NonPlayableCharacter.h"
 #include "../AI/MiniCyphersAIController.h"
 #include "../Character/Tower.h"
+
 ANonPlayableCharacter::ANonPlayableCharacter()
 {
 	AutoPossessAI = EAutoPossessAI::PlacedInWorldOrSpawned;
 	AutoPossessPlayer = EAutoReceiveInput::Disabled;
 }
 
-FVector ANonPlayableCharacter::GetTargetPosition(ECollisionChannel Channel, float RayCastDistance, OUT bool& IsFoundTarget)
+// 타워를 탐색해서 이동하는 로직
+// 현재 센티넬, 투루퍼에서 사용 중
+AMiniCyphersCharacter* ANonPlayableCharacter::GetTarget()
 {
-	auto* Character = Cast<AMiniCyphersCharacter>(GetOwner());
-	if (Character == nullptr)
-		return FVector::Zero();
-
 	TArray<AMiniCyphersCharacter*> Targets;
 
-	if (TryGetOverlapTargets(Character, OUT Targets) == false)
-		return FVector::Zero();
+	if (TryGetOverlapTargets(this, OUT Targets) == false)
+		return nullptr;
 
 	for (auto& Target : Targets)
 	{
@@ -27,7 +26,17 @@ FVector ANonPlayableCharacter::GetTargetPosition(ECollisionChannel Channel, floa
 		if (Tower == nullptr)
 			continue;
 
-		return Tower->GetActorLocation();
+		return Tower;
 	}
-	return FVector();
+
+	return nullptr;
+}
+
+FVector ANonPlayableCharacter::GetTargetPosition()
+{
+	auto* Character = GetTarget();
+	if (Character == nullptr)
+		return FVector::ZeroVector;
+
+	return Character->GetActorLocation();
 }

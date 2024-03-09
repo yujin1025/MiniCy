@@ -4,6 +4,13 @@
 #include "BTTask_MoveToTarget.h"
 #include "BehaviorTree/BlackboardComponent.h"
 #include "../MiniCyphersAIController.h"
+#include "../../Character/MiniCyphersCharacter.h"
+#include "GameFramework/CharacterMovementComponent.h"
+
+UBTTask_MoveToTarget::UBTTask_MoveToTarget()
+{
+	bNotifyTick = true;
+}
 
 EBTNodeResult::Type UBTTask_MoveToTarget::ExecuteTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory)
 {
@@ -17,13 +24,25 @@ EBTNodeResult::Type UBTTask_MoveToTarget::ExecuteTask(UBehaviorTreeComponent& Ow
 	if (BlackBoard == nullptr)
 		return EBTNodeResult::Failed;
 
-	AActor* TargetActor = Cast<AActor>(BlackBoard->GetValueAsObject(AMiniCyphersAIController::TargetObjectKey));
-	if (TargetActor == nullptr)
-		return EBTNodeResult::Failed;
-
-    AIController->SetFocus(TargetActor);
-    AIController->MoveToActor(TargetActor, AcceptanceRadius);
-
-
 	return EBTNodeResult::Succeeded;
+}
+
+void UBTTask_MoveToTarget::TickTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory, float DeltaSeconds)
+{
+	Super::TickTask(OwnerComp, NodeMemory, DeltaSeconds);
+
+	auto* MyCharacter = GetCharacter(OwnerComp);
+	if (MyCharacter == nullptr)
+		return;
+
+	auto* OtherCharacter = MyCharacter->GetTarget();
+	if (OtherCharacter == nullptr)
+		return;
+
+	FVector CurrentLocation = MyCharacter->GetActorLocation();
+	FVector TargetLocation = OtherCharacter->GetActorLocation();
+	FVector TargetDirection = (TargetLocation - CurrentLocation).GetSafeNormal();
+
+	MyCharacter->RotateToTarget(OtherCharacter, 5.0f);
+	MyCharacter->Move(FVector2D(0, 1000));
 }

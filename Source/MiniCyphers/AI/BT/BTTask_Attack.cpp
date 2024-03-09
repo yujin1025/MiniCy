@@ -10,7 +10,6 @@
 UBTTask_Attack::UBTTask_Attack()
 {
 	bNotifyTick = true;
-
 	bIsProcessing = false;
 }
 

@@ -20,5 +20,5 @@ bool UBTDecorator_IsHit::CalculateRawConditionValue(UBehaviorTreeComponent& Owne
 		return false;
 
 	bool bHit = HitDeadComponent->bHit;
-	return HitDeadComponent->bHit || HitDeadComponent->bDead;
+	return MyCharacter->RemainStiffTime > 0.01f || HitDeadComponent->bHit || HitDeadComponent->bDead;
 }

@@ -16,6 +16,8 @@ enum class EDetectType
 	Square = 1,
 };
 
+
+// Stand와 PowerKnockBack의 차이는 모션 뿐
 UENUM()
 enum class EDamageType
 {

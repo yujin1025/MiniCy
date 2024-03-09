@@ -22,6 +22,11 @@ class MINICYPHERS_API UMiniCyphersTaskNode : public UBTTaskNode
 	GENERATED_BODY()
 	
 protected:
+	virtual EBTNodeResult::Type ExecuteTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory);
+	virtual void TickTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory, float DeltaSeconds);
+	float CurrentDeltaTime = 0.0f;
+
+	
 	AMiniCyphersCharacter* GetCharacter(UBehaviorTreeComponent& OwnerComp);
 	UNavigationSystemV1* GetNavigationSystem(UBehaviorTreeComponent& OwnerComp);
 	AMiniCyphersAIController* GetAIController(UBehaviorTreeComponent& OwnerComp);

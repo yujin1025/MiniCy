@@ -24,7 +24,5 @@ EBTNodeResult::Type UBTTask_ClearTarget::ExecuteTask(UBehaviorTreeComponent& Own
 	BlackBoard->SetValueAsVector(AMiniCyphersAIController::PatrolPosKey, FVector::ZeroVector);
 	BlackBoard->SetValueAsObject(AMiniCyphersAIController::TargetObjectKey, nullptr);
 
-	MyCharacter->GetCharacterMovement()->StopActiveMovement();
-
 	return EBTNodeResult::Succeeded;
 }

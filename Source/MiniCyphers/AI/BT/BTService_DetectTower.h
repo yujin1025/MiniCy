@@ -15,6 +15,5 @@ class MINICYPHERS_API UBTService_DetectTower : public UBTService_Detect
 	GENERATED_BODY()
 	
 public:
-	virtual void FindTarget(UBehaviorTreeComponent& OwnerComp, AMiniCyphersCharacter* MyCharacter, OUT AMiniCyphersCharacter*& DetectedTarget) override;
 
 };

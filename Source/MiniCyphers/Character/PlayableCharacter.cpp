@@ -119,6 +119,8 @@ AMiniCyphersPlayerController* APlayableCharacter::GetPlayerController()
 	return Cast<AMiniCyphersPlayerController>(Controller);
 }
 
+// 플레이어의 타겟 포지션은 AMiniCyphersCharacter가 아닐 수도 있다.
+// 플레이어의 타겟은 항상 다르므로, 항상 nullptr이다.
 FVector APlayableCharacter::GetTargetPosition(ECollisionChannel Channel, float RayCastDistance, OUT bool& IsFoundTarget)
 {
 	FVector CameraLocation;

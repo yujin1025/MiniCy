@@ -48,27 +48,7 @@ bool AShiva::IsSatisfiedGrabSkill()
 
 void AShiva::OnUseNormalAttack()
 {
-	// try and fire a projectile
-	if (ProjectileClass == nullptr)
-		return;
-
-	UWorld* const World = GetWorld();
-	if (World != nullptr)
-	{
-		const FVector SpawnLocation = NormalAttackProjectileStartLocation->GetComponentLocation();
-		
-		bool IsFoundTarget = false;
-		FVector TargetPosition = GetTargetPosition(ECollisionChannel::ECC_EngineTraceChannel1, 3500.0f, IsFoundTarget);
-		const FVector SpawnRotation = (TargetPosition - SpawnLocation).GetSafeNormal();
-
-		FActorSpawnParameters ActorSpawnParams;
-		auto* Projectile = World->SpawnActor<AShivaShadowKnife>(ProjectileClass, SpawnLocation, SpawnRotation.Rotation(), ActorSpawnParams);
-		if (Projectile == nullptr)
-			return;
-
-		Projectile->Initialize(this);
-		Projectile->SetDirection(SpawnRotation);
-	}
+	
 }
 
 void AShiva::OnUseRightClickAttack()
@@ -97,4 +77,9 @@ void AShiva::OnUseGrabSkill()
 void AShiva::OnDie()
 {
 	Super::OnDie();
+}
+
+FVector AShiva::GetProjectileStartLocation()
+{
+	return NormalAttackProjectileStartLocation->GetComponentLocation();
 }

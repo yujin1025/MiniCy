@@ -96,6 +96,7 @@ protected:
 	AMiniCyphersPlayerState* GetState();
 	AMiniCyphersPlayerController* GetPlayerController();
 
+public:
 	virtual FVector GetTargetPosition(ECollisionChannel Channel, float RayCastDistance, OUT bool& IsFoundTarget) override;
 
 public:

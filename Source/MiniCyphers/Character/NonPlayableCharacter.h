@@ -18,5 +18,6 @@ public:
 	ANonPlayableCharacter();
 	
 public:
-	virtual FVector GetTargetPosition(ECollisionChannel Channel, float RayCastDistance, OUT bool& IsFoundTarget) override;
+	virtual AMiniCyphersCharacter* GetTarget();
+	virtual FVector GetTargetPosition() override;
 };

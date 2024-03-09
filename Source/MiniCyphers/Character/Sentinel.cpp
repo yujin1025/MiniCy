@@ -4,6 +4,7 @@
 #include "Sentinel.h"
 #include "Kismet/GameplayStatics.h"
 #include "../AI/MiniCyphersAIController.h"
+#include "Tower.h"
 
 
 ASentinel::ASentinel()
@@ -15,5 +16,7 @@ ASentinel::ASentinel()
 void ASentinel::BeginPlay()
 {
 	Super::BeginPlay();
+	
+	// 센티넬은 초기 슈퍼아머 없음
 	bSuperArmor = false;
 }

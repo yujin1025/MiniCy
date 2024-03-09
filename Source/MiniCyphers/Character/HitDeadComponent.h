@@ -31,7 +31,7 @@ private:
 
 public:
 	UFUNCTION(BlueprintCallable, Category = "Animation")
-	void OnHit(EDamageType DamageType);
+	void OnHit(EDamageType DamageType, float StiffTime);
 
 	UFUNCTION(BlueprintCallable, Category = "Animation")
 	void OnDead();

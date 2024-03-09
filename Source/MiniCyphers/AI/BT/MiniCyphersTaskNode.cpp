@@ -8,6 +8,19 @@
 #include "../../Character/MiniCyphersCharacter.h"
 #include "AIController.h"
 
+EBTNodeResult::Type UMiniCyphersTaskNode::ExecuteTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory)
+{
+	CurrentDeltaTime = 0.0f;
+	return Super::ExecuteTask(OwnerComp, NodeMemory);
+}
+
+void UMiniCyphersTaskNode::TickTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory, float DeltaSeconds)
+{
+	Super::TickTask(OwnerComp, NodeMemory, DeltaSeconds);
+
+	CurrentDeltaTime += DeltaSeconds;
+}
+
 AMiniCyphersCharacter* UMiniCyphersTaskNode::GetCharacter(UBehaviorTreeComponent& OwnerComp)
 {
 	auto Pawn = OwnerComp.GetAIOwner()->GetPawn();

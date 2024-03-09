@@ -64,10 +64,11 @@ public:
 	UHealthComponent* HealthComponent;
 	UQuestComponent* QuestComponent;
 
-protected:
+public:
 	void Move(const FVector2D Value);
 	virtual void Look(const FVector2D Value);
 
+protected:
 	bool CheckCoolTime(EAttackType AttackType);
 
 	FString GetEnumNameAsString(EAttackType EnumValue);
@@ -119,23 +120,33 @@ public:
 	UPROPERTY(EditAnywhere)
 	float KnockBackSpeedRate = 5.0f;
 
-	bool bInvincible = false;
+	UPROPERTY(EditAnywhere)
+	float SuperArmorStiffRate = 0.1f;
+
+	UPROPERTY(EditAnywhere)
+	float SuperArmorKnockBackPowerRate = 0.1f;
+
+	UPROPERTY(EditAnywhere)
+	float TargetDetectRadius = 1000.0f;
+
 	bool bSuperArmor = false;
+	bool bInvincible = false;
 	bool IsProgressingSkillMotion = false;
 	bool IsDead = false;
 
+	FVector KnockBackDirection = FVector::ZeroVector;
 	float RemainStiffTime = 0.0f;
 	float RemainKnockBackPower = 0.0f;
 
-	FVector KnockBackDirection = FVector::ZeroVector;
-
-	float DetectRadius = 1000.0f;
-
+public:
 	FVector GetLookVector(AMiniCyphersCharacter*& Target) const;
 
 	void RotateToTarget(AMiniCyphersCharacter*& Target, float RotationSpeed);
 	void SetRotation(FRotator Rotation, float RotationSpeed);
 
 	virtual FVector GetTargetPosition(ECollisionChannel Channel, float RayCastDistance, OUT bool& IsFoundTarget);
+
+	virtual FVector GetTargetPosition();
+	virtual AMiniCyphersCharacter* GetTarget();
 };
 

@@ -14,7 +14,11 @@ class MINICYPHERS_API UAnimNotifyStiffCheckState : public UMiniCyphersAnimNotify
 {
 	GENERATED_BODY()
 
+protected:
 	virtual void NotifyTick(USkeletalMeshComponent* MeshComp, UAnimSequenceBase* Animation, float FrameDeltaTime, const FAnimNotifyEventReference& EventReference) override;
 	virtual void NotifyEnd(USkeletalMeshComponent* MeshComp, UAnimSequenceBase* Animation, const FAnimNotifyEventReference& EventReference) override;
 
+public:
+	UPROPERTY(EditAnywhere)
+	float StiffAnimationSpeedRate = 0.05f;
 };

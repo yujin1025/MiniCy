@@ -17,4 +17,7 @@ class MINICYPHERS_API ATower : public ANonPlayableCharacter
 	
 public:
 	ATower();
+	virtual void BeginPlay() override;
+	
+	virtual AMiniCyphersCharacter* GetTarget() override;
 };

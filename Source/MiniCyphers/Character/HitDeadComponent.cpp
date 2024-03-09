@@ -3,7 +3,7 @@
 
 #include "HitDeadComponent.h"
 
-void UHitDeadComponent::OnHit(EDamageType DamageType)
+void UHitDeadComponent::OnHit(EDamageType DamageType, float StiffTime)
 {
 	AMiniCyphersCharacter* Character = Cast<AMiniCyphersCharacter>(GetOwner());
 	if (Character == nullptr)

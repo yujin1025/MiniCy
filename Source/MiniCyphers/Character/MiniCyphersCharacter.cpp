@@ -96,7 +96,7 @@ void AMiniCyphersCharacter::Tick(float DeltaTime)
 	CurrentDeltaTime += DeltaTime;
 	RemainStiffTime = RemainStiffTime - DeltaTime <= 0.0f ? 0.0f : RemainStiffTime - DeltaTime;
 
-	if (RemainKnockBackPower >= 0.0f)
+	if (RemainKnockBackPower > 0.01f)
 	{
 		RemainKnockBackPower -= DeltaTime * KnockBackSpeedRate;
 		SetActorLocation(GetActorLocation() + KnockBackDirection * KnockBackSpeedRate);
@@ -223,17 +223,20 @@ void AMiniCyphersCharacter::OnHit(AMiniCyphersCharacter* Attacker, EDamageType D
 	if (IsDead)
 		return;
 
+	const FRotator Rotation = Attacker->GetControlRotation();
+	const FRotator YawRotation(0, Rotation.Yaw, 0);
+
+	KnockBackDirection = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::X);
+
 	if (bSuperArmor)
 	{
-		this->RemainStiffTime = StiffTime;
+		this->RemainStiffTime = StiffTime * SuperArmorStiffRate;
+		this->RemainKnockBackPower = KnockBackPower * SuperArmorKnockBackPowerRate;
 	}
 	else
 	{
-		const FRotator Rotation = Attacker->GetControlRotation();
-		const FRotator YawRotation(0, Rotation.Yaw, 0);
-
-		KnockBackDirection = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::X);
-		RemainKnockBackPower = KnockBackPower;
+		this->RemainStiffTime = 0.f;
+		this->RemainKnockBackPower = KnockBackPower;
 
 		if (DamageType == EDamageType::Airborne)
 		{
@@ -241,7 +244,7 @@ void AMiniCyphersCharacter::OnHit(AMiniCyphersCharacter* Attacker, EDamageType D
 			Jump();
 		}
 
-		HitDeadComponent->OnHit(DamageType);
+		HitDeadComponent->OnHit(DamageType, StiffTime);
 	}
 }
 
@@ -290,6 +293,16 @@ FVector AMiniCyphersCharacter::GetTargetPosition(ECollisionChannel Channel, floa
 {
 	IsFoundTarget = false;
 	return FVector::ZeroVector;
+}
+
+FVector AMiniCyphersCharacter::GetTargetPosition()
+{
+	return FVector();
+}
+
+AMiniCyphersCharacter* AMiniCyphersCharacter::GetTarget()
+{
+	return nullptr;
 }
 
 bool AMiniCyphersCharacter::IsSatisfiedNormalAttack()
@@ -344,12 +357,12 @@ bool AMiniCyphersCharacter::TryGetOverlapResult(AMiniCyphersCharacter* Character
 		Center,
 		FQuat::Identity,
 		ECollisionChannel::ECC_Pawn,
-		FCollisionShape::MakeSphere(DetectRadius),
+		FCollisionShape::MakeSphere(TargetDetectRadius),
 		CollisionParam);
 
 	if (bResult)
 	{
-		DrawDebugSphere(World, Center, DetectRadius, 16, FColor::Red, false, 0.2f);
+		DrawDebugSphere(World, Center, TargetDetectRadius, 16, FColor::Red, false, 0.2f);
 	}
 
 	return bResult;

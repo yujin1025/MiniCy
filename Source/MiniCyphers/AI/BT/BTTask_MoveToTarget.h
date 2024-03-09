@@ -13,11 +13,15 @@ UCLASS()
 class MINICYPHERS_API UBTTask_MoveToTarget : public UMiniCyphersTaskNode
 {
 	GENERATED_BODY()
+
+public:
+	UBTTask_MoveToTarget();
 	
 protected:
 	virtual EBTNodeResult::Type ExecuteTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory) override;
+	virtual void TickTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory, float DeltaSeconds) override;
 
 public:
 	UPROPERTY(EditAnyWhere)
-	float AcceptanceRadius = 500.0f;
+	float MoveSpeed = 5.0f;
 };

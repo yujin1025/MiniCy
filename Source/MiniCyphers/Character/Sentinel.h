@@ -18,6 +18,4 @@ public:
 	ASentinel();
 
 	virtual void BeginPlay() override;
-
-
 };

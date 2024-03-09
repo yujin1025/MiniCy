@@ -30,6 +30,5 @@ EBTNodeResult::Type UBTTask_Shot::ExecuteTask(UBehaviorTreeComponent& OwnerComp,
 	if (Projectile == nullptr)
 		return EBTNodeResult::Failed;
 	
-
 	return EBTNodeResult::Succeeded;
 }

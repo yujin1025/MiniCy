@@ -13,11 +13,11 @@ void UAnimNotifyStiffCheckState::NotifyTick(USkeletalMeshComponent* MeshComp, UA
 
 	if (Character->RemainStiffTime > 0.01f)
 	{
-		Animation->RateScale = 0.01f;
+		Animation->RateScale = StiffAnimationSpeedRate;
 	}
 	else
 	{
-		Animation->RateScale = 0.0f;
+		Animation->RateScale = 1.0f;
 	}
 }
 
