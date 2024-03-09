@@ -17,4 +17,7 @@ class MINICYPHERS_API ASentinel : public ANonPlayableCharacter
 public:
 	ASentinel();
 
+	virtual void BeginPlay() override;
+
+
 };

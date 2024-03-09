@@ -47,7 +47,7 @@ void UHealthComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActo
 	// ...
 }
 
-void UHealthComponent::ChangeHealth(AMiniCyphersCharacter* Attacker, EDamageType DamageType, int HealthAmount, float UpperVelocity, float KnockBackDistance, bool isMelee)
+void UHealthComponent::ChangeHealth(AMiniCyphersCharacter* Attacker, EDamageType DamageType, float StiffTime, int HealthAmount, float UpperVelocity, float KnockBackDistance, bool isMelee)
 {
 	auto* GameMode = Cast<AMiniCyphersGameMode>(GetWorld()->GetAuthGameMode());
 	if (GameMode == nullptr)
@@ -81,7 +81,7 @@ void UHealthComponent::ChangeHealth(AMiniCyphersCharacter* Attacker, EDamageType
 		}
 		else
 		{
-			Character->OnHit(Attacker, DamageType, FMath::Abs(HealthAmount), UpperVelocity, KnockBackDistance, isMelee);
+			Character->OnHit(Attacker, DamageType, StiffTime, FMath::Abs(HealthAmount), UpperVelocity, KnockBackDistance, isMelee);
 		}
 
 		OnDamaged.Broadcast(Attacker, CurrentHealth);

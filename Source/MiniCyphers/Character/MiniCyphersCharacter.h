@@ -71,6 +71,8 @@ protected:
 	bool CheckCoolTime(EAttackType AttackType);
 
 	FString GetEnumNameAsString(EAttackType EnumValue);
+
+	virtual void BeginPlay() override;
 	virtual void Tick(float DeltaTime) override;
 
 public:
@@ -99,7 +101,7 @@ public:
 	virtual void OnUseUltimateSkill() {}
 	virtual void OnUseGrabSkill() {}
 
-	virtual void OnHit(AMiniCyphersCharacter* Attacker, EDamageType DamageType, int HealthAmount, float UpperVelocity, float KnockBackDistance, bool isMelee);
+	virtual void OnHit(AMiniCyphersCharacter* Attacker, EDamageType DamageType, float StiffTime, int HealthAmount, float UpperVelocity, float KnockBackDistance, bool isMelee);
 	virtual void OnDie();
 	
 protected:
@@ -108,17 +110,24 @@ protected:
 	bool TryGetOverlapTargets(AMiniCyphersCharacter* Character, OUT TArray<AMiniCyphersCharacter*>& FoundTargets);
 	bool TryGetOverlapTarget(AMiniCyphersCharacter* Character, OUT AMiniCyphersCharacter*& FoundTarget);
 
-	void SetAnimationSpeedRate(float Rate);
 public:
 	bool IsPlayer(); //플레이어인지 여부
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Pawn)
-	bool isPlayerTeam = false;
+	bool IsPlayerTeam = false;
+
+	UPROPERTY(EditAnywhere)
+	float KnockBackSpeedRate = 5.0f;
 
 	bool bInvincible = false;
 	bool bSuperArmor = false;
-	bool isProgressingSkillMotion = false;
-	bool isDead = false;
+	bool IsProgressingSkillMotion = false;
+	bool IsDead = false;
+
+	float RemainStiffTime = 0.0f;
+	float RemainKnockBackPower = 0.0f;
+
+	FVector KnockBackDirection = FVector::ZeroVector;
 
 	float DetectRadius = 1000.0f;
 

@@ -77,6 +77,9 @@ protected:
 	bool IsMelee = false;
 
 	UPROPERTY(EditAnywhere)
+	float StiffTime = 5.0f;
+
+	UPROPERTY(EditAnywhere)
 	EDamageType DamageType = EDamageType::Stand;
 
 };

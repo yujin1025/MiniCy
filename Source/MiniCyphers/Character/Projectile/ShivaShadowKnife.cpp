@@ -76,7 +76,7 @@ void AShivaShadowKnife::OnAttack(UPrimitiveComponent* HitComp, AActor* OtherActo
 		if (DamagedHealthComponent == nullptr)
 			return;
 
-		DamagedHealthComponent->ChangeHealth(ProjectileOwner, EDamageType::Stand, -DamageAmount, 0, KnockBackDistance, false);
+		DamagedHealthComponent->ChangeHealth(ProjectileOwner, EDamageType::Stand, StiffTime, -DamageAmount, 0, KnockBackDistance, false);
 
 		if (EnemyHitParticleEffect)
 		{

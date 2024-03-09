@@ -15,29 +15,30 @@ class MINICYPHERS_API UHitDeadComponent : public UMiniCyphersComponent
 	GENERATED_BODY()
 	
 private:
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Animation, meta = (AllowPrivateAccess = "true"))
+	UPROPERTY(EditAnywhere, Category = Animation, meta = (AllowPrivateAccess = "true"))
 	TArray<UAnimMontage*> StandHitMontages;
 
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Animation, meta = (AllowPrivateAccess = "true"))
-	TArray<UAnimMontage*> AirborneHitMontages;
+	UPROPERTY(EditAnywhere, Category = Animation, meta = (AllowPrivateAccess = "true"))
+	UAnimMontage* AirborneHitMontage;
 
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Animation, meta = (AllowPrivateAccess = "true"))
-	TArray<UAnimMontage*> PowerKnockBackMontages;
+	UPROPERTY(EditAnywhere, Category = Animation, meta = (AllowPrivateAccess = "true"))
+	UAnimMontage* PowerKnockBackMontage;
 
-	UPROPERTY(EditAnywhere)
+	UPROPERTY(EditAnywhere, Category = Animation, meta = (AllowPrivateAccess = "true"))
 	UAnimMontage* DeadMontage;
 
 	int32 CurrentHitMontageIndex;
-	int32 CurrentPowerKnockBackMontageIndex;
-	int32 CurrentAirborneHitMontageIndex;
 
 public:
 	UFUNCTION(BlueprintCallable, Category = "Animation")
-	void PlayHitMontage(EDamageType DamageType);
+	void OnHit(EDamageType DamageType);
 
 	UFUNCTION(BlueprintCallable, Category = "Animation")
-	void PlayDeadMontage();
+	void OnDead();
 
+	// Hit 모션 상태
 	bool bHit = false;
+
+	// Dead 모션 상태
 	bool bDead = false;
 };

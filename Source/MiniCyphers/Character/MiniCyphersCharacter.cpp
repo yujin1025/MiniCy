@@ -83,17 +83,35 @@ FString AMiniCyphersCharacter::GetEnumNameAsString(EAttackType EnumValue)
 	return "";
 }
 
+void AMiniCyphersCharacter::BeginPlay()
+{
+	Super::BeginPlay();
+
+}
+
 void AMiniCyphersCharacter::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
 	CurrentDeltaTime += DeltaTime;
+	RemainStiffTime = RemainStiffTime - DeltaTime <= 0.0f ? 0.0f : RemainStiffTime - DeltaTime;
+
+	if (RemainKnockBackPower >= 0.0f)
+	{
+		RemainKnockBackPower -= DeltaTime * KnockBackSpeedRate;
+		SetActorLocation(GetActorLocation() + KnockBackDirection * KnockBackSpeedRate);
+	}
+	else
+	{
+		RemainKnockBackPower = 0.0f;
+		KnockBackDirection = FVector::ZeroVector;
+	}
 }
 
 
 void AMiniCyphersCharacter::Move(const FVector2D Value)
 {
-	if (isDead)
+	if (IsDead)
 		return;
 
 	if (Controller != nullptr)
@@ -116,7 +134,7 @@ void AMiniCyphersCharacter::Move(const FVector2D Value)
 
 void AMiniCyphersCharacter::Look(const FVector2D Value)
 {
-	if (isDead)
+	if (IsDead)
 		return;
 
 	if (Controller != nullptr)
@@ -141,10 +159,10 @@ bool AMiniCyphersCharacter::CheckCoolTime(EAttackType AttackType)
 
 void AMiniCyphersCharacter::UseSkill(EAttackType AttackType) //캐릭터(나)가 때림
 {
-	if (isDead)
+	if (IsDead)
 		return;
 
-	if (isProgressingSkillMotion)
+	if (IsProgressingSkillMotion)
 		return;
 
 	if (ActionComponentMap.Contains(AttackType) == false)
@@ -191,55 +209,58 @@ void AMiniCyphersCharacter::UseSkill(EAttackType AttackType) //캐릭터(나)가 때림
 		break;
 	}
 
-	isProgressingSkillMotion = true;
+	IsProgressingSkillMotion = true;
 }
 
 void AMiniCyphersCharacter::OnFinishedSkillMotion(EAttackType AttackType)
 {
-	isProgressingSkillMotion = false;
+	IsProgressingSkillMotion = false;
 	OnUseSkillDelegate.Broadcast(AttackType);
 }
 
-void AMiniCyphersCharacter::OnHit(AMiniCyphersCharacter* Attacker, EDamageType DamageType, int DamageAmount, float UpperVelocity, float KnockBackDistance, bool isMelee)
+void AMiniCyphersCharacter::OnHit(AMiniCyphersCharacter* Attacker, EDamageType DamageType, float StiffTime, int DamageAmount, float UpperVelocity, float KnockBackPower, bool isMelee)
 {
-	if (isDead)
+	if (IsDead)
 		return;
 
-	if (!bSuperArmor && DamageType == EDamageType::Airborne)
+	if (bSuperArmor)
 	{
-		GetCharacterMovement()->JumpZVelocity = UpperVelocity;
-		Jump();
+		this->RemainStiffTime = StiffTime;
 	}
-
-	if (!bSuperArmor)
+	else
 	{
-		Move(FVector2D(0, -KnockBackDistance));
-	}
+		const FRotator Rotation = Attacker->GetControlRotation();
+		const FRotator YawRotation(0, Rotation.Yaw, 0);
 
-	SetAnimationSpeedRate(0.5f);
+		KnockBackDirection = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::X);
+		RemainKnockBackPower = KnockBackPower;
 
-	if (HitDeadComponent)
-	{
-		HitDeadComponent->PlayHitMontage(DamageType);
+		if (DamageType == EDamageType::Airborne)
+		{
+			GetCharacterMovement()->JumpZVelocity = UpperVelocity;
+			Jump();
+		}
+
+		HitDeadComponent->OnHit(DamageType);
 	}
 }
 
 void AMiniCyphersCharacter::OnDie()
 {
-	if (isDead)
+	if (IsDead)
 		return;
 
-	isDead = true;
+	IsDead = true;
 
 	if (HitDeadComponent)
 	{
-		HitDeadComponent->PlayDeadMontage();
+		HitDeadComponent->OnDead();
 	}
 }
 
 bool AMiniCyphersCharacter::IsPlayer()
 {
-	return Controller->IsPlayerController() || isPlayerTeam;
+	return Controller->IsPlayerController() || IsPlayerTeam;
 }
 
 FVector AMiniCyphersCharacter::GetLookVector(AMiniCyphersCharacter*& Target) const
@@ -273,32 +294,32 @@ FVector AMiniCyphersCharacter::GetTargetPosition(ECollisionChannel Channel, floa
 
 bool AMiniCyphersCharacter::IsSatisfiedNormalAttack()
 {
-	return CheckCoolTime(EAttackType::NormalAttack) && !isDead;
+	return CheckCoolTime(EAttackType::NormalAttack) && !IsDead;
 }
 
 bool AMiniCyphersCharacter::IsSatisfiedRightClickAttack()
 {
-	return CheckCoolTime(EAttackType::RightClickAttack) && !isDead;
+	return CheckCoolTime(EAttackType::RightClickAttack) && !IsDead;
 }
 
 bool AMiniCyphersCharacter::IsSatisfiedQSkill()
 {
-	return CheckCoolTime(EAttackType::QSkillAttack) && !isDead;
+	return CheckCoolTime(EAttackType::QSkillAttack) && !IsDead;
 }
 
 bool AMiniCyphersCharacter::IsSatisfiedUltimateSkill()
 {
-	return CheckCoolTime(EAttackType::UltimateAttack) && !isDead;
+	return CheckCoolTime(EAttackType::UltimateAttack) && !IsDead;
 }
 
 bool AMiniCyphersCharacter::IsSatisfiedGrabSkill()
 {
-	return CheckCoolTime(EAttackType::GrabSkillAttack) && !isDead;
+	return CheckCoolTime(EAttackType::GrabSkillAttack) && !IsDead;
 }
 
 bool AMiniCyphersCharacter::IsSatisfiedShiftAttack()
 {
-	return CheckCoolTime(EAttackType::ShiftAttack) && !isDead;
+	return CheckCoolTime(EAttackType::ShiftAttack) && !IsDead;
 }
 
 void AMiniCyphersCharacter::OnUseNormalAttack()
@@ -378,21 +399,4 @@ bool AMiniCyphersCharacter::TryGetOverlapTarget(AMiniCyphersCharacter* Character
 	}
 
 	return FoundTarget != nullptr;
-}
-
-void AMiniCyphersCharacter::SetAnimationSpeedRate(float Rate)
-{
-	auto* MyMesh = GetMesh();
-	if (MyMesh == nullptr)
-		return;
-
-	auto* AnimInstance = MyMesh->GetAnimInstance();
-	if (AnimInstance == nullptr)
-		return;
-
-	auto* CurrentMontange = AnimInstance->GetCurrentActiveMontage();
-	if (CurrentMontange == nullptr)
-		return;
-
-	AnimInstance->Montage_SetPlayRate(CurrentMontange, Rate);
 }

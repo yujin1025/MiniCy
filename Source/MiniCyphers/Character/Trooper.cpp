@@ -12,6 +12,7 @@ ATrooper::ATrooper()
 {
 	// AIControllerClass = BP로 된 센티넬 AI Controller를 넣어줄 것
 	AIControllerClass = AMiniCyphersAIController::StaticClass();
+	bSuperArmor = true;
 }
 
 FVector ATrooper::GetTargetPosition(ECollisionChannel Channel, float RayCastDistance, OUT bool& IsFoundTarget)
@@ -26,9 +27,9 @@ FVector ATrooper::GetTargetPosition(ECollisionChannel Channel, float RayCastDist
 	return Super::GetTargetPosition(Channel, RayCastDistance, OUT IsFoundTarget);
 }
 
-void ATrooper::OnHit(AMiniCyphersCharacter* Attacker, EDamageType DamageType, int HealthAmount, float UpperVelocity, float KnockBackDistance, bool isMelee)
+void ATrooper::OnHit(AMiniCyphersCharacter* Attacker, EDamageType DamageType, float StiffTime, int HealthAmount, float UpperVelocity, float KnockBackDistance, bool isMelee)
 {
-	Super::OnHit(Attacker, DamageType, HealthAmount, UpperVelocity, KnockBackDistance, isMelee);
+	Super::OnHit(Attacker, DamageType, StiffTime, HealthAmount, UpperVelocity, KnockBackDistance, isMelee);
 	
 	LastAttacker = Attacker;
 	LastAttackDeltaTime = 0.0f;

@@ -3,16 +3,16 @@
 
 #include "HitDeadComponent.h"
 
-void UHitDeadComponent::PlayHitMontage(EDamageType DamageType)
+void UHitDeadComponent::OnHit(EDamageType DamageType)
 {
+	AMiniCyphersCharacter* Character = Cast<AMiniCyphersCharacter>(GetOwner());
+	if (Character == nullptr)
+		return;
+
 	if (DamageType == EDamageType::Stand)
 	{
 		int32 MontageCount = StandHitMontages.Num();
 		if (MontageCount <= 0)
-			return;
-
-		AMiniCyphersCharacter* Character = Cast<AMiniCyphersCharacter>(GetOwner());
-		if (Character == nullptr)
 			return;
 
 		CurrentHitMontageIndex = (CurrentHitMontageIndex + 1) % MontageCount;
@@ -20,35 +20,15 @@ void UHitDeadComponent::PlayHitMontage(EDamageType DamageType)
 	}
 	else if (DamageType == EDamageType::Airborne)
 	{
-		int32 MontageCount = AirborneHitMontages.Num();
-		if (MontageCount <= 0)
-			return;
-
-		AMiniCyphersCharacter* Character = Cast<AMiniCyphersCharacter>(GetOwner());
-		if (Character == nullptr)
-			return;
-
-		CurrentAirborneHitMontageIndex = (CurrentAirborneHitMontageIndex + 1) % MontageCount;
-		Character->PlayAnimMontage(AirborneHitMontages[CurrentAirborneHitMontageIndex]);
+		Character->PlayAnimMontage(AirborneHitMontage);
 	}
 	else if (DamageType == EDamageType::PowerKnockBack)
 	{
-		int32 MontageCount = PowerKnockBackMontages.Num();
-		if (MontageCount <= 0)
-			return;
-
-		AMiniCyphersCharacter* Character = Cast<AMiniCyphersCharacter>(GetOwner());
-		if (Character == nullptr)
-			return;
-
-		CurrentPowerKnockBackMontageIndex = (CurrentPowerKnockBackMontageIndex + 1) % MontageCount;
-		Character->PlayAnimMontage(PowerKnockBackMontages[CurrentPowerKnockBackMontageIndex]);
+		Character->PlayAnimMontage(PowerKnockBackMontage);
 	}
-
-	bHit = true;
 }
 
-void UHitDeadComponent::PlayDeadMontage()
+void UHitDeadComponent::OnDead()
 {
 	AMiniCyphersCharacter* Character = Cast<AMiniCyphersCharacter>(GetOwner());
 	if (Character == nullptr)

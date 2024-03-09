@@ -45,6 +45,9 @@ private:
 	float CurrentDeltaTime = 0.0f;
 
 	UPROPERTY(EditAnywhere)
+	float StiffTime = 5.0f;
+
+	UPROPERTY(EditAnywhere)
 	int DamageAmount = 5;
 
 	UPROPERTY(EditAnywhere)
