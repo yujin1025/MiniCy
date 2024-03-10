@@ -215,7 +215,10 @@ void AMiniCyphersCharacter::UseSkill(EAttackType AttackType) //캐릭터(나)가 때림
 void AMiniCyphersCharacter::OnFinishedSkillMotion(EAttackType AttackType)
 {
 	ProgressingAttackType = EAttackType::Max;
-	OnUseSkillDelegate.Broadcast(AttackType);
+	if (AttackType != EAttackType::Max)
+	{
+		OnUseSkillDelegate.Broadcast(AttackType);
+	}
 }
 
 void AMiniCyphersCharacter::OnHit(AMiniCyphersCharacter* Attacker, EDamageType DamageType, float StiffTime, int DamageAmount, float UpperVelocity, float KnockBackPower, bool isMelee)

@@ -24,7 +24,11 @@ EBTNodeResult::Type UBTTask_MoveToTarget::ExecuteTask(UBehaviorTreeComponent& Ow
 	if (MyCharacter == nullptr)
 		return EBTNodeResult::Failed;
 
-	auto* OtherCharacter = MyCharacter->GetTarget();
+	auto* BlackBoard = GetBlackboardComponent(OwnerComp);
+	if (BlackBoard == nullptr)
+		return EBTNodeResult::Failed;
+
+	auto* OtherCharacter = Cast<AMiniCyphersCharacter>(BlackBoard->GetValueAsObject(AMiniCyphersAIController::TargetObjectKey));
 	if (OtherCharacter == nullptr)
 		return EBTNodeResult::Failed;
 
