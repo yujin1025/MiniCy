@@ -15,8 +15,8 @@ ATower::ATower()
 
 void ATower::BeginPlay()
 {
-	// 타워는 항시 슈퍼아머
-	bSuperArmor = true;
+	bSuperArmor = true; // 타워는 항시 슈퍼아머
+	IsPlayerTeam = true; // 플레이어 팀
 }
 
 // 타워는 가장 가까운 적을 탐색한다.

@@ -63,7 +63,7 @@ void AShivaShadowKnife::OnAttack(UPrimitiveComponent* HitComp, AActor* OtherActo
 		return;
 
 	AMiniCyphersCharacter* DamagedCharacter = Cast<AMiniCyphersCharacter>(OtherActor); //투사체에 맞은 놈
-	if (DamagedCharacter != nullptr && DamagedCharacter->IsPlayer() == ProjectileOwner->IsPlayer())
+	if (DamagedCharacter != nullptr && DamagedCharacter->IsPlayerTeam == ProjectileOwner->IsPlayerTeam)
 		return;
 
 	const FVector SpawnLocation = Hit.ImpactPoint;

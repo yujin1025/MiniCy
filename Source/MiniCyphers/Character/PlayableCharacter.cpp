@@ -37,6 +37,7 @@
 	AutoPossessAI = EAutoPossessAI::Disabled;
 
 	isShift = false;
+	IsPlayerTeam = true;
 }
 
 

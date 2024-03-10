@@ -17,6 +17,6 @@ void ASentinel::BeginPlay()
 {
 	Super::BeginPlay();
 	
-	// 센티넬은 초기 슈퍼아머 없음
-	bSuperArmor = false;
+	bSuperArmor = false; // 센티넬은 슈퍼아머 없음
+	IsPlayerTeam = false; // 적 팀
 }

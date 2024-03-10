@@ -79,7 +79,7 @@ bool AFieldItem::TryGetOverlapTarget(OUT UItemActionComponent*& FoundTarget)
 			if (TargetCharacter == nullptr)
 				continue;
 
-			if (TargetCharacter->IsPlayer() == false)
+			if (TargetCharacter->IsPlayerTeam == false)
 				continue;
 
 			auto* ItemActionComponent = TargetCharacter->GetComponentByClass<UItemActionComponent>();

@@ -271,7 +271,7 @@ void AMiniCyphersCharacter::OnDie()
 
 bool AMiniCyphersCharacter::IsPlayer()
 {
-	return Controller->IsPlayerController() || IsPlayerTeam;
+	return Controller->IsPlayerController();
 }
 
 FVector AMiniCyphersCharacter::GetLookVector(AMiniCyphersCharacter*& Target) const
@@ -388,7 +388,7 @@ bool AMiniCyphersCharacter::TryGetOverlapTargets(AMiniCyphersCharacter* Characte
 			if (TargetCharacter == nullptr)
 				continue;
 
-			if (IsPlayer() != TargetCharacter->IsPlayer())
+			if (IsPlayerTeam != TargetCharacter->IsPlayerTeam)
 			{
 				FoundTargets.Add(TargetCharacter);
 				continue;
@@ -401,22 +401,11 @@ bool AMiniCyphersCharacter::TryGetOverlapTargets(AMiniCyphersCharacter* Characte
 
 bool AMiniCyphersCharacter::TryGetOverlapTarget(AMiniCyphersCharacter* Character, OUT AMiniCyphersCharacter*& FoundTarget)
 {
-	TArray<FOverlapResult> OverlapResults;
+	TArray<AMiniCyphersCharacter*> Targets;
 
-	if (TryGetOverlapResult(Character, OverlapResults))
+	if (TryGetOverlapTargets(Character, Targets))
 	{
-		for (auto const& OverlapResult : OverlapResults)
-		{
-			auto* TargetCharacter = Cast<AMiniCyphersCharacter>(OverlapResult.GetActor());
-			if (TargetCharacter == nullptr)
-				continue;
-
-			if (IsPlayer() != TargetCharacter->IsPlayer())
-			{
-				FoundTarget = TargetCharacter;
-				break;
-			}
-		}
+		FoundTarget = Targets[0];
 	}
 
 	return FoundTarget != nullptr;

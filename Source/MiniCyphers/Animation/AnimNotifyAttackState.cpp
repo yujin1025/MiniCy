@@ -94,7 +94,7 @@ bool UAnimNotifyAttackState::TryGetOverlapTarget(AMiniCyphersCharacter* Owner, O
 			if (TargetCharacter == nullptr)
 				continue;
 
-			if (TargetCharacter->IsPlayer() == Owner->IsPlayer())
+			if (TargetCharacter->IsPlayerTeam == Owner->IsPlayerTeam)
 				continue;
 
 			bResult = true;
