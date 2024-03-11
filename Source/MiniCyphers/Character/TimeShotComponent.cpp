@@ -12,6 +12,7 @@ void UTimeShotComponent::TryAction()
     if (TowerShot)
     {
         UStaticMeshComponent* StaticMeshComponent = TowerShot->StaticMesh;
+        /*
         UMaterialInstanceDynamic* MaterialInstance = StaticMeshComponent->CreateAndSetMaterialInstanceDynamic(0);
 
         if (MaterialInstance)
@@ -23,6 +24,10 @@ void UTimeShotComponent::TryAction()
             CurrentOpacity = FMath::Max(CurrentOpacity, 0.0f);
 
             MaterialInstance->SetScalarParameterValue(TEXT("Alpha"), CurrentOpacity);
-        }
+        }*/
     }
+}
+
+void UTimeShotComponent::OnAction()
+{
 }

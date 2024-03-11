@@ -9,10 +9,21 @@ ATowerShot::ATowerShot()
 	TimeShotComponent = CreateDefaultSubobject<UTimeShotComponent>(TEXT("TimeShotComponent"));
 	
 	StaticMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("UStaticMeshComponent"));
-	UMaterialInstanceDynamic* MaterialInstance = StaticMesh->CreateAndSetMaterialInstanceDynamic(0);
 
-	if (MaterialInstance)
+	RootComponent = StaticMesh;
+
+}
+
+void ATowerShot::BeginPlay()
+{
+
+	if (StaticMesh)
 	{
-		MaterialInstance->SetScalarParameterValue(TEXT("Alpha"), DefaultAlphaValue);
+		UMaterialInstanceDynamic* DynamicMaterial = StaticMesh->CreateAndSetMaterialInstanceDynamic(0);
+		if (DynamicMaterial)
+		{
+			DynamicMaterial->SetScalarParameterValue(TEXT("Opacity"), TransparencyAmount);
+		}
 	}
 }
+

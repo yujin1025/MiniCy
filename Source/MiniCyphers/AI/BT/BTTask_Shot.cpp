@@ -26,7 +26,10 @@ EBTNodeResult::Type UBTTask_Shot::ExecuteTask(UBehaviorTreeComponent& OwnerComp,
 
 	UWorld* const World = GetWorld();
 
-	auto* Projectile = World->SpawnActor<ATowerShot>(ProjectileClass, TargetCharacter->GetActorLocation(), FRotator::ZeroRotator);
+	FVector SpawnLocation = TargetCharacter->GetActorLocation();
+	SpawnLocation.Z = 0;
+
+	auto* Projectile = World->SpawnActor<ATowerShot>(ProjectileClass, SpawnLocation, FRotator::ZeroRotator);
 	if (Projectile == nullptr)
 		return EBTNodeResult::Failed;
 	

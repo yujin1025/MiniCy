@@ -21,8 +21,10 @@ public:
 	UStaticMeshComponent* StaticMesh = nullptr;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "TowerShot")
-	float DefaultAlphaValue = 1.0f;
+	float TransparencyAmount = 0.5f;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components")
 	UTimeShotComponent* TimeShotComponent;
+
+	virtual void BeginPlay() override;
 };

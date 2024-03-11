@@ -16,4 +16,5 @@ class MINICYPHERS_API UTimeShotComponent : public UTimeActionComponent
 	
 public:
 	virtual void TryAction() override; 
+	virtual void OnAction() override;
 };
