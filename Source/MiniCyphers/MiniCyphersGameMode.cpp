@@ -72,7 +72,7 @@ void AMiniCyphersGameMode::OnPostLogin(AMiniCyphersPlayerController* NewPlayer)
 
 void AMiniCyphersGameMode::SpawnPlayer(ECharacterType Type)
 {
-	FVector SpawnLocation = FVector(900.0f, 1110.0f, 90.0f);
+	FVector SpawnLocation = FVector(-1000.0f, 800.0f, 0.0f);
 	FRotator SpawnRotation = FRotator(0.0f, 0.0f, 0.0f);
 
 	AMiniCyphersCharacter* Character = nullptr;
