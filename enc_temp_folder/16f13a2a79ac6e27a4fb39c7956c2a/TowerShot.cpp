@@ -12,32 +12,30 @@ ATowerShot::ATowerShot()
 	RootComponent = StaticMesh;
 }
 
+void ATowerShot::BeginPlay()
+{
+	Super::BeginPlay();
+	SetAlpha(1.0f);
+}
+
 void ATowerShot::SetAlpha(float alpha)
 {
 	if (StaticMesh)
 	{
 		// 현재 메시의 0번 메터리얼을 가져온다.
-		if (MyMaterialInterface == nullptr)
-		{
-			MyMaterialInterface = StaticMesh->GetMaterial(0);
-		}
+		auto* BaseMaterial = StaticMesh->GetMaterial(0);
 
 		// 베이스 메터리얼 기반으로 정보 인스턴스를 생성
-		if (MyMaterialInterfaceDynamic == nullptr)
-		{
-			MyMaterialInterfaceDynamic = UMaterialInstanceDynamic::Create(MyMaterialInterface, this);
-		}
-
-		if (MyMaterialInterfaceDynamic != nullptr)
+		auto* DynamicMaterialInstance = UMaterialInstanceDynamic::Create(BaseMaterial, this);
+		if (DynamicMaterialInstance)
 		{
 			// Transparency_Amount라는 이름의 파라미터 값을 세팅
-			CurrentTransparencyAmount = alpha;
-			MyMaterialInterfaceDynamic->SetScalarParameterValue(TEXT("Transparency_Amount"), alpha);	
-			MyMaterialInterfaceDynamic->SetVectorParameterValue("BaseColor", FLinearColor::Red);
+			DynamicMaterialInstance->SetScalarParameterValue(TEXT("Transparency_Amount"), alpha);
 		}
 
+		CurrentTransparencyAmount = alpha;
 		// 스태틱 메시 내 메터리얼에 정보 인스턴스 적용
-		StaticMesh->SetMaterial(0, MyMaterialInterfaceDynamic);
+		StaticMesh->SetMaterial(0, DynamicMaterialInstance);
 	}
 }
 

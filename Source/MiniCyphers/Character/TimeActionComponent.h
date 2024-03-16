@@ -22,10 +22,11 @@ public:
 	// Called every frame
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 
-	virtual void TryAction();
+	virtual void StartAction();
+	virtual void UpdateAction(float DeltaTime);
 	virtual void OnAction();
 
-private:
+protected:
 	UPROPERTY(EditAnywhere)
 	float ReserveTime = 5.0f;
 

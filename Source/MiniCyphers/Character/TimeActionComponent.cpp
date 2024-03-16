@@ -6,26 +6,31 @@
 void UTimeActionComponent::BeginPlay()
 {
 	CurrentDeltaTime = 0.0f;
+	StartAction();
 }
 
 void UTimeActionComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
 {
 	CurrentDeltaTime += DeltaTime;
 
+	UpdateAction(DeltaTime);
 	if (CurrentDeltaTime >= ReserveTime)
 	{
-		TryAction();
 		OnAction();
-
 		CurrentDeltaTime = 0.0f;
 	}
 }
 
-void UTimeActionComponent::TryAction()
+void UTimeActionComponent::StartAction()
 {
 
 }
 
+void UTimeActionComponent::UpdateAction(float DeltaTime)
+{
+}
+
+// 기본은 Owner Actor 삭제
 void UTimeActionComponent::OnAction()
 {
 	GetOwner()->Destroy();

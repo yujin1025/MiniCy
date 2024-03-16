@@ -20,14 +20,15 @@ public:
 	UPROPERTY(EditAnywhere)
 	UStaticMeshComponent* StaticMesh = nullptr;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Alpha")
+	float TransparencyAmount = 1.0f;
+
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components")
 	UTimeShotComponent* TimeShotComponent;
 
-	UMaterialInterface* MyMaterialInterface = nullptr;
-	UMaterialInstanceDynamic* MyMaterialInterfaceDynamic = nullptr;
-
 	float CurrentTransparencyAmount = 1.0f;
 
+	virtual void BeginPlay() override;
 	void SetAlpha(float Alpha);
 	void ChangeAlpha(float DeltaAlpha);
 };

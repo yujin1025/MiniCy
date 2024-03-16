@@ -15,6 +15,8 @@ class MINICYPHERS_API UTimeShotComponent : public UTimeActionComponent
 	GENERATED_BODY()
 	
 public:
-	virtual void TryAction() override; 
+	virtual void StartAction() override; 
+	virtual void UpdateAction(float DeltaTime) override;
+
 	virtual void OnAction() override;
 };
