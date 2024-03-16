@@ -6,7 +6,7 @@
 #include "../AI/MiniCyphersAIController.h"
 #include "Tower.h"
 
-
+ 
 ASentinel::ASentinel()
 {
 	// AIControllerClass = BP로 된 센티넬 AI Controller를 넣어줄 것

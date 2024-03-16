@@ -1,6 +1,5 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
-
 #include "Tower.h"
 #include "Kismet/GameplayStatics.h"
 #include "../Character/HealthComponent.h"
@@ -11,6 +10,9 @@
 ATower::ATower()
 {
 	AIControllerClass = AMiniCyphersAIController::StaticClass();
+	
+	TowerStaticMesh = CreateDefaultSubobject<UStaticMeshComponent>("TowerMesh");
+	TowerStaticMesh->SetupAttachment(RootComponent);
 }
 
 void ATower::BeginPlay()
@@ -28,4 +30,14 @@ AMiniCyphersCharacter* ATower::GetTarget()
 		return nullptr;
 
 	return Target;
+}
+
+FVector ATower::GetMyLocation() const
+{
+	if (TowerStaticMesh)
+	{
+		return TowerStaticMesh->GetComponentLocation();
+	}
+
+	return GetActorLocation();
 }

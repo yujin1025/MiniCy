@@ -62,15 +62,12 @@ void AShivaShadowKnife::OnAttack(UPrimitiveComponent* HitComp, AActor* OtherActo
 	if (OtherComp == nullptr)
 		return;
 
-	AMiniCyphersCharacter* DamagedCharacter = Cast<AMiniCyphersCharacter>(OtherActor); //투사체에 맞은 놈
-	if (DamagedCharacter != nullptr && DamagedCharacter->IsPlayerTeam == ProjectileOwner->IsPlayerTeam)
-		return;
-
 	const FVector SpawnLocation = Hit.ImpactPoint;
 	FActorSpawnParameters ActorSpawnParams;
 	UParticleSystemComponent* ParticleSystemComponent = nullptr;
 	
-	if (DamagedCharacter != nullptr)
+	AMiniCyphersCharacter* DamagedCharacter = Cast<AMiniCyphersCharacter>(OtherActor); //투사체에 맞은 놈
+	if (DamagedCharacter != nullptr && DamagedCharacter->IsPlayerTeam != ProjectileOwner->IsPlayerTeam)
 	{
 		UHealthComponent* DamagedHealthComponent = DamagedCharacter->FindComponentByClass<UHealthComponent>();
 		if (DamagedHealthComponent == nullptr)

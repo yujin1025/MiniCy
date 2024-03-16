@@ -11,7 +11,7 @@
 
 #include "HealthComponent.generated.h"
 
-DECLARE_MULTICAST_DELEGATE_TwoParams(FOnDamaged, AMiniCyphersCharacter*, float)
+DECLARE_MULTICAST_DELEGATE_ThreeParams(FOnDamaged, AMiniCyphersCharacter*, float, bool)
 
 
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )

@@ -27,11 +27,6 @@ void UBTService_Detect::SetDetectedTarget(UBehaviorTreeComponent& OwnerComp, AMi
 		return;
 
 	BlackBoard->SetValueAsObject(AMiniCyphersAIController::TargetObjectKey, TargetCharacter);
-
-	if (TargetCharacter != nullptr)
-	{
-		BlackBoard->SetValueAsVector(AMiniCyphersAIController::PatrolPosKey, TargetCharacter->GetActorLocation());
-	}
 }
 
 void UBTService_Detect::OnTickNode(UBehaviorTreeComponent& OwnerComp, float DeltaSeconds)

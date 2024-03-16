@@ -14,6 +14,8 @@
 const FName AMiniCyphersAIController::HomePosKey(TEXT("HomePos"));
 const FName AMiniCyphersAIController::PatrolPosKey(TEXT("PatrolPos"));
 const FName AMiniCyphersAIController::TargetObjectKey(TEXT("TargetObject"));
+const FName AMiniCyphersAIController::DamagedCountKey(TEXT("DamagedCount"));
+const FName AMiniCyphersAIController::DamagedTypeKey(TEXT("DamagedType"));
 
 
 AMiniCyphersAIController::AMiniCyphersAIController()
@@ -50,7 +52,13 @@ void AMiniCyphersAIController::SetCharacterPerception(AMiniCyphersCharacter* InC
 	InChar->HealthComponent->OnDamaged.AddUObject(this, &AMiniCyphersAIController::OnDamaged);
 }
 
-void AMiniCyphersAIController::OnDamaged(AMiniCyphersCharacter* Attacker, float Amount)
+void AMiniCyphersAIController::OnDamaged(AMiniCyphersCharacter* Attacker, float Amount, bool isMelee)
 {
-	
+	UBlackboardComponent* blackboardComponent = Blackboard;
+	if (blackboardComponent == nullptr)
+		return;
+
+	int DamagedCount = blackboardComponent->GetValueAsInt(DamagedCountKey);
+	blackboardComponent->SetValueAsInt(DamagedCountKey, DamagedCount + 1);
+	blackboardComponent->SetValueAsBool(DamagedTypeKey, isMelee);
 }

@@ -148,6 +148,7 @@ public:
 	virtual FVector GetTargetPosition(ECollisionChannel Channel, float RayCastDistance, OUT bool& IsFoundTarget);
 
 	virtual FVector GetTargetPosition();
+	virtual FVector GetMyLocation() const;
 	virtual AMiniCyphersCharacter* GetTarget();
 };
 

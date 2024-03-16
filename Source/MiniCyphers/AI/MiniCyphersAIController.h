@@ -20,9 +20,8 @@ public:
 	static const FName HomePosKey;
 	static const FName PatrolPosKey;
 	static const FName TargetObjectKey;
-	static const FName AttackerObjectKey;
-	static const FName AttackerTrackingTimeKey;
-
+	static const FName DamagedCountKey;
+	static const FName DamagedTypeKey;
 
 	virtual void OnPossess(APawn* InPawn) override;
 	virtual void OnUnPossess() override;
@@ -31,8 +30,7 @@ public:
 	void SetCharacterPerception(AMiniCyphersCharacter* InChar);
 
 	UFUNCTION()
-	void OnDamaged(AMiniCyphersCharacter* Attacker, float Amount);
-
+	void OnDamaged(AMiniCyphersCharacter* Attacker, float Amount, bool isMelee);
 
 
 private:

@@ -33,9 +33,7 @@ EBTNodeResult::Type UBTTask_MoveToTarget::ExecuteTask(UBehaviorTreeComponent& Ow
 		return EBTNodeResult::Failed;
 
 	MyCharacter->RotateToTarget(OtherCharacter, 5.0f);
-
-	AIController->SetFocus(OtherCharacter);
-	AIController->MoveToActor(OtherCharacter, 200.0f);
+	AIController->MoveToLocation(OtherCharacter->GetMyLocation(), 200.0f);
 
 	return EBTNodeResult::Succeeded;
 }

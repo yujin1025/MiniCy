@@ -84,7 +84,7 @@ void UHealthComponent::ChangeHealth(AMiniCyphersCharacter* Attacker, EDamageType
 			Character->OnHit(Attacker, DamageType, StiffTime, FMath::Abs(HealthAmount), UpperVelocity, KnockBackDistance, isMelee);
 		}
 
-		OnDamaged.Broadcast(Attacker, CurrentHealth);
+		OnDamaged.Broadcast(Attacker, CurrentHealth, isMelee);
 	}
 }
 

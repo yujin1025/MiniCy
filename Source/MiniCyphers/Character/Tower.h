@@ -17,7 +17,12 @@ class MINICYPHERS_API ATower : public ANonPlayableCharacter
 	
 public:
 	ATower();
+
+	UPROPERTY(EditAnywhere)
+	UStaticMeshComponent* TowerStaticMesh = nullptr;
+
 	virtual void BeginPlay() override;
 	
 	virtual AMiniCyphersCharacter* GetTarget() override;
+	virtual FVector GetMyLocation() const override;
 };

@@ -308,6 +308,11 @@ FVector AMiniCyphersCharacter::GetTargetPosition()
 	return FVector();
 }
 
+FVector AMiniCyphersCharacter::GetMyLocation() const
+{
+	return GetActorLocation();
+}
+
 AMiniCyphersCharacter* AMiniCyphersCharacter::GetTarget()
 {
 	return nullptr;
@@ -357,8 +362,9 @@ bool AMiniCyphersCharacter::TryGetOverlapResult(AMiniCyphersCharacter* Character
 	if (World == nullptr)
 		return false;
 
-	FVector Center = Character->GetActorLocation();
+	FVector Center = Character->GetMyLocation();
 	FCollisionQueryParams CollisionParam(NAME_None, false, Character);
+	CollisionParam.AddIgnoredActor(this);
 
 	bool bResult = World->OverlapMultiByChannel(
 		OverlapResults,
@@ -368,11 +374,7 @@ bool AMiniCyphersCharacter::TryGetOverlapResult(AMiniCyphersCharacter* Character
 		FCollisionShape::MakeSphere(TargetDetectRadius),
 		CollisionParam);
 
-	if (bResult)
-	{
-		DrawDebugSphere(World, Center, TargetDetectRadius, 16, FColor::Red, false, 0.2f);
-	}
-
+	DrawDebugSphere(World, Center, TargetDetectRadius, 16, FColor::Red, false, 0.2f);
 	return bResult;
 }
 
