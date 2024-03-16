@@ -2,7 +2,7 @@
 
 
 #include "MiniCyphersProjectile.h"
-
+#include "../../Character/MiniCyphersCharacter.h"
 
 // Sets default values
 AMiniCyphersProjectile::AMiniCyphersProjectile()
@@ -24,5 +24,15 @@ void AMiniCyphersProjectile::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
+}
+
+void AMiniCyphersProjectile::Initialize(AMiniCyphersCharacter* Character)
+{
+	ProjectileOwner = Character;
+}
+
+void AMiniCyphersProjectile::SetDirection(FVector Direction)
+{
+	ProjectileDirection = Direction;
 }
 

@@ -16,6 +16,10 @@ EBTNodeResult::Type UBTTask_Shot::ExecuteTask(UBehaviorTreeComponent& OwnerComp,
 	if (BlackBoard == nullptr)
 		return EBTNodeResult::Failed;
 
+	auto* Character = GetCharacter(OwnerComp);
+	if (Character == nullptr)
+		return EBTNodeResult::Failed;
+
 	auto* Target = BlackBoard->GetValueAsObject(AMiniCyphersAIController::TargetObjectKey);
 	if (Target == nullptr)
 		return EBTNodeResult::Failed;
@@ -33,5 +37,6 @@ EBTNodeResult::Type UBTTask_Shot::ExecuteTask(UBehaviorTreeComponent& OwnerComp,
 	if (Projectile == nullptr)
 		return EBTNodeResult::Failed;
 	
+	Projectile->Initialize(Character);
 	return EBTNodeResult::Succeeded;
 }

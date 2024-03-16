@@ -35,13 +35,6 @@ public:
 	UFUNCTION()
 	void OnAttack(UPrimitiveComponent* HitComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, FVector NormalImpulse, const FHitResult& Hit);
 
-	void Initialize(AMiniCyphersCharacter* Character);
-	void SetDirection(FVector Direction);
-
-private:
-	AMiniCyphersCharacter* ProjectileOwner;
-	FVector ProjectileDirection;
-
 	float CurrentDeltaTime = 0.0f;
 
 	UPROPERTY(EditAnywhere)

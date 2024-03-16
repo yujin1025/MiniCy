@@ -95,13 +95,3 @@ void AShivaShadowKnife::OnAttack(UPrimitiveComponent* HitComp, AActor* OtherActo
 
 	Destroy();
 }
-
-void AShivaShadowKnife::Initialize(AMiniCyphersCharacter* Character)
-{
-	ProjectileOwner = Character;
-}
-
-void AShivaShadowKnife::SetDirection(FVector Direction)
-{
-	ProjectileDirection = Direction;
-}

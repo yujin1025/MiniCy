@@ -18,9 +18,6 @@ void UAnimNotifySummonState::SummonObject(AMiniCyphersCharacter* Character)
 	case ESummonType::ShivaKnife:
 		SummonShivaKnife(Cast<AShiva>(Character));
 		break;
-
-	case ESummonType::TowerShot:
-		break;
 	}
 }
 

@@ -15,6 +15,9 @@ class MINICYPHERS_API UTimeShotComponent : public UTimeActionComponent
 	GENERATED_BODY()
 	
 public:
+	UPROPERTY(EditAnywhere)
+	TSubclassOf<class AMiniCyphersProjectile> ProjectileClass;
+
 	virtual void StartAction() override; 
 	virtual void UpdateAction(float DeltaTime) override;
 

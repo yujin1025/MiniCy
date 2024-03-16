@@ -11,8 +11,7 @@ enum class ESummonType
 {
 	None = -1,
 	ShivaKnife = 0, // 시바 평타 나이프
-	TowerShot = 1, // 타워 포탄
-	TrooperStone = 2, // 투루퍼 전방 스킬 돌
+	TrooperStone = 1, // 투루퍼 전방 스킬 돌
 };
 
 class AMiniCyphersCharacter;
