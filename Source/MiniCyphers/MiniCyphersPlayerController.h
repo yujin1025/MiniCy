@@ -6,6 +6,7 @@
 #include "GameFramework/PlayerController.h"
 #include "MiniCyphersPlayerController.generated.h"
 
+
 class AMiniCyphersCharacter;
 class AMiniCyphersPlayerState;
 /**
@@ -19,6 +20,8 @@ class MINICYPHERS_API AMiniCyphersPlayerController : public APlayerController
 public:
 	virtual void PostInitializeComponents() override;
 	virtual void OnPossess(APawn* aPawn) override;
+	virtual void SetupInputComponent() override;
+	void OpenSettings();
 
 private:
 	void OnPossessCharacter(AMiniCyphersCharacter* aCharacter);
@@ -27,4 +30,12 @@ private:
 public:
 	AMiniCyphersPlayerState* GetState();
 	AMiniCyphersCharacter* GetCharacter();
+
+	UPROPERTY()
+	class UMiniCyphersWidget* SettingWidget;
+	
+private:
+	UPROPERTY(EditAnywhere, Category = UI)
+	TSubclassOf<UMiniCyphersWidget> SettingsWidgetClass;
+	
 };
