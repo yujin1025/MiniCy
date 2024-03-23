@@ -21,7 +21,7 @@ void ATower::BeginPlay()
 	IsPlayerTeam = true; // 플레이어 팀
 }
 
-// 타워는 가장 가까운 적을 탐색한다.
+// 타워는 그냥 가장 가까운 적을 탐색한다.
 AMiniCyphersCharacter* ATower::GetTarget()
 {
 	AMiniCyphersCharacter* Target;

@@ -20,4 +20,14 @@ public:
 public:
 	virtual AMiniCyphersCharacter* GetTarget();
 	virtual FVector GetTargetPosition() override;
+
+protected:
+	AMiniCyphersCharacter* LastAttacker = nullptr;
+
+	float LastAttackDeltaTime = 0.0f;
+	float LastAttackTrackingValidTime = 5.0f;
+
+protected:
+	virtual void OnHit(AMiniCyphersCharacter* Attacker, EDamageType DamageType, float StiffTime, int HealthAmount, float UpperVelocity, float KnockBackDistance, bool isMelee);
+	virtual void Tick(float DeltaTime) override;
 };

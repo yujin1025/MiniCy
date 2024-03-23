@@ -15,6 +15,9 @@ class MINICYPHERS_API ATowerShot : public AMiniCyphersProjectile
 	GENERATED_BODY()
 
 public:
+	UPROPERTY(EditAnywhere)
+	FLinearColor WarningAreaColor = FLinearColor::Red;
+	
 	ATowerShot();
 
 	UPROPERTY(EditAnywhere)

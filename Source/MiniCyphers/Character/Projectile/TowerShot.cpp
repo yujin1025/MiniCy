@@ -33,7 +33,7 @@ void ATowerShot::SetAlpha(float alpha)
 			// Transparency_Amount라는 이름의 파라미터 값을 세팅
 			CurrentTransparencyAmount = alpha;
 			MyMaterialInterfaceDynamic->SetScalarParameterValue(TEXT("Transparency_Amount"), alpha);	
-			MyMaterialInterfaceDynamic->SetVectorParameterValue("BaseColor", FLinearColor::Red);
+			MyMaterialInterfaceDynamic->SetVectorParameterValue("Base Color", WarningAreaColor);
 		}
 
 		// 스태틱 메시 내 메터리얼에 정보 인스턴스 적용

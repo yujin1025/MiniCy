@@ -11,10 +11,13 @@ ANonPlayableCharacter::ANonPlayableCharacter()
 	AutoPossessPlayer = EAutoReceiveInput::Disabled;
 }
 
-// 타워를 탐색해서 이동하는 로직
-// 현재 센티넬, 투루퍼에서 사용 중
+// 1. 최근에 나를 공격한 녀석이 있다면 그 녀석
+// 2. 아니라면 타워
 AMiniCyphersCharacter* ANonPlayableCharacter::GetTarget()
 {
+	if (LastAttacker != nullptr)
+		return LastAttacker;
+
 	TArray<AMiniCyphersCharacter*> Targets;
 
 	if (TryGetOverlapTargets(this, OUT Targets) == false)
@@ -40,3 +43,25 @@ FVector ANonPlayableCharacter::GetTargetPosition()
 
 	return Character->GetActorLocation();
 }
+
+void ANonPlayableCharacter::OnHit(AMiniCyphersCharacter* Attacker, EDamageType DamageType, float StiffTime, int HealthAmount, float UpperVelocity, float KnockBackDistance, bool isMelee)
+{
+	Super::OnHit(Attacker, DamageType, StiffTime, HealthAmount, UpperVelocity, KnockBackDistance, isMelee);
+
+	LastAttacker = Attacker;
+	LastAttackDeltaTime = 0.0f;
+}
+
+void ANonPlayableCharacter::Tick(float DeltaTime)
+{
+	if (LastAttackTrackingValidTime < LastAttackDeltaTime)
+	{
+		LastAttacker = nullptr;
+		LastAttackDeltaTime = 0.0f;
+	}
+	else
+	{
+		LastAttackDeltaTime += DeltaTime;
+	}
+}
+
