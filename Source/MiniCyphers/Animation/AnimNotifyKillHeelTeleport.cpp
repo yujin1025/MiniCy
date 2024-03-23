@@ -20,11 +20,12 @@ void UAnimNotifyKillHeelTeleport::NotifyEnd(USkeletalMeshComponent* MeshComp, UA
     if (!MyCharacter)
         return;
 
-    if (!IsFoundTarget)
+    // 텔레포트 시 적이 없어도 모션 캔슬하지 않도록 변경됨
+    /* if (!IsFoundTarget)
     {
         MyCharacter->StopAnimMontage();
         MyCharacter->OnFinishedSkillMotion(EAttackType::ShiftAttack);
-    }
+    }*/
 }
 
 void UAnimNotifyKillHeelTeleport::FindTarget(USkeletalMeshComponent* MeshComp)

@@ -39,7 +39,6 @@ AMiniCyphersCharacter::AMiniCyphersCharacter()
 
 	HealthComponent = CreateDefaultSubobject<UHealthComponent>(TEXT("HealthComponent"));
 	QuestComponent = CreateDefaultSubobject<UQuestComponent>(TEXT("UQuestComponent"));
-	RandomMotionComponent = CreateDefaultSubobject<URandomMotionComponent>(TEXT("RandomMotionComponent"));
 	HitDeadComponent = CreateDefaultSubobject<UHitDeadComponent>(TEXT("HitDeadComponent"));
 
 	ActionComponentMap.Empty();
@@ -346,14 +345,6 @@ bool AMiniCyphersCharacter::IsSatisfiedGrabSkill()
 bool AMiniCyphersCharacter::IsSatisfiedShiftAttack()
 {
 	return CheckCoolTime(EAttackType::ShiftAttack) && !IsDead;
-}
-
-void AMiniCyphersCharacter::OnUseNormalAttack()
-{
-	if (RandomMotionComponent)
-	{
-		RandomMotionComponent->NormalRandomAttack();
-	}
 }
 
 bool AMiniCyphersCharacter::TryGetOverlapResult(AMiniCyphersCharacter* Character, TArray<FOverlapResult>& OverlapResults)

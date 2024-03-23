@@ -65,9 +65,6 @@ public:
 	int CharacterId;
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Motion, meta = (AllowPrivateAccess = "true"))
-	URandomMotionComponent* RandomMotionComponent;
-
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Motion, meta = (AllowPrivateAccess = "true"))
 	UHitDeadComponent* HitDeadComponent;
 
 	UHealthComponent* HealthComponent;
@@ -104,7 +101,7 @@ public:
 	virtual bool IsSatisfiedGrabSkill();
 	virtual bool IsSatisfiedShiftAttack();
 
-	virtual void OnUseNormalAttack();
+	virtual void OnUseNormalAttack() {}
 	virtual void OnUseShiftLeftClickAttack() {}
 	virtual void OnUseRightClickAttack() {}
 	virtual void OnUseQSkill() {}
@@ -150,7 +147,6 @@ public:
 	FVector KnockBackDirection = FVector::ZeroVector;
 	float RemainStiffTime = 0.0f;
 	float RemainKnockBackPower = 0.0f;
-
 
 public:
 	FVector GetLookVector(AMiniCyphersCharacter*& Target) const;

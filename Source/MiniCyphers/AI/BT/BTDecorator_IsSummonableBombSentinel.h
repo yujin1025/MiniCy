@@ -4,13 +4,13 @@
 
 #include "CoreMinimal.h"
 #include "MiniCyphersDecorator.h"
-#include "IsUpperDamageCount.generated.h"
+#include "BTDecorator_IsSummonableBombSentinel.generated.h"
 
 /**
  * 
  */
 UCLASS()
-class MINICYPHERS_API UIsUpperDamageCount : public UMiniCyphersDecorator
+class MINICYPHERS_API UBTDecorator_IsSummonableBombSentinel : public UMiniCyphersDecorator
 {
 	GENERATED_BODY()
 	
