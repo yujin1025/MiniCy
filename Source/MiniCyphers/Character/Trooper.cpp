@@ -16,6 +16,8 @@ ATrooper::ATrooper()
 
 void ATrooper::BeginPlay()
 {
+	Super::BeginPlay();
+
 	bSuperArmor = true; // 투루퍼는 항시 슈퍼아머
 	IsPlayerTeam = false; // 적 팀
 }
