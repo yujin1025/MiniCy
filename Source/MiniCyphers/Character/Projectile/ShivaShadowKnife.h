@@ -37,15 +37,6 @@ public:
 
 	float CurrentDeltaTime = 0.0f;
 
-	UPROPERTY(EditAnywhere)
-	float StiffTime = 5.0f;
-
-	UPROPERTY(EditAnywhere)
-	int DamageAmount = 5;
-
-	UPROPERTY(EditAnywhere)
-	float KnockBackDistance = 50.0f;
-
 	UPROPERTY(EditDefaultsOnly, Category = Projectile)
 	UParticleSystem* EnemyHitParticleEffect;
 

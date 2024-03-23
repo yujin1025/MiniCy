@@ -18,6 +18,62 @@ void AMiniCyphersProjectile::BeginPlay()
 	Super::BeginPlay();
 	
 }
+bool AMiniCyphersProjectile::TryGetOverlapResult(AMiniCyphersCharacter* Character, TArray<FOverlapResult>& OverlapResults)
+{
+	auto* World = Character->GetWorld();
+	if (World == nullptr)
+		return false;
+
+	FVector Center = Character->GetMyLocation();
+	FCollisionQueryParams CollisionParam(NAME_None, false, Character);
+	CollisionParam.AddIgnoredActor(this);
+
+	bool bResult = World->OverlapMultiByChannel(
+		OverlapResults,
+		Center,
+		FQuat::Identity,
+		ECollisionChannel::ECC_Pawn,
+		FCollisionShape::MakeSphere(TargetDetectRadius),
+		CollisionParam);
+
+	DrawDebugSphere(World, Center, TargetDetectRadius, 16, FColor::Red, false, 0.2f);
+	return bResult;
+}
+
+bool AMiniCyphersProjectile::TryGetOverlapTargets(AMiniCyphersCharacter* Character, OUT TArray<AMiniCyphersCharacter*>& FoundTargets)
+{
+	TArray<FOverlapResult> OverlapResults;
+
+	if (TryGetOverlapResult(Character, OverlapResults))
+	{
+		for (auto const& OverlapResult : OverlapResults)
+		{
+			auto* TargetCharacter = Cast<AMiniCyphersCharacter>(OverlapResult.GetActor());
+			if (TargetCharacter == nullptr)
+				continue;
+
+			if (Character->IsPlayerTeam != TargetCharacter->IsPlayerTeam)
+			{
+				FoundTargets.Add(TargetCharacter);
+				continue;
+			}
+		}
+	}
+
+	return FoundTargets.Num() > 0;
+}
+
+bool AMiniCyphersProjectile::TryGetOverlapTarget(AMiniCyphersCharacter* Character, OUT AMiniCyphersCharacter*& FoundTarget)
+{
+	TArray<AMiniCyphersCharacter*> Targets;
+
+	if (TryGetOverlapTargets(Character, Targets))
+	{
+		FoundTarget = Targets[0];
+	}
+
+	return FoundTarget != nullptr;
+}
 
 // Called every frame
 void AMiniCyphersProjectile::Tick(float DeltaTime)

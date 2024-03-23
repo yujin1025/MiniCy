@@ -13,5 +13,9 @@ UCLASS()
 class MINICYPHERS_API ATowerBomb : public AMiniCyphersProjectile
 {
 	GENERATED_BODY()
+
+protected:
+	virtual void Tick(float DeltaTime) override;
 	
+
 };

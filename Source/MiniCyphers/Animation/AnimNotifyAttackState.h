@@ -3,10 +3,10 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "../Character/MiniCyphersCharacter.h"
 #include "MiniCyphersAnimNotifyState.h"
 #include "AnimNotifyAttackState.generated.h"
 
-class UHealthComponent;
 class AMiniCyphersCharacter;
 
 UENUM()
@@ -14,17 +14,6 @@ enum class EDetectType
 {
 	Sphere = 0,
 	Square = 1,
-};
-
-
-// Stand와 PowerKnockBack의 차이는 모션 뿐
-UENUM()
-enum class EDamageType
-{
-	None = -1,
-	Stand = 0,
-	Airborne = 1,
-	PowerKnockBack = 2,
 };
 
 /**

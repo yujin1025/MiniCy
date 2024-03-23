@@ -4,15 +4,12 @@
 
 #include "CoreMinimal.h"
 #include "Components/ActorComponent.h"
-#include "GameFramework/PlayerState.h"
-#include "../Animation/AnimNotifyAttackState.h"
 #include "MiniCyphersComponent.h"
 #include "Engine/GameInstance.h"
 
 #include "HealthComponent.generated.h"
 
 DECLARE_MULTICAST_DELEGATE_ThreeParams(FOnDamaged, AMiniCyphersCharacter*, float, bool)
-
 
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
 class MINICYPHERS_API UHealthComponent : public UMiniCyphersComponent

@@ -4,7 +4,6 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
-#include "../Animation/AnimNotifyAttackState.h"
 #include "Logging/LogMacros.h"
 #include "MiniCyphersCharacter.generated.h"
 
@@ -14,6 +13,16 @@ class USoundComponent;
 class URandomMotionComponent;
 class UQuestComponent;
 class UHitDeadComponent;
+
+// Stand와 PowerKnockBack의 차이는 모션 뿐
+UENUM()
+enum class EDamageType
+{
+	None = -1,
+	Stand = 0,
+	Airborne = 1,
+	PowerKnockBack = 2,
+};
 
 UENUM(BlueprintType)
 enum class EAttackType : uint8
