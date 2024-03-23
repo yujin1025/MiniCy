@@ -18,16 +18,32 @@ void UAnimNotifyAttackState::TryAttack(USkeletalMeshComponent* MeshComp)
 		return;
 
 	AMiniCyphersCharacter* MyCharacter = Cast<AMiniCyphersCharacter>(MeshComp->GetOwner());
-	AMiniCyphersCharacter* TargetCharacter = nullptr;
+	TArray<AMiniCyphersCharacter*> TargetCharacters;
 
-	if (TryGetOverlapTarget(MyCharacter, TargetCharacter))
+	if (TryGetOverlapTargets(MyCharacter, TargetCharacters))
 	{
-		UHealthComponent* DamagedHealthComponent = TargetCharacter->FindComponentByClass<UHealthComponent>();
-
-		if (DamagedHealthComponent)
+		for (auto* TargetCharacter : TargetCharacters)
 		{
-			DamagedHealthComponent->ChangeHealth(MyCharacter, DamageType, StiffTime, -DamageAmount, UpperVelocity, KnockBackDistance, IsMelee);
-			CurrentAttackCount++;
+			int id = TargetCharacter->CharacterId;
+
+			if (attackedCountsByCharacter.Contains(id) && attackedCountsByCharacter[id] > MaxAttackCountByEnemy)
+				continue;
+
+			if (attackedCountsByCharacter.Contains(id) == false)
+			{
+				attackedCountsByCharacter.Add(id, 1);
+			}
+			else
+			{
+				attackedCountsByCharacter[id]++;
+			}
+
+			UHealthComponent* DamagedHealthComponent = TargetCharacter->FindComponentByClass<UHealthComponent>();
+			if (DamagedHealthComponent)
+			{
+				DamagedHealthComponent->ChangeHealth(MyCharacter, DamageType, StiffTime, -DamageAmount, UpperVelocity, KnockBackDistance, IsMelee);
+				CurrentAttackCount++;
+			}
 		}
 	}
 }
@@ -48,14 +64,16 @@ void UAnimNotifyAttackState::NotifyEnd(USkeletalMeshComponent* MeshComp, UAnimSe
 	CurrentAttackCount = 0;
 }
 
-FCollisionShape UAnimNotifyAttackState::MakeDetection(const float X, const float Y, const float Z)
+FCollisionShape UAnimNotifyAttackState::MakeDetection(UWorld* World, FVector Center, FQuat Quat, const float X, const float Y, const float Z)
 {
 	switch(DetectType)
 	{
-	case EDetectType::Square:
+	case EDetectType::Box:
+		DrawDebugBox(World, Center + CenterOffset, FVector(X, Y, Z), Quat, FColor::Green, false, 0.2f);
 		return FCollisionShape::MakeBox(FVector(X, Y, Z));
 
 	default:
+		DrawDebugSphere(World, Center + CenterOffset, DetectX, 16, FColor::Green, false, 0.2f);
 		return FCollisionShape::MakeSphere(X);
 	}
 }
@@ -71,22 +89,21 @@ bool UAnimNotifyAttackState::TryGetOverlapResult(AMiniCyphersCharacter* Owner, T
 
 	bool bResult = World->OverlapMultiByChannel(
 		OverlapResults,
-		Center,
-		FQuat::Identity,
+		Center + CenterOffset,
+		Owner->GetActorQuat(),
 		ECollisionChannel::ECC_GameTraceChannel2,
-		MakeDetection(DetectX, DetectY, DetectZ),
+		MakeDetection(World, Center, Owner->GetActorQuat(), DetectX, DetectY, DetectZ),
 		CollisionParam);
 
-	DrawDebugSphere(World, Center, DetectX, 16, FColor::Red, false, 0.2f);
 	return bResult;
 }
 
-bool UAnimNotifyAttackState::TryGetOverlapTarget(AMiniCyphersCharacter* Owner, OUT AMiniCyphersCharacter*& FoundTarget)
+bool UAnimNotifyAttackState::TryGetOverlapTargets(AMiniCyphersCharacter* Character, OUT TArray<AMiniCyphersCharacter*>& FoundTargets)
 {
 	TArray<FOverlapResult> OverlapResults;
 	bool bResult = false;
 
-	if (TryGetOverlapResult(Owner, OverlapResults))
+	if (TryGetOverlapResult(Character, OverlapResults))
 	{
 		for (auto const& OverlapResult : OverlapResults)
 		{
@@ -94,11 +111,11 @@ bool UAnimNotifyAttackState::TryGetOverlapTarget(AMiniCyphersCharacter* Owner, O
 			if (TargetCharacter == nullptr)
 				continue;
 
-			if (TargetCharacter->IsPlayerTeam == Owner->IsPlayerTeam)
+			if (TargetCharacter->IsPlayerTeam == Character->IsPlayerTeam)
 				continue;
 
 			bResult = true;
-			FoundTarget = TargetCharacter;
+			FoundTargets.Add(TargetCharacter);
 			break;
 		}
 	}

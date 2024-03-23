@@ -114,7 +114,7 @@ public:
 	virtual void OnHit(AMiniCyphersCharacter* Attacker, EDamageType DamageType, float StiffTime, int HealthAmount, float UpperVelocity, float KnockBackDistance, bool isMelee);
 	virtual void OnDie();
 	
-protected:
+public:
 	bool TryGetOverlapResult(AMiniCyphersCharacter* Character, TArray<FOverlapResult>& OverlapResults);
 
 	bool TryGetOverlapTargets(AMiniCyphersCharacter* Character, OUT TArray<AMiniCyphersCharacter*>& FoundTargets);
@@ -138,6 +138,9 @@ public:
 	UPROPERTY(EditAnywhere)
 	float TargetDetectRadius = 1000.0f;
 
+	UPROPERTY(EditAnywhere)
+	FColor DetectTargetDebugColor = FColor::Red;
+
 	bool bSuperArmor = false;
 	bool bInvincible = false;
 	bool IsDead = false;
@@ -147,6 +150,7 @@ public:
 	FVector KnockBackDirection = FVector::ZeroVector;
 	float RemainStiffTime = 0.0f;
 	float RemainKnockBackPower = 0.0f;
+
 
 public:
 	FVector GetLookVector(AMiniCyphersCharacter*& Target) const;

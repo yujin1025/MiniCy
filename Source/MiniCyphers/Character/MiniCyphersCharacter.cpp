@@ -374,7 +374,7 @@ bool AMiniCyphersCharacter::TryGetOverlapResult(AMiniCyphersCharacter* Character
 		FCollisionShape::MakeSphere(TargetDetectRadius),
 		CollisionParam);
 
-	DrawDebugSphere(World, Center, TargetDetectRadius, 16, FColor::Red, false, 0.2f);
+	DrawDebugSphere(World, Center, TargetDetectRadius, 16, DetectTargetDebugColor, false, 0.2f);
 	return bResult;
 }
 

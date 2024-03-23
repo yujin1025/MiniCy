@@ -13,7 +13,7 @@ UENUM()
 enum class EDetectType
 {
 	Sphere = 0,
-	Square = 1,
+	Box = 1,
 };
 
 /**
@@ -32,10 +32,13 @@ public:
 	virtual void NotifyTick(USkeletalMeshComponent* MeshComp, UAnimSequenceBase* Animation, float FrameDeltaTime, const FAnimNotifyEventReference& EventReference) override;
 	virtual void NotifyEnd(USkeletalMeshComponent* MeshComp, UAnimSequenceBase* Animation, const FAnimNotifyEventReference& EventReference) override;
 
-	FCollisionShape MakeDetection(const float X, const float Y, const float Z);
+	FCollisionShape MakeDetection(UWorld* World, FVector Center, FQuat Quat, const float X, const float Y, const float Z);
 
 	bool TryGetOverlapResult(AMiniCyphersCharacter* Owner, TArray<FOverlapResult>& OverlapResults);
-	bool TryGetOverlapTarget(AMiniCyphersCharacter* Owner, OUT AMiniCyphersCharacter*& FoundTarget);
+	bool TryGetOverlapTargets(AMiniCyphersCharacter* Character, OUT TArray<AMiniCyphersCharacter*>& FoundTargets);
+
+private:
+	TMap<int, int> attackedCountsByCharacter;
 
 protected:
 	UPROPERTY(Editanywhere)
@@ -43,6 +46,9 @@ protected:
 
 	UPROPERTY(EditAnywhere)
 	int MaxAttackCount = 1;
+
+	UPROPERTY(EditAnywhere)
+	int MaxAttackCountByEnemy = 1;
 
 	int CurrentAttackCount = 0;
 
@@ -57,6 +63,9 @@ protected:
 
 	UPROPERTY(EditAnywhere)
 	float DetectZ = 800.0f;
+
+	UPROPERTY(EditAnyWhere)
+	FVector CenterOffset;
 
 	UPROPERTY(EditAnywhere)
 	float KnockBackDistance = 50.0f;
