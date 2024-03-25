@@ -34,20 +34,28 @@ void AMiniCyphersPlayerController::SetupInputComponent()
 
 void AMiniCyphersPlayerController::OpenSettings()
 {
-	/*
-	static ConstructorHelpers::FClassFinder<UMiniCyphersWidget>WidgetClassFinder(TEXT("/Game/Assets/UI/WBP_Setting"));
+	if (SettingWidget && SettingWidget->IsInViewport())
+	{
+		return;
+	}
 
-	if (WidgetClassFinder.Class != nullptr)
-		SettingsWidgetClass = WidgetClassFinder.Class;
-	else
-		return;*/
-	
 	if (SettingsWidgetClass)
 	{
 		SettingWidget = CreateWidget<UMiniCyphersWidget>(GetWorld(), SettingsWidgetClass);
 
 		if (SettingWidget != nullptr)
+		{
 			SettingWidget->AddToViewport();
+
+			UGameplayStatics::SetGamePaused(GetWorld(), true);
+
+			FInputModeGameAndUI  InputMode;
+			InputMode.SetWidgetToFocus(SettingWidget->TakeWidget());
+			InputMode.SetLockMouseToViewportBehavior(EMouseLockMode::DoNotLock);
+			InputMode.SetHideCursorDuringCapture(false);
+			SetInputMode(InputMode);
+		}
+
 	}
 
 }
