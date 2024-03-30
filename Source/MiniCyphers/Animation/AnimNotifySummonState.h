@@ -12,11 +12,14 @@ enum class ESummonType
 	None = -1,
 	ShivaKnife = 0, // ½Ã¹Ù ÆòÅ¸ ³ªÀÌÇÁ
 	TrooperStone = 1, // Åõ·çÆÛ Àü¹æ ½ºÅ³ µ¹
+	BombSentinel = 2, // ÆøÅº ¼¾Æ¼³Ú
+	BombSentinelBomb = 3, // ÆøÅº ¼¾Æ¼³ÚÀÇ ½ÇÁ¦ Æø¹ß
 };
 
 class AMiniCyphersCharacter;
 class AShiva;
 class ATrooper;
+class ABombSentinel;
 
 /**
  * 
@@ -30,6 +33,8 @@ private:
 	void SummonObject(AMiniCyphersCharacter* Character);
 	void SummonTrooperStone(ATrooper* TrooperCharacter);
 	void SummonShivaKnife(AShiva* ShivaCharacter);
+	void SummonBombSentinel(ATrooper* TrooperCharacter);
+	void SummonBombSentinelBomb(ABombSentinel* BombSentinel);
 
 	UPROPERTY(EditAnywhere)
 	ESummonType SummonType;
@@ -37,8 +42,11 @@ private:
 	UPROPERTY(EditAnywhere, Category = Projectile)
 	TSubclassOf<class AMiniCyphersProjectile> ProjectileClass;
 
+	UPROPERTY(EditAnywhere, Category = Projectile)
+	TSubclassOf<class AMiniCyphersCharacter> SummonCharacterClass;
+
 	UPROPERTY(EditAnywhere)
-	TArray<FVector> TrooperStoneSummonOffsetArray;
+	TArray<FVector> TrooperSummonOffsetArray;
 
 protected:
 	virtual void NotifyBegin(USkeletalMeshComponent* MeshComp, UAnimSequenceBase* Animation, float TotalDuration, const FAnimNotifyEventReference& EventReference) override;

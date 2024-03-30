@@ -22,5 +22,5 @@ protected:
 	virtual void OnTaskFinished(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory, EBTNodeResult::Type TaskResult) override;
 public:
 	UPROPERTY(EditAnyWhere)
-	float MoveSpeed = 5.0f;
+	float MoveSpeed = 1500.0f;
 };

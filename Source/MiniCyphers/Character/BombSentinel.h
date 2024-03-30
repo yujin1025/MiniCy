@@ -14,4 +14,8 @@ class MINICYPHERS_API ABombSentinel : public ASentinel
 {
 	GENERATED_BODY()
 	
+protected:
+	virtual void BeginPlay() override;
+	virtual void UpdateTarget() override;
+
 };
