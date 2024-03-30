@@ -28,21 +28,25 @@ void UAnimNotifyKillHeelTeleport::NotifyEnd(USkeletalMeshComponent* MeshComp, UA
     }*/
 }
 
-void UAnimNotifyKillHeelTeleport::FindTarget(USkeletalMeshComponent* MeshComp)
+FVector UAnimNotifyKillHeelTeleport::FindTarget(USkeletalMeshComponent* MeshComp)
 {
+    FVector ResultTargetLocation = FVector::ZeroVector;
+
     AMiniCyphersCharacter* MyCharacter = Cast<AMiniCyphersCharacter>(MeshComp->GetOwner());
     if (MyCharacter == nullptr)
-        return;
+        return ResultTargetLocation;
 
     auto AttackTargetLocation = MyCharacter->GetTargetPosition(ECollisionChannel::ECC_GameTraceChannel2, MoveDistance, IsFoundTarget);
     if (IsFoundTarget)
     {
-        TargetLocation = FVector(AttackTargetLocation.X, AttackTargetLocation.Y, CurrentLocation.Z);;
+        ResultTargetLocation = FVector(AttackTargetLocation.X, AttackTargetLocation.Y, CurrentLocation.Z);;
     }
     else
     {
         bool NoUseFoundTarget = false;
         auto Location = MyCharacter->GetTargetPosition(ECollisionChannel::ECC_WorldStatic, MoveDistance, NoUseFoundTarget);
-        TargetLocation = FVector(Location.X, Location.Y, CurrentLocation.Z);
+        ResultTargetLocation = FVector(Location.X, Location.Y, CurrentLocation.Z);
     }
+
+    return ResultTargetLocation;
 }

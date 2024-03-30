@@ -17,7 +17,7 @@ class MINICYPHERS_API UAnimNotifyKillHeelTeleport : public UAnimNotifyMoveState
 public:
 	virtual void NotifyBegin(USkeletalMeshComponent* MeshComp, UAnimSequenceBase* Animation, float TotalDuration, const FAnimNotifyEventReference& EventReference) override;
 	virtual void NotifyEnd(USkeletalMeshComponent* MeshComp, UAnimSequenceBase* Animation, const FAnimNotifyEventReference& EventReference) override;
-	virtual void FindTarget(USkeletalMeshComponent* MeshComp) override;
+	virtual FVector FindTarget(USkeletalMeshComponent* MeshComp) override;
 private:
 	bool IsFoundTarget = false;
 };

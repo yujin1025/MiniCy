@@ -15,6 +15,9 @@ class MINICYPHERS_API UAnimNotifyChaseAttackState : public UAnimNotifyMoveState
 	GENERATED_BODY()
 
 protected:
-	virtual void FindTarget(USkeletalMeshComponent* MeshComp) override;
-	
+	virtual FVector FindTarget(USkeletalMeshComponent* MeshComp) override;
+	virtual void NotifyTick(USkeletalMeshComponent* MeshComp, UAnimSequenceBase* Animation, float FrameDeltaTime, const FAnimNotifyEventReference& EventReference) override;
+
+	UPROPERTY(EditAnywhere)
+	float RotationSpeed = 3.0f;
 };

@@ -19,7 +19,7 @@ public:
 	virtual void NotifyTick(USkeletalMeshComponent* MeshComp, UAnimSequenceBase* Animation, float FrameDeltaTime, const FAnimNotifyEventReference& EventReference) override;
 	virtual void NotifyEnd(USkeletalMeshComponent* MeshComp, UAnimSequenceBase* Animation, const FAnimNotifyEventReference& EventReference) override;
 
-	virtual void FindTarget(USkeletalMeshComponent* MeshComp);
+	virtual FVector FindTarget(USkeletalMeshComponent* MeshComp);
 protected:
 	FVector CurrentLocation;
 	FVector TargetLocation;
