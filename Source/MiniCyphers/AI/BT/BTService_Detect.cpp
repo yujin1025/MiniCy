@@ -15,7 +15,10 @@ void UBTService_Detect::TickNode(UBehaviorTreeComponent& OwnerComp, uint8* NodeM
 	if (MyCharacter == nullptr)
 		return;
 	
-	MyCharacter->UpdateTarget();
+	if (MyCharacter->ProgressingAttackType == EAttackType::Max)
+	{
+		MyCharacter->UpdateTarget();
+	}
 
 	AMiniCyphersCharacter* DetectedTarget = MyCharacter->DetectedTarget;
 	SetDetectedTarget(OwnerComp, DetectedTarget);
