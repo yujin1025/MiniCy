@@ -20,11 +20,11 @@ void AMiniCyphersProjectile::BeginPlay()
 }
 bool AMiniCyphersProjectile::TryGetOverlapResult(AMiniCyphersCharacter* Character, TArray<FOverlapResult>& OverlapResults)
 {
-	auto* World = Character->GetWorld();
+	auto* World = GetWorld();
 	if (World == nullptr)
 		return false;
 
-	FVector Center = Character->GetMyLocation();
+	FVector Center = GetActorLocation();
 	FCollisionQueryParams CollisionParam(NAME_None, false, Character);
 	CollisionParam.AddIgnoredActor(this);
 

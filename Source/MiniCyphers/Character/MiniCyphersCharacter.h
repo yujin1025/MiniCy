@@ -83,7 +83,7 @@ protected:
 	virtual void Tick(float DeltaTime) override;
 
 public:
-	void UseSkill(EAttackType AttackType);
+	bool UseSkill(EAttackType AttackType);
 	void OnFinishedSkillMotion(EAttackType AttackType);
 
 	FOnUseSkill OnUseSkillDelegate;

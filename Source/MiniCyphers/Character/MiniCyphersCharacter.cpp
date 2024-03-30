@@ -153,22 +153,25 @@ bool AMiniCyphersCharacter::CheckCoolTime(EAttackType AttackType)
 		return true;
 
 	float CurrentCoolTime = CurrentActionCoolTimeMap[AttackType];
-	return CurrentCoolTime <= CurrentDeltaTime;
+	return CurrentCoolTime > CurrentDeltaTime;
 }
 
-void AMiniCyphersCharacter::UseSkill(EAttackType AttackType) //캐릭터(나)가 때림
+bool AMiniCyphersCharacter::UseSkill(EAttackType AttackType) //캐릭터(나)가 때림
 {
 	if (IsDead)
-		return;
+		return false;
 
 	if (ProgressingAttackType != EAttackType::Max)
-		return;
+		return false;
+
+	if (CheckCoolTime(AttackType))
+		return false;
 
 	if (ActionComponentMap.Contains(AttackType) == false)
-		return;
+		return false;
 
 	if (ActionCoolTimeMap.Contains(AttackType) == false)
-		return;
+		return false;
 
 	for (auto& MapPair : ActionComponentMap)
 	{
@@ -209,6 +212,7 @@ void AMiniCyphersCharacter::UseSkill(EAttackType AttackType) //캐릭터(나)가 때림
 	}
 
 	ProgressingAttackType = AttackType;
+	return true;
 }
 
 void AMiniCyphersCharacter::OnFinishedSkillMotion(EAttackType AttackType)
@@ -319,32 +323,32 @@ AMiniCyphersCharacter* AMiniCyphersCharacter::GetTarget()
 
 bool AMiniCyphersCharacter::IsSatisfiedNormalAttack()
 {
-	return CheckCoolTime(EAttackType::NormalAttack) && !IsDead;
+	return !CheckCoolTime(EAttackType::NormalAttack) && !IsDead;
 }
 
 bool AMiniCyphersCharacter::IsSatisfiedRightClickAttack()
 {
-	return CheckCoolTime(EAttackType::RightClickAttack) && !IsDead;
+	return !CheckCoolTime(EAttackType::RightClickAttack) && !IsDead;
 }
 
 bool AMiniCyphersCharacter::IsSatisfiedQSkill()
 {
-	return CheckCoolTime(EAttackType::QSkillAttack) && !IsDead;
+	return !CheckCoolTime(EAttackType::QSkillAttack) && !IsDead;
 }
 
 bool AMiniCyphersCharacter::IsSatisfiedUltimateSkill()
 {
-	return CheckCoolTime(EAttackType::UltimateAttack) && !IsDead;
+	return !CheckCoolTime(EAttackType::UltimateAttack) && !IsDead;
 }
 
 bool AMiniCyphersCharacter::IsSatisfiedGrabSkill()
 {
-	return CheckCoolTime(EAttackType::GrabSkillAttack) && !IsDead;
+	return !CheckCoolTime(EAttackType::GrabSkillAttack) && !IsDead;
 }
 
 bool AMiniCyphersCharacter::IsSatisfiedShiftAttack()
 {
-	return CheckCoolTime(EAttackType::ShiftAttack) && !IsDead;
+	return !CheckCoolTime(EAttackType::ShiftAttack) && !IsDead;
 }
 
 bool AMiniCyphersCharacter::TryGetOverlapResult(AMiniCyphersCharacter* Character, TArray<FOverlapResult>& OverlapResults)
