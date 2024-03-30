@@ -18,7 +18,7 @@ public:
 	ANonPlayableCharacter();
 	
 public:
-	virtual AMiniCyphersCharacter* GetTarget();
+	virtual void UpdateTarget() override;
 	virtual FVector GetTargetPosition() override;
 
 protected:

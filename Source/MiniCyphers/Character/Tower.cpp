@@ -22,14 +22,10 @@ void ATower::BeginPlay()
 }
 
 // 타워는 그냥 가장 가까운 적을 탐색한다.
-AMiniCyphersCharacter* ATower::GetTarget()
+void ATower::UpdateTarget()
 {
-	AMiniCyphersCharacter* Target;
-
-	if (TryGetOverlapTarget(this, OUT Target) == false)
-		return nullptr;
-
-	return Target;
+	if (TryGetOverlapTarget(this, OUT DetectedTarget) == false)
+		return;
 }
 
 FVector ATower::GetMyLocation() const

@@ -327,9 +327,8 @@ FVector AMiniCyphersCharacter::GetMyLocation() const
 	return GetActorLocation();
 }
 
-AMiniCyphersCharacter* AMiniCyphersCharacter::GetTarget()
+void AMiniCyphersCharacter::UpdateTarget()
 {
-	return nullptr;
 }
 
 bool AMiniCyphersCharacter::TryGetOverlapResult(AMiniCyphersCharacter* Character, TArray<FOverlapResult>& OverlapResults)

@@ -21,8 +21,21 @@ EBTNodeResult::Type UBTTask_Attack::ExecuteTask(UBehaviorTreeComponent& OwnerCom
 	if (Character == nullptr)
 		return EBTNodeResult::Failed;
 
-	if(Character->IsSatisfiedAttack(AttackType) == false)
+	if (Character->IsSatisfiedAttack(AttackType) == false)
 		return EBTNodeResult::Failed;
+
+	auto* BlackBoard = GetBlackboardComponent(OwnerComp);
+	if (BlackBoard == nullptr)
+		return EBTNodeResult::Failed;
+
+	if (AttackType == UseStackAttackType)
+	{
+		int CurrentStackCount = BlackBoard->GetValueAsInt(AMiniCyphersAIController::DamagedCountKey);
+		if (CurrentStackCount < UseStackCount)
+			return EBTNodeResult::Failed;
+
+		BlackBoard->SetValueAsInt(AMiniCyphersAIController::DamagedCountKey, CurrentStackCount - UseStackCount);
+	}
 
 	Character->UseSkill(AttackType);
 	Character->OnUseSkillDelegate.AddLambda([this](EAttackType AttackType) -> void

@@ -11,17 +11,21 @@ ANonPlayableCharacter::ANonPlayableCharacter()
 	AutoPossessPlayer = EAutoReceiveInput::Disabled;
 }
 
+
 // 1. 최근에 나를 공격한 녀석이 있다면 그 녀석
 // 2. 아니라면 타워
-AMiniCyphersCharacter* ANonPlayableCharacter::GetTarget()
+void ANonPlayableCharacter::UpdateTarget()
 {
 	if (LastAttacker != nullptr)
-		return LastAttacker;
+	{
+		DetectedTarget = LastAttacker;
+		return;
+	}
 
 	TArray<AMiniCyphersCharacter*> Targets;
 
 	if (TryGetOverlapTargets(this, OUT Targets) == false)
-		return nullptr;
+		return;
 
 	for (auto& Target : Targets)
 	{
@@ -29,19 +33,16 @@ AMiniCyphersCharacter* ANonPlayableCharacter::GetTarget()
 		if (Tower == nullptr)
 			continue;
 
-		return Tower;
+		DetectedTarget = Tower;
 	}
-
-	return nullptr;
 }
 
 FVector ANonPlayableCharacter::GetTargetPosition()
 {
-	auto* Character = GetTarget();
-	if (Character == nullptr)
+	if (DetectedTarget == nullptr)
 		return FVector::ZeroVector;
 
-	return Character->GetActorLocation();
+	return DetectedTarget->GetActorLocation();
 }
 
 void ANonPlayableCharacter::OnHit(AMiniCyphersCharacter* Attacker, EDamageType DamageType, float StiffTime, int HealthAmount, float UpperVelocity, float KnockBackDistance, bool isMelee)

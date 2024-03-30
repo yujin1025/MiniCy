@@ -15,7 +15,9 @@ void UBTService_Detect::TickNode(UBehaviorTreeComponent& OwnerComp, uint8* NodeM
 	if (MyCharacter == nullptr)
 		return;
 	
-	AMiniCyphersCharacter* DetectedTarget = MyCharacter->GetTarget();
+	MyCharacter->UpdateTarget();
+
+	AMiniCyphersCharacter* DetectedTarget = MyCharacter->DetectedTarget;
 	SetDetectedTarget(OwnerComp, DetectedTarget);
 	OnTickNode(OwnerComp, DeltaSeconds);
 }

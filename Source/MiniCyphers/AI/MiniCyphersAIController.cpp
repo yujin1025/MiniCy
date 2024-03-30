@@ -18,6 +18,7 @@ const FName AMiniCyphersAIController::DamagedCountKey(TEXT("DamagedCount"));
 const FName AMiniCyphersAIController::DamagedTypeKey(TEXT("DamagedType"));
 
 
+
 AMiniCyphersAIController::AMiniCyphersAIController()
 {
 }

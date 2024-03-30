@@ -153,6 +153,7 @@ public:
 
 	virtual FVector GetTargetPosition();
 	virtual FVector GetMyLocation() const;
-	virtual AMiniCyphersCharacter* GetTarget();
+	AMiniCyphersCharacter* DetectedTarget;
+	virtual void UpdateTarget();
 };
 

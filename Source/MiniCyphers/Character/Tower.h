@@ -23,6 +23,6 @@ public:
 
 	virtual void BeginPlay() override;
 	
-	virtual AMiniCyphersCharacter* GetTarget() override;
+	virtual void UpdateTarget() override;
 	virtual FVector GetMyLocation() const override;
 };

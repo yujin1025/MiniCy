@@ -20,6 +20,7 @@ public:
 	virtual void NotifyEnd(USkeletalMeshComponent* MeshComp, UAnimSequenceBase* Animation, const FAnimNotifyEventReference& EventReference) override;
 
 	virtual FVector FindTarget(USkeletalMeshComponent* MeshComp);
+
 protected:
 	FVector CurrentLocation;
 	FVector TargetLocation;

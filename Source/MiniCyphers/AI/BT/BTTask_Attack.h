@@ -26,5 +26,11 @@ private:
 	UPROPERTY(EditAnywhere)
 	EAttackType AttackType;
 
+	UPROPERTY(EditAnywhere)
+	int UseStackCount = 5;
+
+	UPROPERTY(EditAnywhere)
+	EAttackType UseStackAttackType = EAttackType::ShiftAttack;
+
 	bool bIsProcessing = false;
 };

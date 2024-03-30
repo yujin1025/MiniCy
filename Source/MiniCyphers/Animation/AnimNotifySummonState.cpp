@@ -32,20 +32,23 @@ void UAnimNotifySummonState::SummonTrooperStone(ATrooper* TrooperCharacter)
 	UWorld* const World = TrooperCharacter->GetWorld();
 	if (World != nullptr)
 	{
-		const FVector SpawnCenterLocation = TrooperCharacter->GetMyLocation();
-		const FRotator SpawnRotation = TrooperCharacter->GetActorRotation();
+		FVector SpawnCenterLocation = TrooperCharacter->GetMyLocation();
 		
+		FVector Dir = (TrooperCharacter->GetTargetPosition() - SpawnCenterLocation);
+		FVector SpawnRotation = Dir.GetSafeNormal();
+		SpawnRotation = FVector(SpawnRotation.X, SpawnRotation.Y, 0);
+
 		for (FVector OffsetVector : TrooperStoneSummonOffsetArray)
 		{
-			const FVector SpawnLocation = SpawnCenterLocation + OffsetVector;
+			const FVector SpawnLocation = SpawnCenterLocation + OffsetVector * SpawnRotation;
 
 			FActorSpawnParameters ActorSpawnParams;
-			auto* Projectile = World->SpawnActor<AStaticProjectile>(ProjectileClass, SpawnLocation, SpawnRotation, ActorSpawnParams);
+			auto* Projectile = World->SpawnActor<AStaticProjectile>(ProjectileClass, SpawnLocation, SpawnRotation.Rotation(), ActorSpawnParams);
 			if (Projectile == nullptr)
 				return;
 
 			Projectile->Initialize(TrooperCharacter);
-			Projectile->SetDirection(SpawnRotation.Vector());
+			Projectile->SetDirection(SpawnRotation);
 		}
 	}
 }
