@@ -3,7 +3,7 @@
 
 #include "TimeShotComponent.h"
 #include "Projectile/TowerShot.h"
-#include "Projectile/TowerBomb.h"
+#include "Projectile/StaticProjectile.h"
 #include "Projectile/MiniCyphersProjectile.h"
 
 void UTimeShotComponent::StartAction()
@@ -34,7 +34,7 @@ void UTimeShotComponent::OnAction()
         return;
 
     // 여기서 폭발 Projectile 생성합니다.
-    auto* Bomb = GetWorld()->SpawnActor<ATowerBomb>(ProjectileClass, TowerShot->GetActorLocation(), FRotator::ZeroRotator);
+    auto* Bomb = GetWorld()->SpawnActor<AStaticProjectile>(ProjectileClass, TowerShot->GetActorLocation(), FRotator::ZeroRotator);
     if (Bomb == nullptr)
         return;
 

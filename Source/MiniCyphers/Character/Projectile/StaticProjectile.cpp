@@ -1,11 +1,11 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 
-#include "TowerBomb.h"
+#include "StaticProjectile.h"
 #include "../MiniCyphersCharacter.h"
 #include "../HealthComponent.h"
 
-void ATowerBomb::Tick(float DeltaTime)
+void AStaticProjectile::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 

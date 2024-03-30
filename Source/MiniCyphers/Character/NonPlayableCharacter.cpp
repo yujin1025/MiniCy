@@ -54,6 +54,8 @@ void ANonPlayableCharacter::OnHit(AMiniCyphersCharacter* Attacker, EDamageType D
 
 void ANonPlayableCharacter::Tick(float DeltaTime)
 {
+	Super::Tick(DeltaTime);
+
 	if (LastAttackTrackingValidTime < LastAttackDeltaTime)
 	{
 		LastAttacker = nullptr;

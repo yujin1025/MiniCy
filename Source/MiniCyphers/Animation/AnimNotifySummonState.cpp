@@ -4,6 +4,8 @@
 #include "AnimNotifySummonState.h"
 #include "../Character/Shiva.h"
 #include "../Character/Projectile/ShivaShadowKnife.h"
+#include "../Character/Trooper.h"
+#include "../Character/Projectile/StaticProjectile.h"
 
 void UAnimNotifySummonState::SummonObject(AMiniCyphersCharacter* Character)
 {
@@ -18,6 +20,33 @@ void UAnimNotifySummonState::SummonObject(AMiniCyphersCharacter* Character)
 	case ESummonType::ShivaKnife:
 		SummonShivaKnife(Cast<AShiva>(Character));
 		break;
+
+	case ESummonType::TrooperStone:
+		SummonTrooperStone(Cast<ATrooper>(Character));
+		break;
+	}
+}
+
+void UAnimNotifySummonState::SummonTrooperStone(ATrooper* TrooperCharacter)
+{
+	UWorld* const World = TrooperCharacter->GetWorld();
+	if (World != nullptr)
+	{
+		const FVector SpawnCenterLocation = TrooperCharacter->GetMyLocation();
+		const FRotator SpawnRotation = TrooperCharacter->GetActorRotation();
+		
+		for (FVector OffsetVector : TrooperStoneSummonOffsetArray)
+		{
+			const FVector SpawnLocation = SpawnCenterLocation + OffsetVector;
+
+			FActorSpawnParameters ActorSpawnParams;
+			auto* Projectile = World->SpawnActor<AStaticProjectile>(ProjectileClass, SpawnLocation, SpawnRotation, ActorSpawnParams);
+			if (Projectile == nullptr)
+				return;
+
+			Projectile->Initialize(TrooperCharacter);
+			Projectile->SetDirection(SpawnRotation.Vector());
+		}
 	}
 }
 

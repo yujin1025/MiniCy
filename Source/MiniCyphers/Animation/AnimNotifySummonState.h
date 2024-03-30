@@ -16,6 +16,7 @@ enum class ESummonType
 
 class AMiniCyphersCharacter;
 class AShiva;
+class ATrooper;
 
 /**
  * 
@@ -27,6 +28,7 @@ class MINICYPHERS_API UAnimNotifySummonState : public UMiniCyphersAnimNotifyStat
 	
 private:
 	void SummonObject(AMiniCyphersCharacter* Character);
+	void SummonTrooperStone(ATrooper* TrooperCharacter);
 	void SummonShivaKnife(AShiva* ShivaCharacter);
 
 	UPROPERTY(EditAnywhere)
@@ -34,6 +36,9 @@ private:
 
 	UPROPERTY(EditAnywhere, Category = Projectile)
 	TSubclassOf<class AMiniCyphersProjectile> ProjectileClass;
+
+	UPROPERTY(EditAnywhere)
+	TArray<FVector> TrooperStoneSummonOffsetArray;
 
 protected:
 	virtual void NotifyBegin(USkeletalMeshComponent* MeshComp, UAnimSequenceBase* Animation, float TotalDuration, const FAnimNotifyEventReference& EventReference) override;

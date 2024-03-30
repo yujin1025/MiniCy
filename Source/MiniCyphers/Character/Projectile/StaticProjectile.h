@@ -4,13 +4,13 @@
 
 #include "CoreMinimal.h"
 #include "MiniCyphersProjectile.h"
-#include "TowerBomb.generated.h"
+#include "StaticProjectile.generated.h"
 
 /**
  * 
  */
 UCLASS()
-class MINICYPHERS_API ATowerBomb : public AMiniCyphersProjectile
+class MINICYPHERS_API AStaticProjectile : public AMiniCyphersProjectile
 {
 	GENERATED_BODY()
 
