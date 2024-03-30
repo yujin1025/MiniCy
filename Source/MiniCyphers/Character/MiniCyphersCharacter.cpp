@@ -113,6 +113,9 @@ void AMiniCyphersCharacter::Move(const FVector2D Value)
 	if (IsDead)
 		return;
 
+	if (RemainStiffTime > 0.01f)
+		return;
+
 	if (Controller != nullptr)
 	{
 		// find out which way is forward
@@ -134,6 +137,9 @@ void AMiniCyphersCharacter::Move(const FVector2D Value)
 void AMiniCyphersCharacter::Look(const FVector2D Value)
 {
 	if (IsDead)
+		return;
+
+	if (RemainStiffTime > 0.01f)
 		return;
 
 	if (Controller != nullptr)
@@ -226,7 +232,7 @@ void AMiniCyphersCharacter::OnFinishedSkillMotion(EAttackType AttackType)
 
 bool AMiniCyphersCharacter::IsSatisfiedAttack(EAttackType AttackType)
 {
-	return !CheckCoolTime(AttackType) && !IsDead;
+	return !CheckCoolTime(AttackType) && !IsDead && RemainStiffTime <= 0.01f;
 }
 
 void AMiniCyphersCharacter::OnHit(AMiniCyphersCharacter* Attacker, EDamageType DamageType, float StiffTime, int DamageAmount, float UpperVelocity, float KnockBackPower, bool isMelee)
