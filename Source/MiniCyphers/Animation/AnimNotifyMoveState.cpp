@@ -6,7 +6,9 @@
 void UAnimNotifyMoveState::NotifyBegin(USkeletalMeshComponent* MeshComp, UAnimSequenceBase* Animation, float TotalDuration, const FAnimNotifyEventReference& EventReference)
 {
     FrameProgressingTime = 0.0f;
+
     CurrentLocation = MeshComp->GetOwner()->GetActorLocation();
+    TargetLocation = FindTarget(MeshComp);
 }
 
 void UAnimNotifyMoveState::NotifyTick(USkeletalMeshComponent* MeshComp, UAnimSequenceBase* Animation, float FrameDeltaTime, const FAnimNotifyEventReference& EventReference)
@@ -15,8 +17,6 @@ void UAnimNotifyMoveState::NotifyTick(USkeletalMeshComponent* MeshComp, UAnimSeq
         return;
 
     FrameProgressingTime += FrameDeltaTime;
-
-    TargetLocation = FindTarget(MeshComp);
 
     auto LerpLocation = FMath::VInterpTo(CurrentLocation, TargetLocation, FrameProgressingTime, SpeedRate);
     MeshComp->GetOwner()->SetActorLocation(LerpLocation);

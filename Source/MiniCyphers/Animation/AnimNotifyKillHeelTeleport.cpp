@@ -9,7 +9,7 @@ void UAnimNotifyKillHeelTeleport::NotifyBegin(USkeletalMeshComponent* MeshComp, 
     Super::NotifyBegin(MeshComp, Animation, TotalDuration, EventReference);
 
     IsFoundTarget = false;
-    FindTarget(MeshComp);
+    TargetLocation = FindTarget(MeshComp);
 }
 
 void UAnimNotifyKillHeelTeleport::NotifyEnd(USkeletalMeshComponent* MeshComp, UAnimSequenceBase* Animation, const FAnimNotifyEventReference& EventReference)
