@@ -161,10 +161,10 @@ bool AMiniCyphersCharacter::UseSkill(EAttackType AttackType) //캐릭터(나)가 때림
 	if (IsDead)
 		return false;
 
-	if (ProgressingAttackType != EAttackType::Max)
+	if (IsSatisfiedAttack(AttackType) == false)
 		return false;
 
-	if (CheckCoolTime(AttackType))
+	if (ProgressingAttackType != EAttackType::Max)
 		return false;
 
 	if (ActionComponentMap.Contains(AttackType) == false)
@@ -222,6 +222,11 @@ void AMiniCyphersCharacter::OnFinishedSkillMotion(EAttackType AttackType)
 	{
 		OnUseSkillDelegate.Broadcast(AttackType);
 	}
+}
+
+bool AMiniCyphersCharacter::IsSatisfiedAttack(EAttackType AttackType)
+{
+	return !CheckCoolTime(AttackType) && !IsDead;
 }
 
 void AMiniCyphersCharacter::OnHit(AMiniCyphersCharacter* Attacker, EDamageType DamageType, float StiffTime, int DamageAmount, float UpperVelocity, float KnockBackPower, bool isMelee)
@@ -319,36 +324,6 @@ FVector AMiniCyphersCharacter::GetMyLocation() const
 AMiniCyphersCharacter* AMiniCyphersCharacter::GetTarget()
 {
 	return nullptr;
-}
-
-bool AMiniCyphersCharacter::IsSatisfiedNormalAttack()
-{
-	return !CheckCoolTime(EAttackType::NormalAttack) && !IsDead;
-}
-
-bool AMiniCyphersCharacter::IsSatisfiedRightClickAttack()
-{
-	return !CheckCoolTime(EAttackType::RightClickAttack) && !IsDead;
-}
-
-bool AMiniCyphersCharacter::IsSatisfiedQSkill()
-{
-	return !CheckCoolTime(EAttackType::QSkillAttack) && !IsDead;
-}
-
-bool AMiniCyphersCharacter::IsSatisfiedUltimateSkill()
-{
-	return !CheckCoolTime(EAttackType::UltimateAttack) && !IsDead;
-}
-
-bool AMiniCyphersCharacter::IsSatisfiedGrabSkill()
-{
-	return !CheckCoolTime(EAttackType::GrabSkillAttack) && !IsDead;
-}
-
-bool AMiniCyphersCharacter::IsSatisfiedShiftAttack()
-{
-	return !CheckCoolTime(EAttackType::ShiftAttack) && !IsDead;
 }
 
 bool AMiniCyphersCharacter::TryGetOverlapResult(AMiniCyphersCharacter* Character, TArray<FOverlapResult>& OverlapResults)

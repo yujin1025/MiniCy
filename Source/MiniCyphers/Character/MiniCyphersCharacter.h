@@ -94,12 +94,7 @@ private:
 	float CurrentDeltaTime = 0.0f;
 
 public:
-	virtual bool IsSatisfiedNormalAttack();
-	virtual bool IsSatisfiedRightClickAttack();
-	virtual bool IsSatisfiedQSkill();
-	virtual bool IsSatisfiedUltimateSkill();
-	virtual bool IsSatisfiedGrabSkill();
-	virtual bool IsSatisfiedShiftAttack();
+	virtual bool IsSatisfiedAttack(EAttackType AttackType);
 
 	virtual void OnUseNormalAttack() {}
 	virtual void OnUseShiftLeftClickAttack() {}

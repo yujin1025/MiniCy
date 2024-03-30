@@ -79,6 +79,11 @@ void APlayableCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputC
 	}
 }
 
+bool APlayableCharacter::IsSatisfiedAttack(EAttackType AttackType)
+{
+	return Super::IsSatisfiedAttack(AttackType) && !InputBlockComponent->bInputBlock;
+}
+
 void APlayableCharacter::OnMove(const FInputActionValue& Value)
 {
 	if (InputBlockComponent->bInputBlock)
@@ -149,41 +154,17 @@ FVector APlayableCharacter::GetTargetPosition(ECollisionChannel Channel, float R
 	return End;
 }
 
-bool APlayableCharacter::IsSatisfiedNormalAttack()
-{
-	return Super::IsSatisfiedNormalAttack() && !InputBlockComponent->bInputBlock;
-}
-
-bool APlayableCharacter::IsSatisfiedRightClickAttack()
-{
-	return Super::IsSatisfiedRightClickAttack() && !InputBlockComponent->bInputBlock;
-}
-
-bool APlayableCharacter::IsSatisfiedQSkill()
-{
-	return Super::IsSatisfiedQSkill() && !InputBlockComponent->bInputBlock;
-}
-
-bool APlayableCharacter::IsSatisfiedShiftAttack()
-{
-	return Super::IsSatisfiedShiftAttack() && !InputBlockComponent->bInputBlock;
-}
-
 
 void APlayableCharacter::OnNormalAttack(const FInputActionValue& Value)
 {
 	if (isShift)
 	{
-		if (IsSatisfiedShiftAttack())
-		{
-			UseSkill(EAttackType::ShiftAttack);
-		}
+		UseSkill(EAttackType::ShiftAttack);
 	}
 	else
 	{
-		if (IsSatisfiedNormalAttack())
+		if (UseSkill(EAttackType::NormalAttack))
 		{
-			UseSkill(EAttackType::NormalAttack);
 			OnAttackDelegate.Broadcast();
 		}
 	}
@@ -192,32 +173,20 @@ void APlayableCharacter::OnNormalAttack(const FInputActionValue& Value)
 
 void APlayableCharacter::OnRightClickAttack(const FInputActionValue& Value)
 {
-	if (IsSatisfiedRightClickAttack() == false)
-		return;
-
 	UseSkill(EAttackType::RightClickAttack);
 }
 
 void APlayableCharacter::OnQSkill(const FInputActionValue& Value)
 {
-	if (IsSatisfiedQSkill() == false)
-		return;
-
 	UseSkill(EAttackType::QSkillAttack);
 }
 
 void APlayableCharacter::OnUltimateSkill(const FInputActionValue& Value)
 {
-	if (IsSatisfiedUltimateSkill() == false)
-		return;
-
 	UseSkill(EAttackType::UltimateAttack);
 }
 
 void APlayableCharacter::OnGrabSkill(const FInputActionValue& Value)
 {
-	if (IsSatisfiedGrabSkill() == false)
-		return;
-
 	UseSkill(EAttackType::GrabSkillAttack);
 }

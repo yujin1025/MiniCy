@@ -3,36 +3,6 @@
 
 #include "Tara.h"
 
-bool ATara::IsSatisfiedNormalAttack()
-{
-	return true;
-}
-
-bool ATara::IsSatisfiedRightClickAttack()
-{
-	return true;
-}
-
-bool ATara::IsSatisfiedShiftAttack()
-{
-	return true;
-}
-
-bool ATara::IsSatisfiedQSkill()
-{
-	return true;
-}
-
-bool ATara::IsSatisfiedUltimateSkill()
-{
-	return true;
-}
-
-bool ATara::IsSatisfiedGrabSkill()
-{
-	return true;
-}
-
 void ATara::OnUseNormalAttack()
 {
 }

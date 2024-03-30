@@ -4,8 +4,10 @@
 
 #include "CoreMinimal.h"
 #include "MiniCyphersProjectile.h"
-#include "../TimeShotComponent.h"
 #include "TowerShot.generated.h"
+
+class UTimeShotComponent;
+
 /**
  * 
  */

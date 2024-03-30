@@ -107,10 +107,5 @@ public:
 
 protected:
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
-
-	virtual bool IsSatisfiedNormalAttack() override;
-	virtual bool IsSatisfiedRightClickAttack() override;
-	virtual bool IsSatisfiedQSkill() override;
-	virtual bool IsSatisfiedShiftAttack() override;
-
+	virtual bool IsSatisfiedAttack(EAttackType AttackType) override;
 };

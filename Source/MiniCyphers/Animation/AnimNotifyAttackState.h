@@ -32,7 +32,7 @@ public:
 	virtual void NotifyTick(USkeletalMeshComponent* MeshComp, UAnimSequenceBase* Animation, float FrameDeltaTime, const FAnimNotifyEventReference& EventReference) override;
 	virtual void NotifyEnd(USkeletalMeshComponent* MeshComp, UAnimSequenceBase* Animation, const FAnimNotifyEventReference& EventReference) override;
 
-	FCollisionShape MakeDetection(UWorld* World, FVector Center, FQuat Quat, const float X, const float Y, const float Z);
+	FCollisionShape MakeDetection(UWorld* World, FVector Center, FQuat Quat, FColor Color, const float X, const float Y, const float Z);
 
 	bool TryGetOverlapResult(AMiniCyphersCharacter* Owner, TArray<FOverlapResult>& OverlapResults);
 	bool TryGetOverlapTargets(AMiniCyphersCharacter* Character, OUT TArray<AMiniCyphersCharacter*>& FoundTargets);

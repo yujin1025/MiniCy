@@ -64,16 +64,16 @@ void UAnimNotifyAttackState::NotifyEnd(USkeletalMeshComponent* MeshComp, UAnimSe
 	CurrentAttackCount = 0;
 }
 
-FCollisionShape UAnimNotifyAttackState::MakeDetection(UWorld* World, FVector Center, FQuat Quat, const float X, const float Y, const float Z)
+FCollisionShape UAnimNotifyAttackState::MakeDetection(UWorld* World, FVector Center, FQuat Quat, FColor Color, const float X, const float Y, const float Z)
 {
 	switch(DetectType)
 	{
 	case EDetectType::Box:
-		DrawDebugBox(World, Center + CenterOffset, FVector(X, Y, Z), Quat, FColor::Green, false, 0.2f);
+		DrawDebugBox(World, Center + CenterOffset, FVector(X, Y, Z), Quat, Color, false, 0.2f);
 		return FCollisionShape::MakeBox(FVector(X, Y, Z));
 
 	default:
-		DrawDebugSphere(World, Center + CenterOffset, DetectX, 16, FColor::Green, false, 0.2f);
+		DrawDebugSphere(World, Center + CenterOffset, DetectX, 16, Color, false, 0.2f);
 		return FCollisionShape::MakeSphere(X);
 	}
 }
@@ -92,7 +92,7 @@ bool UAnimNotifyAttackState::TryGetOverlapResult(AMiniCyphersCharacter* Owner, T
 		Center + CenterOffset,
 		Owner->GetActorQuat(),
 		ECollisionChannel::ECC_GameTraceChannel2,
-		MakeDetection(World, Center, Owner->GetActorQuat(), DetectX, DetectY, DetectZ),
+		MakeDetection(World, Center, Owner->GetActorQuat(), Owner->DetectTargetDebugColor, DetectX, DetectY, DetectZ),
 		CollisionParam);
 
 	return bResult;

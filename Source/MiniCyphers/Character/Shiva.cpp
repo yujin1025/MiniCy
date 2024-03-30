@@ -16,36 +16,6 @@ AShiva::AShiva()
 	NormalAttackProjectileStartLocation->SetRelativeLocation(FVector(10.0f, 48.4f, 10.0f));
 }
 
-bool AShiva::IsSatisfiedNormalAttack()
-{
-	return Super::IsSatisfiedNormalAttack();
-}
-
-bool AShiva::IsSatisfiedRightClickAttack()
-{
-	return Super::IsSatisfiedRightClickAttack();
-}
-
-bool AShiva::IsSatisfiedShiftAttack()
-{
-	return Super::IsSatisfiedShiftAttack();
-}
-
-bool AShiva::IsSatisfiedQSkill()
-{
-	return Super::IsSatisfiedQSkill();
-}
-
-bool AShiva::IsSatisfiedUltimateSkill()
-{
-	return Super::IsSatisfiedUltimateSkill();
-}
-
-bool AShiva::IsSatisfiedGrabSkill()
-{
-	return Super::IsSatisfiedGrabSkill();
-}
-
 void AShiva::OnUseNormalAttack()
 {
 	

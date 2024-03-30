@@ -4,6 +4,13 @@
 #include "StaticProjectile.h"
 #include "../MiniCyphersCharacter.h"
 #include "../HealthComponent.h"
+#include "../TimeActionComponent.h"
+
+
+AStaticProjectile::AStaticProjectile()
+{
+	TimeActionComponent = CreateDefaultSubobject<UTimeActionComponent>(TEXT("TimeShotComponent"));
+}
 
 void AStaticProjectile::Tick(float DeltaTime)
 {

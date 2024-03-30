@@ -21,9 +21,10 @@ EBTNodeResult::Type UBTTask_Attack::ExecuteTask(UBehaviorTreeComponent& OwnerCom
 	if (Character == nullptr)
 		return EBTNodeResult::Failed;
 
-	if (Character->UseSkill(AttackType) == false)
+	if(Character->IsSatisfiedAttack(AttackType) == false)
 		return EBTNodeResult::Failed;
 
+	Character->UseSkill(AttackType);
 	Character->OnUseSkillDelegate.AddLambda([this](EAttackType AttackType) -> void
 	{
 		bIsProcessing = true;

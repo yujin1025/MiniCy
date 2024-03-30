@@ -2,6 +2,7 @@
 
 
 #include "TowerShot.h"
+#include "../TimeShotComponent.h"
 
 
 ATowerShot::ATowerShot()
