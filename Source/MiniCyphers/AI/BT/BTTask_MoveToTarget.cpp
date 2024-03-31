@@ -32,7 +32,7 @@ EBTNodeResult::Type UBTTask_MoveToTarget::ExecuteTask(UBehaviorTreeComponent& Ow
 	if (OtherCharacter == nullptr)
 		return EBTNodeResult::Failed;
 
-	MyCharacter->RotateToTarget(OtherCharacter, 5.0f);
+	//MyCharacter->RotateToTarget(OtherCharacter, 5.0f);
 	MyCharacter->GetCharacterMovement()->MaxWalkSpeed = MoveSpeed;
 	AIController->MoveToLocation(OtherCharacter->GetMyLocation(), 200.0f);
 

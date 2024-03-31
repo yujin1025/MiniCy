@@ -28,7 +28,7 @@ EBTNodeResult::Type UBTTask_Attack::ExecuteTask(UBehaviorTreeComponent& OwnerCom
 	if (BlackBoard == nullptr)
 		return EBTNodeResult::Failed;
 
-	if (AttackType == UseStackAttackType)
+	if (AttackType == UseStackAttackType && UseStackCount > 0)
 	{
 		int CurrentStackCount = BlackBoard->GetValueAsInt(AMiniCyphersAIController::DamagedCountKey);
 		if (CurrentStackCount < UseStackCount)

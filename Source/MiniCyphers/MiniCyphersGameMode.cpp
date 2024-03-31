@@ -72,17 +72,14 @@ void AMiniCyphersGameMode::OnPostLogin(AMiniCyphersPlayerController* NewPlayer)
 
 void AMiniCyphersGameMode::SpawnPlayer(ECharacterType Type)
 {
-	FVector SpawnLocation = FVector(-1000.0f, 800.0f, 0.0f);
-	FRotator SpawnRotation = FRotator(0.0f, 0.0f, 0.0f);
-
 	AMiniCyphersCharacter* Character = nullptr;
 	switch (Type)
 	{
 	case ECharacterType::Shiva:
-		Character = GetWorld()->SpawnActor<AShiva>(ShivaClass, SpawnLocation, SpawnRotation);
+		Character = GetWorld()->SpawnActor<AShiva>(ShivaClass, PlayerSpawnPosition, PlayerSpawnRotation);
 		break;
 	case ECharacterType::Tara:
-		Character = GetWorld()->SpawnActor<ATara>(TaraClass, SpawnLocation, SpawnRotation);
+		Character = GetWorld()->SpawnActor<ATara>(TaraClass, PlayerSpawnPosition, PlayerSpawnRotation);
 		break;
 	}
 

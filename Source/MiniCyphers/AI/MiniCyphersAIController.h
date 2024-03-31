@@ -22,6 +22,7 @@ public:
 	static const FName TargetObjectKey;
 	static const FName DamagedCountKey;
 	static const FName DamagedTypeKey;
+	static const FName BombSentinelSummonCountKey;
 
 	virtual void OnPossess(APawn* InPawn) override;
 	virtual void OnUnPossess() override;

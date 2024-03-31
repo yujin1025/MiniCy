@@ -17,4 +17,6 @@ class MINICYPHERS_API UBTDecorator_IsSummonableBombSentinel : public UMiniCypher
 protected:
 	virtual bool CalculateRawConditionValue(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory) const override;
 
+	UPROPERTY(EditAnywhere)
+	int SummonableSentinelDeathCount = 5;
 };

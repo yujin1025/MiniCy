@@ -65,6 +65,12 @@ public:
 	FCharacterStatData* GetStatData(ECharacterType type);
 
 private:
+	UPROPERTY(EditAnywhere)
+	FVector PlayerSpawnPosition = FVector(-190.0f, -2110.0f, 0.0f);
+	
+	UPROPERTY(EditAnywhere)
+	FRotator PlayerSpawnRotation = FRotator(0.0f, 0.0f, 90.0f);
+	
 	UPROPERTY(EditAnywhere, Category = UI)
 	TSubclassOf<class UMiniCyphersWidget> InGameWindowWidgetClass;
 

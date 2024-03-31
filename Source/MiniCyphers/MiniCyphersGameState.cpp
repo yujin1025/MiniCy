@@ -2,123 +2,131 @@
 
 
 #include "MiniCyphersGameState.h"
+#include "Character/Sentinel.h"
+#include "Character/Trooper.h"
+#include "Character/Tower.h"
+#include "Character/MiniCyphersCharacter.h"
 
-void AMiniCyphersGameState::OnChangedHealth(int ObjectID, float Amount)
+AMiniCyphersGameState::AMiniCyphersGameState()
 {
-
+	PrimaryActorTick.bCanEverTick = true;
 }
 
-TArray<FQuestPhaseData*> AMiniCyphersGameState::GetQuestPhaseDatas(int PhaseNumber)
+void AMiniCyphersGameState::Spawn(ESpawnType SpawnType)
 {
-	TArray<FQuestPhaseData*> PhaseDatas;
-	TArray<FQuestPhaseData*> ResultPhaseDatas;
+	AMiniCyphersCharacter* Character;
 
-	QuestPhaseTable->GetAllRows(TEXT(""), OUT PhaseDatas);
-
-	for (auto& Data : PhaseDatas)
+	switch (SpawnType)
 	{
-		if (Data->PhaseNumber != PhaseNumber)
-			continue;
-
-		ResultPhaseDatas.Add(Data);
-	}
-
-	return ResultPhaseDatas;
-}
-
-FQuestData* AMiniCyphersGameState::GetQuestData(int QuestId)
-{
-	TArray<FQuestData*> QuestDatas;
-
-	QuestTable->GetAllRows(TEXT(""), OUT QuestDatas);
-
-	for (auto& QuestData : QuestDatas)
-	{
-		if (QuestData->QuestId != QuestId)
-			continue;
-
-		return QuestData;
-	}
-
-	return nullptr;
-}
-
-TArray<FQuestData*> AMiniCyphersGameState::GetQuestDatas(int PhaseNumber)
-{
-	TArray<FQuestPhaseData*> PhaseDatas = GetQuestPhaseDatas(PhaseNumber);
-	TArray<FQuestData*> QuestDatas;
-
-	for (auto& PhaseData : PhaseDatas)
-	{
-		FQuestData* QuestData = GetQuestData(PhaseData->QuestId);
-		if (QuestData == nullptr)
-			continue;
-
-		QuestDatas.Add(QuestData);
-	}
-
-	return QuestDatas;
-}
-
-bool AMiniCyphersGameState::TryChangePhase(int NextPhaseNumber)
-{
-	if (CurrentPhaseNumber >= 0)
-	{
-		TArray<FQuestData*> QuestDatas = GetQuestDatas(CurrentPhaseNumber);
-
-		for (auto& QuestData : QuestDatas)
+	case ESpawnType::Sentinel:
+		
+		if (SentinelSpawnPositions.Num() > CurrentSpawnSentinelPositionIndex)
 		{
-			int32* QuestProgress = QuestProgressDatas.Find(QuestData->QuestId);
-			if (QuestProgress == nullptr)
-				continue;
+			Character = GetWorld()->SpawnActor<ASentinel>(SentinelClass, SentinelSpawnPositions[CurrentSpawnSentinelPositionIndex], SentinelSpawnRotation);
+			Character->CharacterId = CurrentSentinelCharacterId;
 
-			int Progress = *(QuestProgress);
-			if (Progress >= QuestData->MaxProgress)
-				continue;
+			CurrentSpawnSentinelPositionIndex++;
+			CurrentSpawnSentinelPositionIndex %= MaxFieldSentinelCount;
 
-			return false;
+			MonsterHealthMap.Add(CurrentSentinelCharacterId, 100);
+			CurrentSentinelCharacterId++;
+		}
+
+		break;
+
+	case ESpawnType::Tower:
+		Character = GetWorld()->SpawnActor<ATower>(TowerClass, TowerSpawnPosition, TowerSpawnRotation);		
+		Character->CharacterId = TowerCharacterId;
+
+		MonsterHealthMap.Add(TowerCharacterId, 100);
+
+		break;
+
+	case ESpawnType::Trooper:
+		Character = GetWorld()->SpawnActor<ATrooper>(TrooperClass, TrooperSpawnPosition, TrooperSpawnRotation);
+		Character->CharacterId = TrooperCharacterId;
+
+		MonsterHealthMap.Add(TrooperCharacterId, 100);
+
+		break;
+	}
+}
+
+int AMiniCyphersGameState::GetDeadSentinelCount()
+{
+	int DeadSentinelCount = 0;
+
+	for (auto& Pair : MonsterHealthMap)
+	{
+		// ¼¾Æ¼³ÚÀÌ¸é
+		if (Pair.Key >- StartSentinelCharacterId)
+		{
+			if (Pair.Value <= 0)
+			{
+				DeadSentinelCount++;
+			}
 		}
 	}
 
-	CurrentPhaseNumber = NextPhaseNumber;
-	OnChangedPhase(NextPhaseNumber);
-	return true;
+	return DeadSentinelCount;
 }
 
-void AMiniCyphersGameState::OnChangedPhase(int PhaseNumber)
+void AMiniCyphersGameState::OnChangedHealth(int ObjectID, float CurrentHealth)
 {
-	TArray<FQuestData*> QuestDatas = GetQuestDatas(PhaseNumber);
+	if (MonsterHealthMap.Contains(ObjectID) == false)
+		return;
 
-	QuestProgressDatas.Reset();
-	for (auto& QuestData : QuestDatas)
+	MonsterHealthMap[ObjectID] = CurrentHealth;
+}
+
+bool AMiniCyphersGameState::IsDeadTrooper()
+{
+	return MonsterHealthMap[TrooperCharacterId] <= 0;
+}
+
+bool AMiniCyphersGameState::IsDeadTower()
+{
+	return MonsterHealthMap[TowerCharacterId] <= 0;
+}
+
+void AMiniCyphersGameState::BeginPlay()
+{
+	Super::BeginPlay();
+
+	Spawn(ESpawnType::Trooper);
+	Spawn(ESpawnType::Tower);
+
+	CurrentSentinelCharacterId = StartSentinelCharacterId;
+
+	for (int i = 0; i < MaxFieldSentinelCount; i++)
 	{
-		QuestProgressDatas.Add(QuestData->QuestId, 0);
+		Spawn(ESpawnType::Sentinel);
+	}
+}
+
+void AMiniCyphersGameState::Tick(float DeltaTime)
+{
+	Super::Tick(DeltaTime);
+
+	int FieldSentinelCount = 0;
+
+	for (auto& Pair : MonsterHealthMap)
+	{
+		// ¼¾Æ¼³ÚÀÌ¸é
+		if (Pair.Key >= StartSentinelCharacterId)
+		{
+			if (Pair.Value > 0)
+			{
+				FieldSentinelCount++;
+			}
+		}
 	}
 
-	OnChangedQuestDelegate.Broadcast(QuestDatas, QuestProgressDatas);
-}
-
-bool AMiniCyphersGameState::TryCompleteQuest(int QuestId)
-{
-	FQuestData* QuestData = GetQuestData(QuestId);
-	if (QuestData == nullptr)
-		return false;
-
-	int32* QuestProgress = QuestProgressDatas.Find(QuestId);
-	if (QuestProgress == nullptr)
-		return false;
-
-	int Progress = *(QuestProgress);
-	if (Progress >= QuestData->MaxProgress)
-		return false;
-
-	QuestProgressDatas[QuestId]++;
-	OnChangedQuest(QuestId);
-	return true;
-}
-
-void AMiniCyphersGameState::OnChangedQuest(int QuestId)
-{
-	TArray<FQuestData*> QuestDatas = GetQuestDatas(CurrentPhaseNumber);
-	OnChangedQuestDelegate.Broadcast(QuestDatas, QuestProgressDatas);
+	if (FieldSentinelCount < MaxFieldSentinelCount)
+	{
+		for (int i = 0; i < FieldSentinelCount; i++)
+		{
+			Spawn(ESpawnType::Sentinel);
+		}
+	}
 }

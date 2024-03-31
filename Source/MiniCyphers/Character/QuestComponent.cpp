@@ -8,27 +8,7 @@
 
 void UQuestComponent::BeginPlay()
 {
-	auto* Character = GetCharacter();
-	if (Character == nullptr)
-		return;
-
-	Character->OnMoveDelegate.AddLambda([this](FVector2D Value) -> void
-	{
-		auto* GameMode = Cast<AMiniCyphersGameMode>(GetWorld()->GetAuthGameMode());
-		if (GameMode == nullptr)
-			return;
-
-		GameMode->MyGameState->TryCompleteQuest(0);
-	});
-
-	Character->OnAttackDelegate.AddLambda([this]() -> void
-	{
-		auto* GameMode = Cast<AMiniCyphersGameMode>(GetWorld()->GetAuthGameMode());
-		if (GameMode == nullptr)
-			return;
-
-		GameMode->MyGameState->TryCompleteQuest(1);
-	});
+	Super::BeginPlay();
 }
 
 AMiniCyphersCharacter* UQuestComponent::GetCharacter()

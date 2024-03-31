@@ -6,40 +6,14 @@
 #include "GameFramework/GameStateBase.h"
 #include "MiniCyphersGameState.generated.h"
 
-USTRUCT(BlueprintType)
-struct FQuestPhaseData : public FTableRowBase
+UENUM(BlueprintType)
+enum class ESpawnType : uint8
 {
-	GENERATED_BODY()
-
-public:
-	FQuestPhaseData() {}
-
-	UPROPERTY()
-	int32 QuestId;
-
-	UPROPERTY()
-	int32 PhaseNumber;
+	Sentinel,
+	Trooper,
+	Tower,
 };
 
-USTRUCT(BlueprintType)
-struct FQuestData : public FTableRowBase
-{
-	GENERATED_BODY()
-
-public:
-	FQuestData() {}
-
-	UPROPERTY()
-	int32 QuestId;
-
-	UPROPERTY()
-	FString Description;
-
-	UPROPERTY()
-	int32 MaxProgress;
-};
-
-DECLARE_MULTICAST_DELEGATE_ThreeParams(FOnChangedQuestDelegate, TArray<FQuestData*>, TMap<int, int>)
 
 /**
  * 
@@ -51,36 +25,64 @@ class MINICYPHERS_API AMiniCyphersGameState : public AGameStateBase
 	
 	// 퀘스트, 타이머, HP, 목숨, 웨이브 단계, 보스 등이 저장됩니다.
 
-	//여기서는 보스가 죽었을때 뭘 할지 이런식으로 하려고 hp가 필요한거
+	// 여기서는 보스가 죽었을때 뭘 할지 이런식으로 하려고 hp가 필요한거
+
+public:
+	AMiniCyphersGameState();
 
 private:
-	// Quest Id - Progress
-	TMap<int, int> QuestProgressDatas;
-	int CurrentPhaseNumber = -1;
+	int TrooperCharacterId = 0;
+	int TowerCharacterId = 1;
+
+	int StartSentinelCharacterId = 2;
+	int CurrentSentinelCharacterId = 2;
 
 private:
+	UPROPERTY(EditAnywhere)
+	TArray<FVector> SentinelSpawnPositions;
 
-	UPROPERTY(EditAnywhere, Category = Data)
-	class UDataTable* QuestPhaseTable;
+	UPROPERTY(EditAnywhere)
+	FRotator SentinelSpawnRotation;
 
-	UPROPERTY(EditAnywhere, Category = Data)
-	class UDataTable* QuestTable;
+	UPROPERTY(EditAnywhere)
+	FVector TrooperSpawnPosition;
+
+	UPROPERTY(EditAnywhere)
+	FRotator TrooperSpawnRotation;
+
+	UPROPERTY(EditAnywhere)
+	FVector TowerSpawnPosition;
+
+	UPROPERTY(EditAnywhere)
+	FRotator TowerSpawnRotation;
+
+private:
+	UPROPERTY(EditAnywhere, Category = Character)
+	TSubclassOf<class AMiniCyphersCharacter> TrooperClass;
+
+	UPROPERTY(EditAnywhere, Category = Character)
+	TSubclassOf<class AMiniCyphersCharacter> TowerClass;
+
+	UPROPERTY(EditAnywhere, Category = Character)
+	TSubclassOf<class AMiniCyphersCharacter> SentinelClass;
+
+private:
+	TMap<int, int> MonsterHealthMap;
+	int MaxFieldSentinelCount = 2;
+	int CurrentSpawnSentinelPositionIndex = 0;
 
 public:
-	TArray<FQuestPhaseData*> GetQuestPhaseDatas(int PhaseNumber);
-	FQuestData* GetQuestData(int QuestId);
-	TArray<FQuestData*> GetQuestDatas(int PhaseNumber);
+	void OnChangedHealth(int ObjectID, float CurrentHealth);
 
-
-public:
-	bool TryChangePhase(int PhaseNumber);
-	void OnChangedPhase(int PhaseNumber);
-
-	bool TryCompleteQuest(int QuestId);
-	void OnChangedQuest(int QuestId);
-
-	FOnChangedQuestDelegate OnChangedQuestDelegate;
+protected:
+	virtual void BeginPlay() override;
+	virtual void Tick(float DeltaTime) override;
 
 public:
-	void OnChangedHealth(int ObjectID, float Amount);
+	int GetDeadSentinelCount();
+	bool IsDeadTrooper();
+	bool IsDeadTower();
+
+private:
+	void Spawn(ESpawnType SpawnType);
 };

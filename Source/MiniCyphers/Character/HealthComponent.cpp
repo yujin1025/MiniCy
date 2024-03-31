@@ -56,6 +56,8 @@ void UHealthComponent::ChangeHealth(AMiniCyphersCharacter* Attacker, EDamageType
 	if (CurrentHealth <= 0)
 		return;
 	
+	CurrentHealth += HealthAmount;
+
 	auto* Character = GetCyphersCharacter();
 	if (Character == nullptr || Character->bInvincible)
 		return;
@@ -71,7 +73,6 @@ void UHealthComponent::ChangeHealth(AMiniCyphersCharacter* Attacker, EDamageType
 		UE_LOG(LogTemp, Warning, TEXT("Non Player Number : (%d) Current Health: %d"), Character->CharacterId, CurrentHealth);
 	}
 
-	CurrentHealth += HealthAmount;
 
 	if (HealthAmount < 0)
 	{

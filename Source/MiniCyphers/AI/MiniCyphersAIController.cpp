@@ -16,6 +16,7 @@ const FName AMiniCyphersAIController::PatrolPosKey(TEXT("PatrolPos"));
 const FName AMiniCyphersAIController::TargetObjectKey(TEXT("TargetObject"));
 const FName AMiniCyphersAIController::DamagedCountKey(TEXT("DamagedCount"));
 const FName AMiniCyphersAIController::DamagedTypeKey(TEXT("DamagedType"));
+const FName AMiniCyphersAIController::BombSentinelSummonCountKey(TEXT("BombSentinelSummonCount"));
 
 
 
