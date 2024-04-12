@@ -2,6 +2,7 @@
 
 
 #include "MiniCyphersPlayerController.h"
+#include "MiniCyphersGameState.h"
 #include "Character/MiniCyphersCharacter.h"
 #include "Widget/MiniCyphersWidget.h"
 #include "MiniCyphersPlayerState.h"
@@ -55,9 +56,57 @@ void AMiniCyphersPlayerController::OpenSettings()
 
 }
 
+void AMiniCyphersPlayerController::CheckGameState()
+{
+    if (bGameStateShown)
+        return;
+
+    AMiniCyphersGameState* GameState = GetWorld()->GetGameState<AMiniCyphersGameState>();
+    if (!GameState)
+        return;
+
+    if (GameState->IsDeadTrooper() || GameState->IsDeadTower())
+    {
+        if (GameState->IsDeadTrooper())
+        {
+            if (ClearWidgetClass)
+            {
+                GameClearWidget = CreateWidget<UMiniCyphersWidget>(GetWorld(), ClearWidgetClass);
+                if (GameClearWidget != nullptr)
+                {
+                    GameClearWidget->AddToViewport();
+                }
+            }
+        }
+
+        if (GameState->IsDeadTower())
+        {
+            if (OverWidgetClass)
+            {
+                GameOverWidget = CreateWidget<UMiniCyphersWidget>(GetWorld(), OverWidgetClass);
+                if (GameOverWidget != nullptr)
+                {
+                    GameOverWidget->AddToViewport();
+                }
+            }
+        }
+
+        SetPause(true);
+        bShowMouseCursor = true;
+        bGameStateShown = true;
+    }
+}
+
 void AMiniCyphersPlayerController::OnPossessCharacter(AMiniCyphersCharacter* aCharacter)
 {
 	this->OwnerCharacter = aCharacter;
+}
+
+void AMiniCyphersPlayerController::Tick(float DeltaTime)
+{
+    Super::Tick(DeltaTime);
+
+    CheckGameState();
 }
 
 AMiniCyphersPlayerState* AMiniCyphersPlayerController::GetState()

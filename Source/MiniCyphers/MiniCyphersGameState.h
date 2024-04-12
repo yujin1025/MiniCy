@@ -85,4 +85,5 @@ public:
 
 private:
 	void Spawn(ESpawnType SpawnType);
+
 };

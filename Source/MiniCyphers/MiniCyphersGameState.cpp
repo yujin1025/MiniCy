@@ -5,7 +5,9 @@
 #include "Character/Sentinel.h"
 #include "Character/Trooper.h"
 #include "Character/Tower.h"
+#include "Widget/MiniCyphersWidget.h"
 #include "Character/MiniCyphersCharacter.h"
+#include <Kismet/GameplayStatics.h>
 
 AMiniCyphersGameState::AMiniCyphersGameState()
 {
@@ -129,4 +131,5 @@ void AMiniCyphersGameState::Tick(float DeltaTime)
 			Spawn(ESpawnType::Sentinel);
 		}
 	}
+
 }
