@@ -48,12 +48,7 @@ void AMiniCyphersPlayerController::OpenSettings()
 			SettingWidget->AddToViewport();
 
 			UGameplayStatics::SetGamePaused(GetWorld(), true);
-
-			FInputModeGameAndUI  InputMode;
-			InputMode.SetWidgetToFocus(SettingWidget->TakeWidget());
-			InputMode.SetLockMouseToViewportBehavior(EMouseLockMode::DoNotLock);
-			InputMode.SetHideCursorDuringCapture(false);
-			SetInputMode(InputMode);
+			bShowMouseCursor = true;
 		}
 
 	}
