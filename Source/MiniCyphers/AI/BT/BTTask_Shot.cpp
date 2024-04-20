@@ -35,6 +35,9 @@ EBTNodeResult::Type UBTTask_Shot::ExecuteTask(UBehaviorTreeComponent& OwnerComp,
 	FVector SpawnLocation = TargetCharacter->GetActorLocation();
 	SpawnLocation.Z = 0;
 
+	if (ProjectileClass == nullptr)
+		return EBTNodeResult::Failed;
+
 	auto* Projectile = World->SpawnActor<ATowerShot>(ProjectileClass, SpawnLocation, FRotator::ZeroRotator);
 	if (Projectile == nullptr)
 		return EBTNodeResult::Failed;
