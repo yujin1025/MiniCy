@@ -20,4 +20,5 @@ public:
 
 public:
 	virtual void BeginPlay() override;
+	virtual void OnHit(AMiniCyphersCharacter* Attacker, EDamageType DamageType, float StiffTime, int HealthAmount, float UpperVelocity, float KnockBackDistance, bool isMelee) override;
 };

@@ -7,6 +7,7 @@
 #include "../MiniCyphersGameMode.h"
 #include "../MiniCyphersPlayerState.h"
 #include "../AI/MiniCyphersAIController.h"
+#include "PlayableCharacter.h"
 
 ATrooper::ATrooper()
 {
@@ -20,4 +21,15 @@ void ATrooper::BeginPlay()
 
 	bSuperArmor = true; // 투루퍼는 항시 슈퍼아머
 	IsPlayerTeam = false; // 적 팀
+}
+
+void ATrooper::OnHit(AMiniCyphersCharacter* Attacker, EDamageType DamageType, float StiffTime, int HealthAmount, float UpperVelocity, float KnockBackDistance, bool isMelee)
+{
+	Super::OnHit(Attacker, DamageType, StiffTime, HealthAmount, UpperVelocity, KnockBackDistance, isMelee);
+
+	if (Cast<APlayableCharacter>(Attacker) != nullptr)
+	{
+		LastAttacker = Attacker;
+		LastAttackDeltaTime = 0.0f;
+	}
 }

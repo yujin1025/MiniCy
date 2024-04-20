@@ -20,3 +20,8 @@ void ASentinel::BeginPlay()
 	bSuperArmor = false; // ¼¾Æ¼³ÚÀº ½´ÆÛ¾Æ¸Ó ¾øÀ½
 	IsPlayerTeam = false; // Àû ÆÀ
 }
+
+void ASentinel::OnHit(AMiniCyphersCharacter* Attacker, EDamageType DamageType, float StiffTime, int HealthAmount, float UpperVelocity, float KnockBackDistance, bool isMelee)
+{
+	Super::OnHit(Attacker, DamageType, StiffTime, HealthAmount, UpperVelocity, KnockBackDistance, isMelee);
+}

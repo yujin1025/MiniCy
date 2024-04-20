@@ -4,6 +4,7 @@
 #include "NonPlayableCharacter.h"
 #include "../AI/MiniCyphersAIController.h"
 #include "../Character/Tower.h"
+#include "PlayableCharacter.h"
 
 ANonPlayableCharacter::ANonPlayableCharacter()
 {
@@ -48,9 +49,6 @@ FVector ANonPlayableCharacter::GetTargetPosition()
 void ANonPlayableCharacter::OnHit(AMiniCyphersCharacter* Attacker, EDamageType DamageType, float StiffTime, int HealthAmount, float UpperVelocity, float KnockBackDistance, bool isMelee)
 {
 	Super::OnHit(Attacker, DamageType, StiffTime, HealthAmount, UpperVelocity, KnockBackDistance, isMelee);
-
-	LastAttacker = Attacker;
-	LastAttackDeltaTime = 0.0f;
 }
 
 void ANonPlayableCharacter::Tick(float DeltaTime)
