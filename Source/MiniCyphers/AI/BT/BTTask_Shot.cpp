@@ -29,6 +29,8 @@ EBTNodeResult::Type UBTTask_Shot::ExecuteTask(UBehaviorTreeComponent& OwnerComp,
 		return EBTNodeResult::Failed;
 
 	UWorld* const World = GetWorld();
+	if(World==nullptr)
+		return EBTNodeResult::Failed;
 
 	FVector SpawnLocation = TargetCharacter->GetActorLocation();
 	SpawnLocation.Z = 0;
