@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "GameFramework/SaveGame.h"
 #include "MiniCyphers/MiniCyphersGameInstance.h"
+#include "MiniCyphersGameMode.h"
 #include "MiniCyphersSaveGame.generated.h"
 
 /**

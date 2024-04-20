@@ -19,6 +19,9 @@ enum class ECharacterType
 {
 	Shiva = 0,
 	Tara = 1,
+	Tower = 2,
+	Sentinel = 3,
+	Trooper = 4,
 	Max,
 };
 
